@@ -1,6 +1,7 @@
-
 import { AnalysisResults, AnalysisProgress, DarkPattern } from "@/types/darkPatterns";
+import { analyzeWebsite as realAnalyzeWebsite } from "./realDarkPatternsAnalyzer";
 
+// Keep the mock patterns for fallback or demo mode
 const mockPatterns: DarkPattern[] = [
   {
     id: "1",
@@ -116,4 +117,23 @@ export const mockAnalyzeWebsite = async (
     },
     summary: getSummary()
   };
+};
+
+// Main export now uses real analysis
+export const analyzeWebsite = async (
+  url: string, 
+  onProgress: (progress: AnalysisProgress) => void,
+  useMock: boolean = false
+): Promise<AnalysisResults> => {
+  if (useMock) {
+    return mockAnalyzeWebsite(url, onProgress);
+  }
+  
+  try {
+    return await realAnalyzeWebsite(url, onProgress);
+  } catch (error) {
+    console.warn('Real analysis failed, falling back to mock:', error);
+    // Fallback to mock if real analysis fails
+    return mockAnalyzeWebsite(url, onProgress);
+  }
 };

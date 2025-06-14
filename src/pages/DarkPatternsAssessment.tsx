@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Shield, AlertTriangle, CheckCircle, Download, ExternalLink, Zap } from "lucide-react";
 import { AnalysisResults, AnalysisProgress } from "@/types/darkPatterns";
-import { mockAnalyzeWebsite } from "@/utils/darkPatternsAnalyzer";
+import { analyzeWebsite } from "@/utils/darkPatternsAnalyzer";
 import { generateDarkPatternsPDF } from "@/utils/darkPatternsPdfGenerator";
 import { useToast } from "@/hooks/use-toast";
 
@@ -16,6 +15,7 @@ const DarkPatternsAssessment = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [progress, setProgress] = useState<AnalysisProgress | null>(null);
   const [results, setResults] = useState<AnalysisResults | null>(null);
+  const [useMockAnalysis, setUseMockAnalysis] = useState(false);
   const { toast } = useToast();
 
   const handleAnalyze = async () => {
@@ -44,16 +44,17 @@ const DarkPatternsAssessment = () => {
     setResults(null);
 
     try {
-      const analysisResults = await mockAnalyzeWebsite(url, setProgress);
+      const analysisResults = await analyzeWebsite(url, setProgress, useMockAnalysis);
       setResults(analysisResults);
       toast({
         title: "Analysis Complete",
         description: `Found ${analysisResults.patterns_detected.length} patterns to review`
       });
     } catch (error) {
+      console.error('Analysis error:', error);
       toast({
         title: "Analysis Failed",
-        description: "Unable to analyze the website. Please try again.",
+        description: "Unable to analyze the website. Please check the URL and try again.",
         variant: "destructive"
       });
     } finally {
@@ -135,6 +136,19 @@ const DarkPatternsAssessment = () => {
               >
                 {isAnalyzing ? 'Analyzing...' : 'Analyze Website'}
               </Button>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="mock-analysis"
+                checked={useMockAnalysis}
+                onChange={(e) => setUseMockAnalysis(e.target.checked)}
+                className="rounded"
+              />
+              <label htmlFor="mock-analysis" className="text-sm text-gray-600">
+                Use demo mode (mock analysis)
+              </label>
             </div>
           </CardContent>
         </Card>
