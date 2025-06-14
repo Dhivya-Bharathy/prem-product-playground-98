@@ -1,14 +1,16 @@
+
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Shield, AlertTriangle, CheckCircle, Download, ExternalLink, Zap, Info } from "lucide-react";
+import { Shield, AlertTriangle, CheckCircle, Download, ExternalLink, Zap, Info, Home } from "lucide-react";
 import { AnalysisResults, AnalysisProgress } from "@/types/darkPatterns";
 import { analyzeWebsite } from "@/utils/darkPatternsAnalyzer";
 import { generateDarkPatternsPDF } from "@/utils/darkPatternsPdfGenerator";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 const getPatternTypeColor = (patternType: string) => {
   switch (patternType) {
@@ -98,6 +100,18 @@ const DarkPatternsAssessment = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      {/* Back to Homepage Navigation */}
+      <div className="bg-white/80 backdrop-blur-sm border-b">
+        <div className="container mx-auto px-4 py-4">
+          <Button variant="outline" size="sm" asChild className="rounded-xl mb-2">
+            <Link to="/">
+              <Home className="w-4 h-4 mr-2" />
+              Back to Homepage
+            </Link>
+          </Button>
+        </div>
+      </div>
+
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-sm border-b">
         <div className="container mx-auto px-4 py-6">

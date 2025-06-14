@@ -9,7 +9,7 @@ import { CompetencyRating, AssessmentResults } from "@/types/competency";
 import { analyzeCompetencies } from "@/utils/competency";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Home } from "lucide-react";
 import { Link } from "react-router-dom";
 
 type Step = 'intro' | 'assessment' | 'results';
@@ -51,6 +51,18 @@ const PMCompetency = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Back to Homepage Navigation */}
+      <div className="bg-white border-b">
+        <div className="container mx-auto px-4 py-4">
+          <Button variant="outline" size="sm" asChild className="rounded-xl">
+            <Link to="/">
+              <Home className="w-4 h-4 mr-2" />
+              Back to Homepage
+            </Link>
+          </Button>
+        </div>
+      </div>
+
       {currentStep === 'intro' && (
         <CompetencyIntro onStart={handleStartAssessment} />
       )}
