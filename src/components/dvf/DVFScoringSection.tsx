@@ -9,7 +9,9 @@ interface DVFScoringSectionProps {
 
 export const DVFScoringSection = ({ scores, onScoreChange }: DVFScoringSectionProps) => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
+      <h3 className="text-lg font-semibold mb-4">Score Your Idea</h3>
+      
       <DVFScoreCard
         dimension="desirability"
         score={scores.desirability}

@@ -30,3 +30,10 @@ export interface DVFTemplate {
   criteria: DVFCriteria[];
   industry?: string;
 }
+
+export interface DVFExportData {
+  evaluations: DVFEvaluation[];
+  exportedAt: string;
+  totalCount: number;
+  averageScores: DVFScore & { total: number };
+}
