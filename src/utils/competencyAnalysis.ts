@@ -22,10 +22,10 @@ export const analyzeCompetencies = (ratings: CompetencyRating[]): AssessmentResu
 
   const shape = calculateShape(ratings);
   const shapePattern = identifyShapePattern(shape);
-  const archetype = identifyArchetype(shape, shapePattern);
+  const archetype = identifyArchetype(shape, ratings);
   const topStrengths = identifyTopStrengths(ratings);
   const developmentAreas = identifyDevelopmentAreas(ratings);
-  const recommendations = generateRecommendations(shape, archetype, topStrengths, developmentAreas);
+  const recommendations = generateRecommendations(shape, archetype, topStrengths, developmentAreas, ratings);
 
   return {
     assessment,
@@ -44,25 +44,26 @@ const calculateShape = (ratings: CompetencyRating[]): CompetencyShape => {
     competencyScores[rating.competencyId] = rating.rating;
   });
 
-  // Calculate area averages
-  const productExecution = COMPETENCY_AREAS[0].competencies.reduce((sum, compId) => {
-    const competency = COMPETENCIES.find(c => c.name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '') === compId);
-    return sum + (competency ? (competencyScores[competency.id] || 1) : 1);
+  // Calculate area averages using exact competency IDs
+  const productExecutionComps = ['feature-specification', 'product-delivery', 'quality-assurance'];
+  const customerInsightComps = ['fluency-with-data', 'voice-of-customer', 'user-experience-design'];
+  const productStrategyComps = ['business-outcome-ownership', 'product-vision-roadmapping', 'strategic-impact'];
+  const influencingPeopleComps = ['stakeholder-management', 'team-leadership', 'managing-up'];
+
+  const productExecution = productExecutionComps.reduce((sum, compId) => {
+    return sum + (competencyScores[compId] || 1);
   }, 0) / 3;
 
-  const customerInsight = COMPETENCY_AREAS[1].competencies.reduce((sum, compId) => {
-    const competency = COMPETENCIES.find(c => c.name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '') === compId);
-    return sum + (competency ? (competencyScores[competency.id] || 1) : 1);
+  const customerInsight = customerInsightComps.reduce((sum, compId) => {
+    return sum + (competencyScores[compId] || 1);
   }, 0) / 3;
 
-  const productStrategy = COMPETENCY_AREAS[2].competencies.reduce((sum, compId) => {
-    const competency = COMPETENCIES.find(c => c.name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '') === compId);
-    return sum + (competency ? (competencyScores[competency.id] || 1) : 1);
+  const productStrategy = productStrategyComps.reduce((sum, compId) => {
+    return sum + (competencyScores[compId] || 1);
   }, 0) / 3;
 
-  const influencingPeople = COMPETENCY_AREAS[3].competencies.reduce((sum, compId) => {
-    const competency = COMPETENCIES.find(c => c.name.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '') === compId);
-    return sum + (competency ? (competencyScores[competency.id] || 1) : 1);
+  const influencingPeople = influencingPeopleComps.reduce((sum, compId) => {
+    return sum + (competencyScores[compId] || 1);
   }, 0) / 3;
 
   return {
@@ -93,7 +94,7 @@ const identifyShapePattern = (shape: CompetencyShape): ShapePattern => {
     };
   }
 
-  if (leftSide > rightSide + 0.5) {
+  if (leftSide > rightSide + 0.4) {
     return {
       pattern: 'builder',
       description: 'Product Builder - Strong in execution and customer insight',
@@ -101,7 +102,7 @@ const identifyShapePattern = (shape: CompetencyShape): ShapePattern => {
     };
   }
 
-  if (rightSide > leftSide + 0.5) {
+  if (rightSide > leftSide + 0.4) {
     return {
       pattern: 'architect',
       description: 'Product Architect - Strong in strategy and influence',
@@ -132,32 +133,44 @@ const identifyShapePattern = (shape: CompetencyShape): ShapePattern => {
   };
 };
 
-const identifyArchetype = (shape: CompetencyShape, shapePattern: ShapePattern): PMArchetype => {
+const identifyArchetype = (shape: CompetencyShape, ratings: CompetencyRating[]): PMArchetype => {
   const { productExecution, customerInsight, productStrategy, influencingPeople } = shape;
 
-  // Score each archetype based on shape match
+  // Count high scores (3s) in each area
+  const getHighScoresInArea = (areaCompetencies: string[]) => {
+    return areaCompetencies.filter(compId => {
+      const rating = ratings.find(r => r.competencyId === compId);
+      return rating && rating.rating === 3;
+    }).length;
+  };
+
+  const executionHighs = getHighScoresInArea(['feature-specification', 'product-delivery', 'quality-assurance']);
+  const customerHighs = getHighScoresInArea(['fluency-with-data', 'voice-of-customer', 'user-experience-design']);
+  const strategyHighs = getHighScoresInArea(['business-outcome-ownership', 'product-vision-roadmapping', 'strategic-impact']);
+  const influenceHighs = getHighScoresInArea(['stakeholder-management', 'team-leadership', 'managing-up']);
+
+  // Score each archetype based on both averages and high scores
   const archetypeScores = PM_ARCHETYPES.map(archetype => {
     let score = 0;
     
     switch (archetype.id) {
       case 'project-manager':
-        score = productExecution * 2 + (3 - customerInsight) + (3 - productStrategy);
+        score = (productExecution * 2) + (executionHighs * 0.5) - (productStrategy * 0.5) - (customerInsight * 0.3);
         break;
       case 'people-manager':
-        score = influencingPeople * 2 + (3 - customerInsight) + (3 - productStrategy);
+        score = (influencingPeople * 2) + (influenceHighs * 0.5) - (customerInsight * 0.3) - (productExecution * 0.2);
         break;
       case 'growth-hacker':
-        score = customerInsight * 1.5 + productExecution + (3 - influencingPeople);
+        score = (customerInsight * 1.5) + (productExecution * 1.2) + (customerHighs * 0.5) - (influencingPeople * 0.3);
         break;
       case 'product-innovator':
-        score = productStrategy * 1.5 + customerInsight * 1.5 + (3 - productExecution);
+        score = (productStrategy * 1.5) + (customerInsight * 1.3) + (strategyHighs * 0.5) - (productExecution * 0.2);
         break;
     }
     
     return { archetype, score };
   });
 
-  // Return the archetype with the highest score
   const bestMatch = archetypeScores.reduce((best, current) => 
     current.score > best.score ? current : best
   );
@@ -190,7 +203,8 @@ const generateRecommendations = (
   shape: CompetencyShape, 
   archetype: PMArchetype, 
   topStrengths: string[], 
-  developmentAreas: string[]
+  developmentAreas: string[],
+  ratings: CompetencyRating[]
 ): Recommendation[] => {
   const recommendations: Recommendation[] = [];
 
@@ -200,20 +214,21 @@ const generateRecommendations = (
       id: 'leverage-strengths',
       type: 'leverage',
       title: 'Leverage Your Strengths',
-      description: `You excel at ${topStrengths.join(', ')}. Use these as your differentiators.`,
-      action: `Seek roles and projects that heavily utilize ${topStrengths[0]} and volunteer to lead initiatives in these areas.`,
+      description: `You excel at ${topStrengths.slice(0, 3).join(', ')}. These are your competitive advantages.`,
+      action: `Seek projects that heavily utilize ${topStrengths[0]} and volunteer to mentor others in these areas. Consider specializing further in your strongest domain.`,
       priority: 'high'
     });
   }
 
-  // Add development recommendations
+  // Add development recommendations based on actual low scores
   if (developmentAreas.length > 0) {
+    const criticalGaps = developmentAreas.slice(0, 2);
     recommendations.push({
       id: 'focus-development',
       type: 'develop',
-      title: 'Priority Development Areas',
-      description: `Focus on improving ${developmentAreas.slice(0, 2).join(' and ')} to become more well-rounded.`,
-      action: `Create a 90-day plan to build skills in ${developmentAreas[0]}. Consider finding a mentor or taking a course.`,
+      title: 'Critical Development Areas',
+      description: `Focus on improving ${criticalGaps.join(' and ')} as these gaps may limit your effectiveness.`,
+      action: `Create a 90-day improvement plan for ${criticalGaps[0]}. Find a mentor, take a course, or seek stretch assignments in this area.`,
       priority: 'high'
     });
   }
@@ -222,33 +237,34 @@ const generateRecommendations = (
   recommendations.push({
     id: 'archetype-alignment',
     type: 'role',
-    title: 'Role Alignment',
-    description: `As ${archetype.name}, you're well-suited for ${archetype.suitableRoles.join(', ')} roles.`,
-    action: `Look for opportunities in ${archetype.suitableRoles[0]} positions that align with your natural strengths.`,
+    title: `${archetype.name} Career Path`,
+    description: `Your profile aligns with ${archetype.name} roles. Focus on positions that leverage your natural strengths.`,
+    action: `Target ${archetype.suitableRoles.slice(0, 2).join(' or ')} positions. Highlight your ${archetype.strengths.slice(0, 2).join(' and ')} skills in interviews.`,
     priority: 'medium'
   });
 
-  // Add balance recommendations based on shape
-  const areas = ['productExecution', 'customerInsight', 'productStrategy', 'influencingPeople'];
-  const lowest = areas.reduce((min, area) => 
-    shape[area as keyof CompetencyShape] < shape[min as keyof CompetencyShape] ? area : min
-  );
+  // Add specific recommendations based on shape balance
+  const { productExecution, customerInsight, productStrategy, influencingPeople } = shape;
+  const areas = [
+    { name: 'Product Execution', score: productExecution, key: 'productExecution' },
+    { name: 'Customer Insight', score: customerInsight, key: 'customerInsight' },
+    { name: 'Product Strategy', score: productStrategy, key: 'productStrategy' },
+    { name: 'Influencing People', score: influencingPeople, key: 'influencingPeople' }
+  ];
 
-  const areaNames = {
-    productExecution: 'Product Execution',
-    customerInsight: 'Customer Insight', 
-    productStrategy: 'Product Strategy',
-    influencingPeople: 'Influencing People'
-  };
+  const lowest = areas.reduce((min, area) => area.score < min.score ? area : min);
+  const highest = areas.reduce((max, area) => area.score > max.score ? area : max);
 
-  recommendations.push({
-    id: 'balance-improvement',
-    type: 'focus',
-    title: 'Balance Your Profile',
-    description: `Your ${areaNames[lowest as keyof typeof areaNames]} area has the most room for growth.`,
-    action: `Dedicate 20% of your learning time to building competencies in ${areaNames[lowest as keyof typeof areaNames]}.`,
-    priority: 'medium'
-  });
+  if (lowest.score < 1.8) {
+    recommendations.push({
+      id: 'balance-improvement',
+      type: 'focus',
+      title: `Strengthen ${lowest.name}`,
+      description: `Your ${lowest.name} area (${lowest.score.toFixed(1)}/3.0) needs the most attention to become a well-rounded PM.`,
+      action: `Dedicate 30% of your learning time to ${lowest.name} skills. Consider finding a buddy or mentor strong in this area.`,
+      priority: 'medium'
+    });
+  }
 
   return recommendations;
 };
