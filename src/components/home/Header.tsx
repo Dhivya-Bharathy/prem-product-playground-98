@@ -10,7 +10,9 @@ export const Header = () => {
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Prem Pradeep</h1>
-            <p className="text-lg text-gray-600 mt-1">Product Practice Excellence</p>
+            <p className="text-lg text-gray-600 mt-1">
+              Product Management Expert | User Acquisition • Growth Strategies • Product Optimization
+            </p>
           </div>
           <div className="flex gap-4">
             <Button variant="outline" size="sm" asChild>

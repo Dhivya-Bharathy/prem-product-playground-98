@@ -5,39 +5,45 @@ export const AboutSection = () => {
   const features = [
     {
       icon: Target,
-      title: "Practical Tools",
-      description: "Ready-to-use tools for real product challenges",
-      color: "blue"
-    },
-    {
-      icon: CheckSquare,
-      title: "Best Practices",
-      description: "Based on proven frameworks and methodologies",
-      color: "green"
-    },
-    {
-      icon: Lightbulb,
-      title: "Continuous Learning",
-      description: "Evolving content to match industry trends",
-      color: "purple"
+      title: "Root Cause Analysis",
+      description: "Tools designed to help you identify and solve the right problems, not just symptoms",
+      color: "blue",
+      expertise: "Product Optimization"
     },
     {
       icon: Users,
-      title: "Community Driven",
-      description: "Built with feedback from product professionals",
-      color: "orange"
+      title: "User-Centric Growth",
+      description: "Frameworks that prioritize sustainable user acquisition and retention strategies",
+      color: "green",
+      expertise: "User Acquisition"
     },
     {
       icon: TrendingUp,
-      title: "Career Growth",
-      description: "Tools designed to advance your PM career",
-      color: "indigo"
+      title: "Data-Driven Decisions",
+      description: "Metrics and analytics tools to guide strategic growth initiatives",
+      color: "purple",
+      expertise: "Growth Strategies"
+    },
+    {
+      icon: CheckSquare,
+      title: "Ethical Frameworks",
+      description: "Methodologies that promote responsible product development and user welfare",
+      color: "orange",
+      expertise: "Ethical Problem-Solving"
+    },
+    {
+      icon: Lightbulb,
+      title: "Innovation Tools",
+      description: "Creative frameworks for generating and validating product ideas sustainably",
+      color: "indigo",
+      expertise: "Product Optimization"
     },
     {
       icon: Award,
-      title: "Industry Standard",
-      description: "Used by leading product teams worldwide",
-      color: "pink"
+      title: "Best Practices",
+      description: "Industry-proven approaches refined through real-world product management experience",
+      color: "pink",
+      expertise: "Professional Excellence"
     }
   ];
 
@@ -70,14 +76,24 @@ export const AboutSection = () => {
           {/* Header */}
           <div className="text-center mb-16">
             <h3 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              About Product Practice
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Excellence</span>
+              Philosophy Behind the
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Tools</span>
             </h3>
             <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              This platform is designed to help product managers, entrepreneurs, and teams 
-              practice and refine their product management skills. Each tool is built based 
-              on industry best practices and proven frameworks used by successful product teams.
+              Each tool and framework on this platform reflects my core belief in <strong>ethical problem-solving</strong> and 
+              <strong> sustainable value creation</strong>. These aren't just theoretical concepts — they're practical instruments 
+              born from real-world product management challenges and refined through years of helping teams succeed.
             </p>
+          </div>
+
+          {/* Mission Statement */}
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 mb-16 text-white text-center">
+            <h4 className="text-2xl font-bold mb-4">My Commitment to the Community</h4>
+            <p className="text-xl opacity-90 max-w-3xl mx-auto leading-relaxed">
+              "I believe in empowering teams to identify root causes and develop commercially viable solutions that matter. 
+              These tools represent my way of giving back — helping you solve the <em>right</em> problems, not just any problems."
+            </p>
+            <p className="text-lg opacity-80 mt-4">— Prem Pradeep</p>
           </div>
 
           {/* Features Grid */}
@@ -95,9 +111,14 @@ export const AboutSection = () => {
                   <div className={`p-4 ${colors.bg} rounded-2xl w-16 h-16 mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
                     <IconComponent className={`w-8 h-8 ${colors.text}`} />
                   </div>
-                  <h4 className="text-xl font-semibold mb-3 text-gray-900 group-hover:text-gray-700 transition-colors duration-300">
-                    {feature.title}
-                  </h4>
+                  <div className="mb-3">
+                    <div className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">
+                      {feature.expertise}
+                    </div>
+                    <h4 className="text-xl font-semibold text-gray-900 group-hover:text-gray-700 transition-colors duration-300">
+                      {feature.title}
+                    </h4>
+                  </div>
                   <p className="text-gray-600 leading-relaxed">
                     {feature.description}
                   </p>
