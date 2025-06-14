@@ -57,7 +57,12 @@ export const AboutSection = () => {
     <section className="py-20 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="m0 0h100v100h-100z" fill="none"/%3E%3Cpath d="m0 0 50 50-50 50z" fill="none" stroke="%23e5e7eb" stroke-width="0.5"/%3E%3Cpath d="m50 0 50 50-50 50z" fill="none" stroke="%23e5e7eb" stroke-width="0.5"/%3E%3C/svg%3E')]"></div>
+        <div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m0 0h100v100h-100z' fill='none'/%3E%3Cpath d='m0 0 50 50-50 50z' fill='none' stroke='%23e5e7eb' stroke-width='0.5'/%3E%3Cpath d='m50 0 50 50-50 50z' fill='none' stroke='%23e5e7eb' stroke-width='0.5'/%3E%3C/svg%3E")`
+          }}
+        ></div>
       </div>
 
       <div className="container mx-auto px-4 relative">
