@@ -33,12 +33,22 @@ export const Footer = () => {
               Master product management with practical tools, frameworks, and assessments designed for modern product professionals.
             </p>
             <div className="flex gap-3">
-              <Button variant="outline" size="sm" asChild className="text-white border-gray-600 hover:bg-white hover:text-gray-900">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                asChild 
+                className="text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-white hover:border-gray-500 transition-all duration-200"
+              >
                 <a href="https://www.linkedin.com/in/prempradeep/" target="_blank" rel="noopener noreferrer" aria-label="Connect on LinkedIn">
                   <Linkedin className="w-4 h-4" />
                 </a>
               </Button>
-              <Button variant="outline" size="sm" asChild className="text-white border-gray-600 hover:bg-white hover:text-gray-900">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                asChild 
+                className="text-gray-300 border-gray-600 hover:bg-gray-700 hover:text-white hover:border-gray-500 transition-all duration-200"
+              >
                 <Link to="/contact" aria-label="Contact us">
                   <Mail className="w-4 h-4" />
                 </Link>
