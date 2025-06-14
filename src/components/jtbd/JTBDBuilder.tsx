@@ -22,11 +22,6 @@ export const JTBDBuilder = ({ onSaveStatement }: JTBDBuilderProps) => {
 
   const generateStatement = () => {
     if (!situation.trim() || !motivation.trim() || !outcome.trim()) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields to generate a job statement.",
-        variant: "destructive"
-      });
       return "";
     }
 
@@ -34,9 +29,17 @@ export const JTBDBuilder = ({ onSaveStatement }: JTBDBuilderProps) => {
   };
 
   const fullStatement = generateStatement();
+  const hasRequiredFields = situation.trim() && motivation.trim() && outcome.trim();
 
   const handleSave = () => {
-    if (!fullStatement) return;
+    if (!fullStatement) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields to generate a job statement.",
+        variant: "destructive"
+      });
+      return;
+    }
 
     const statement: JTBDStatement = {
       id: Date.now().toString(),
@@ -64,7 +67,14 @@ export const JTBDBuilder = ({ onSaveStatement }: JTBDBuilderProps) => {
   };
 
   const handleExport = () => {
-    if (!fullStatement) return;
+    if (!fullStatement) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields before exporting.",
+        variant: "destructive"
+      });
+      return;
+    }
 
     const exportData = {
       statement: fullStatement,
@@ -178,7 +188,7 @@ export const JTBDBuilder = ({ onSaveStatement }: JTBDBuilderProps) => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               Generated Statement
-              {fullStatement && <Badge className="bg-green-100 text-green-800">Ready</Badge>}
+              {hasRequiredFields && <Badge className="bg-green-100 text-green-800">Ready</Badge>}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -190,18 +200,18 @@ export const JTBDBuilder = ({ onSaveStatement }: JTBDBuilderProps) => {
             )}
 
             <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg min-h-[120px] flex items-center">
-              {fullStatement ? (
+              {hasRequiredFields ? (
                 <p className="text-lg font-medium text-gray-800 italic">
                   "{fullStatement}"
                 </p>
               ) : (
                 <p className="text-gray-500 italic">
-                  Fill in the fields above to generate your JTBD statement...
+                  Fill in the required fields above to generate your JTBD statement...
                 </p>
               )}
             </div>
 
-            {fullStatement && (
+            {hasRequiredFields && (
               <>
                 <div className="text-xs text-gray-600 space-y-1">
                   <p><span className="font-semibold">Structure:</span></p>
