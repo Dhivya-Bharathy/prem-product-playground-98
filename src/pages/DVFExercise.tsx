@@ -1,17 +1,13 @@
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Link } from "react-router-dom";
-import { ArrowLeft, Brain, Download, RefreshCw, BarChart3 } from "lucide-react";
-import { DVFScoreCard } from "@/components/dvf/DVFScoreCard";
-import { DVFMatrix } from "@/components/dvf/DVFMatrix";
+import { Brain, BarChart3 } from "lucide-react";
 import { DVFEvaluation, DVFScore } from "@/types/dvf";
 import { useToast } from "@/hooks/use-toast";
+import { DVFExerciseHeader } from "@/components/dvf/DVFExerciseHeader";
+import { DVFIdeaForm } from "@/components/dvf/DVFIdeaForm";
+import { DVFScoringSection } from "@/components/dvf/DVFScoringSection";
+import { DVFResultsSection } from "@/components/dvf/DVFResultsSection";
 
 const DVFExercise = () => {
   const { toast } = useToast();
@@ -102,36 +98,11 @@ const DVFExercise = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button variant="outline" size="sm" asChild>
-                <Link to="/">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Home
-                </Link>
-              </Button>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">DVF Exercise</h1>
-                <p className="text-gray-600">Evaluate your ideas using Desirability, Viability, Feasibility framework</p>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={handleReset} size="sm">
-                <RefreshCw className="w-4 h-4 mr-2" />
-                Reset
-              </Button>
-              {evaluation && (
-                <Button variant="outline" onClick={handleExport} size="sm">
-                  <Download className="w-4 h-4 mr-2" />
-                  Export
-                </Button>
-              )}
-            </div>
-          </div>
-        </div>
-      </header>
+      <DVFExerciseHeader 
+        onReset={handleReset}
+        onExport={handleExport}
+        evaluation={evaluation}
+      />
 
       <div className="container mx-auto px-4 py-6">
         <div className="max-w-5xl mx-auto">
@@ -150,124 +121,28 @@ const DVFExercise = () => {
             <TabsContent value="evaluate" className="space-y-6 mt-6">
               <div className="grid lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-1">
-                  <Card className="sticky top-6">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2 text-lg">
-                        <Brain className="w-5 h-5" />
-                        Idea Details
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div>
-                        <Label htmlFor="title">Idea Title *</Label>
-                        <Input
-                          id="title"
-                          placeholder="Enter your idea title"
-                          value={title}
-                          onChange={(e) => setTitle(e.target.value)}
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="description">Description</Label>
-                        <Textarea
-                          id="description"
-                          placeholder="Describe your idea..."
-                          value={description}
-                          onChange={(e) => setDescription(e.target.value)}
-                          rows={3}
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="notes">Additional Notes</Label>
-                        <Textarea
-                          id="notes"
-                          placeholder="Any additional thoughts..."
-                          value={notes}
-                          onChange={(e) => setNotes(e.target.value)}
-                          rows={2}
-                        />
-                      </div>
-                      <Button onClick={handleEvaluate} className="w-full">
-                        Evaluate Idea
-                      </Button>
-                    </CardContent>
-                  </Card>
+                  <DVFIdeaForm
+                    title={title}
+                    description={description}
+                    notes={notes}
+                    onTitleChange={setTitle}
+                    onDescriptionChange={setDescription}
+                    onNotesChange={setNotes}
+                    onEvaluate={handleEvaluate}
+                  />
                 </div>
 
-                <div className="lg:col-span-2 space-y-4">
-                  <div className="grid gap-4">
-                    <DVFScoreCard
-                      dimension="desirability"
-                      score={scores.desirability}
-                      onChange={(value) => handleScoreChange('desirability', value)}
-                      title="Desirability"
-                      description="How much do users want this?"
-                      factors={[
-                        "User demand and interest",
-                        "Problem-solution fit",
-                        "User experience quality",
-                        "Emotional appeal"
-                      ]}
-                    />
-                    
-                    <DVFScoreCard
-                      dimension="viability"
-                      score={scores.viability}
-                      onChange={(value) => handleScoreChange('viability', value)}
-                      title="Viability"
-                      description="Can this be a sustainable business?"
-                      factors={[
-                        "Revenue potential",
-                        "Business model clarity",
-                        "Market size and growth",
-                        "Competitive advantage"
-                      ]}
-                    />
-                    
-                    <DVFScoreCard
-                      dimension="feasibility"
-                      score={scores.feasibility}
-                      onChange={(value) => handleScoreChange('feasibility', value)}
-                      title="Feasibility"
-                      description="Can we actually build this?"
-                      factors={[
-                        "Technical complexity",
-                        "Resource availability",
-                        "Timeline realistic",
-                        "Risk assessment"
-                      ]}
-                    />
-                  </div>
+                <div className="lg:col-span-2">
+                  <DVFScoringSection
+                    scores={scores}
+                    onScoreChange={handleScoreChange}
+                  />
                 </div>
               </div>
             </TabsContent>
 
             <TabsContent value="results" className="mt-6">
-              {evaluation ? (
-                <div className="max-w-4xl mx-auto">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Evaluation Results</CardTitle>
-                      <CardDescription>{evaluation.title}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <DVFMatrix evaluation={evaluation} />
-                      <div className="mt-6 flex justify-between">
-                        <Button variant="outline" asChild>
-                          <Link to="/tools/dvf-framework">
-                            Learn More About DVF
-                          </Link>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              ) : (
-                <div className="text-center text-gray-500 py-12">
-                  <Brain className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                  <p>Complete the evaluation to see your results</p>
-                </div>
-              )}
+              <DVFResultsSection evaluation={evaluation} />
             </TabsContent>
           </Tabs>
         </div>
