@@ -26,15 +26,15 @@ const FeaturePrioritization = () => {
   const [features, setFeatures] = useState<Feature[]>([]);
   const [newFeature, setNewFeature] = useState({
     name: "",
-    reach: 0,
-    impact: 0,
-    confidence: 0,
-    effort: 0
+    reach: "",
+    impact: "",
+    confidence: "",
+    effort: ""
   });
 
   const calculateRICE = (reach: number, impact: number, confidence: number, effort: number) => {
     if (effort === 0) return 0;
-    const confidenceDecimal = confidence / 100; // Convert percentage to decimal
+    const confidenceDecimal = confidence / 100;
     return (reach * impact * confidenceDecimal) / effort;
   };
 
@@ -44,7 +44,20 @@ const FeaturePrioritization = () => {
     return "Low";
   };
 
+  const resetForm = () => {
+    setNewFeature({
+      name: "",
+      reach: "",
+      impact: "",
+      confidence: "",
+      effort: ""
+    });
+  };
+
   const addFeature = () => {
+    console.log("Adding feature with data:", newFeature);
+
+    // Validate name
     if (!newFeature.name.trim()) {
       toast({
         title: "Missing Information",
@@ -54,42 +67,77 @@ const FeaturePrioritization = () => {
       return;
     }
 
-    if (newFeature.reach <= 0 || newFeature.impact <= 0 || newFeature.confidence <= 0 || newFeature.effort <= 0) {
+    // Convert strings to numbers and validate
+    const reach = parseFloat(newFeature.reach);
+    const impact = parseFloat(newFeature.impact);
+    const confidence = parseFloat(newFeature.confidence);
+    const effort = parseFloat(newFeature.effort);
+
+    console.log("Parsed values:", { reach, impact, confidence, effort });
+
+    if (isNaN(reach) || reach <= 0) {
       toast({
-        title: "Invalid Values",
-        description: "All RICE values must be greater than 0.",
+        title: "Invalid Reach",
+        description: "Please enter a valid reach value greater than 0.",
         variant: "destructive"
       });
       return;
     }
 
-    const riceScore = calculateRICE(
-      newFeature.reach,
-      newFeature.impact,
-      newFeature.confidence,
-      newFeature.effort
-    );
+    if (isNaN(impact) || impact <= 0) {
+      toast({
+        title: "Invalid Impact",
+        description: "Please select an impact level.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (isNaN(confidence) || confidence <= 0) {
+      toast({
+        title: "Invalid Confidence",
+        description: "Please select a confidence level.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (isNaN(effort) || effort <= 0) {
+      toast({
+        title: "Invalid Effort",
+        description: "Please enter a valid effort value greater than 0.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const riceScore = calculateRICE(reach, impact, confidence, effort);
+    console.log("Calculated RICE score:", riceScore);
 
     const feature: Feature = {
       id: Date.now().toString(),
       name: newFeature.name.trim(),
-      reach: newFeature.reach,
-      impact: newFeature.impact,
-      confidence: newFeature.confidence,
-      effort: newFeature.effort,
+      reach: reach,
+      impact: impact,
+      confidence: confidence,
+      effort: effort,
       riceScore: Number(riceScore.toFixed(2)),
       priority: getPriorityLevel(riceScore)
     };
 
+    console.log("Created feature:", feature);
+
     setFeatures(prev => {
       const updated = [...prev, feature];
-      return updated.sort((a, b) => b.riceScore - a.riceScore);
+      const sorted = updated.sort((a, b) => b.riceScore - a.riceScore);
+      console.log("Updated features list:", sorted);
+      return sorted;
     });
     
-    setNewFeature({ name: "", reach: 0, impact: 0, confidence: 0, effort: 0 });
+    resetForm();
 
     toast({
-      title: "Feature Added",
+      title: "Feature Added Successfully",
       description: `${feature.name} has been added with a RICE score of ${riceScore.toFixed(2)}.`
     });
   };
@@ -153,15 +201,18 @@ const FeaturePrioritization = () => {
                   type="number"
                   min="1"
                   placeholder="1000"
-                  value={newFeature.reach || ""}
-                  onChange={(e) => setNewFeature(prev => ({ ...prev, reach: Number(e.target.value) || 0 }))}
+                  value={newFeature.reach}
+                  onChange={(e) => setNewFeature(prev => ({ ...prev, reach: e.target.value }))}
                 />
                 <p className="text-xs text-gray-500 mt-1">How many users will this impact in a given time period?</p>
               </div>
 
               <div>
                 <Label htmlFor="impact">Impact</Label>
-                <Select onValueChange={(value) => setNewFeature(prev => ({ ...prev, impact: Number(value) }))}>
+                <Select 
+                  value={newFeature.impact} 
+                  onValueChange={(value) => setNewFeature(prev => ({ ...prev, impact: value }))}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select impact level" />
                   </SelectTrigger>
@@ -178,7 +229,10 @@ const FeaturePrioritization = () => {
 
               <div>
                 <Label htmlFor="confidence">Confidence (%)</Label>
-                <Select onValueChange={(value) => setNewFeature(prev => ({ ...prev, confidence: Number(value) }))}>
+                <Select 
+                  value={newFeature.confidence} 
+                  onValueChange={(value) => setNewFeature(prev => ({ ...prev, confidence: value }))}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select confidence level" />
                   </SelectTrigger>
@@ -199,8 +253,8 @@ const FeaturePrioritization = () => {
                   min="0.1"
                   step="0.1"
                   placeholder="2.5"
-                  value={newFeature.effort || ""}
-                  onChange={(e) => setNewFeature(prev => ({ ...prev, effort: Number(e.target.value) || 0 }))}
+                  value={newFeature.effort}
+                  onChange={(e) => setNewFeature(prev => ({ ...prev, effort: e.target.value }))}
                 />
                 <p className="text-xs text-gray-500 mt-1">How much work will this require from your team?</p>
               </div>
