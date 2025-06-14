@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { CompetencyIntro } from "@/components/competency/CompetencyIntro";
 import { AssessmentForm } from "@/components/competency/AssessmentForm";
@@ -6,7 +5,7 @@ import { ShapeVisualization } from "@/components/competency/ShapeVisualization";
 import { ArchetypeResults } from "@/components/competency/ArchetypeResults";
 import { InsightsPanel } from "@/components/competency/InsightsPanel";
 import { CompetencyRating, AssessmentResults } from "@/types/competency";
-import { analyzeCompetencies } from "@/utils/competencyAnalysis";
+import { analyzeCompetencies } from "@/utils/competency";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
