@@ -18,11 +18,11 @@ const FeatureSummaryStats = ({ features }: FeatureSummaryStatsProps) => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-      <Card>
+      <Card className="bg-white/70 backdrop-blur-sm border-white/20">
         <CardContent className="p-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <Target className="w-5 h-5 text-blue-600" />
+            <div className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg">
+              <Target className="w-5 h-5 text-white" />
             </div>
             <div>
               <p className="text-sm text-gray-600">Total Features</p>
@@ -32,11 +32,11 @@ const FeatureSummaryStats = ({ features }: FeatureSummaryStatsProps) => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="bg-white/70 backdrop-blur-sm border-white/20">
         <CardContent className="p-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-green-100 rounded-lg">
-              <TrendingUp className="w-5 h-5 text-green-600" />
+            <div className="p-2 bg-gradient-to-r from-green-500 to-green-600 rounded-lg">
+              <TrendingUp className="w-5 h-5 text-white" />
             </div>
             <div>
               <p className="text-sm text-gray-600">Avg RICE Score</p>
@@ -46,11 +46,11 @@ const FeatureSummaryStats = ({ features }: FeatureSummaryStatsProps) => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="bg-white/70 backdrop-blur-sm border-white/20">
         <CardContent className="p-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-red-100 rounded-lg">
-              <BarChart3 className="w-5 h-5 text-red-600" />
+            <div className="p-2 bg-gradient-to-r from-red-500 to-red-600 rounded-lg">
+              <BarChart3 className="w-5 h-5 text-white" />
             </div>
             <div>
               <p className="text-sm text-gray-600">High Priority</p>
@@ -60,7 +60,7 @@ const FeatureSummaryStats = ({ features }: FeatureSummaryStatsProps) => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="bg-white/70 backdrop-blur-sm border-white/20">
         <CardContent className="p-4">
           <div className="space-y-2">
             <p className="text-sm text-gray-600">Priority Distribution</p>

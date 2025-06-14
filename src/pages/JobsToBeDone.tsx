@@ -106,7 +106,7 @@ const JobsToBeDone = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-white/70 backdrop-blur-sm shadow-sm border-b border-white/20">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -117,7 +117,9 @@ const JobsToBeDone = () => {
                 </Link>
               </Button>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Jobs to be Done Framework</h1>
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                  Jobs to be Done Framework
+                </h1>
                 <p className="text-gray-600 mt-1">
                   Understand customer needs using Clayton Christensen's methodology
                 </p>
@@ -130,11 +132,11 @@ const JobsToBeDone = () => {
                     <Users className="w-4 h-4 mr-1" />
                     {statements.length} Statements
                   </Badge>
-                  <Button size="sm" variant="outline" onClick={handleExportAll}>
+                  <Button size="sm" variant="outline" onClick={handleExportAll} className="bg-white/80 hover:bg-white">
                     <Download className="w-4 h-4 mr-2" />
                     Export All
                   </Button>
-                  <Button size="sm" variant="outline" onClick={handleClearAll}>
+                  <Button size="sm" variant="outline" onClick={handleClearAll} className="bg-white/80 hover:bg-white">
                     <Trash2 className="w-4 h-4 mr-2" />
                     Clear All
                   </Button>

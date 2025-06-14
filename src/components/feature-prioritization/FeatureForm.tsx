@@ -20,10 +20,12 @@ interface FeatureFormProps {
 
 const FeatureForm = ({ newFeature, onFeatureChange, onAddFeature }: FeatureFormProps) => {
   return (
-    <Card>
+    <>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Plus className="w-5 h-5" />
+          <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg">
+            <Plus className="w-5 h-5 text-white" />
+          </div>
           Add Feature
         </CardTitle>
         <CardDescription>
@@ -32,17 +34,22 @@ const FeatureForm = ({ newFeature, onFeatureChange, onAddFeature }: FeatureFormP
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
-          <Label htmlFor="featureName">Feature Name</Label>
+          <Label htmlFor="featureName" className="text-sm font-medium text-gray-700 mb-2 block">
+            Feature Name
+          </Label>
           <Input
             id="featureName"
             placeholder="e.g., Dark mode toggle"
             value={newFeature.name}
             onChange={(e) => onFeatureChange('name', e.target.value)}
+            className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
 
         <div>
-          <Label htmlFor="reach">Reach (users per time period)</Label>
+          <Label htmlFor="reach" className="text-sm font-medium text-gray-700 mb-2 block">
+            Reach (users per time period)
+          </Label>
           <Input
             id="reach"
             type="number"
@@ -50,17 +57,20 @@ const FeatureForm = ({ newFeature, onFeatureChange, onAddFeature }: FeatureFormP
             placeholder="1000"
             value={newFeature.reach}
             onChange={(e) => onFeatureChange('reach', e.target.value)}
+            className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
           />
           <p className="text-xs text-gray-500 mt-1">How many users will this impact in a given time period?</p>
         </div>
 
         <div>
-          <Label htmlFor="impact">Impact</Label>
+          <Label htmlFor="impact" className="text-sm font-medium text-gray-700 mb-2 block">
+            Impact
+          </Label>
           <Select 
             value={newFeature.impact} 
             onValueChange={(value) => onFeatureChange('impact', value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className="border-gray-200 focus:border-blue-500 focus:ring-blue-500">
               <SelectValue placeholder="Select impact level" />
             </SelectTrigger>
             <SelectContent>
@@ -75,12 +85,14 @@ const FeatureForm = ({ newFeature, onFeatureChange, onAddFeature }: FeatureFormP
         </div>
 
         <div>
-          <Label htmlFor="confidence">Confidence (%)</Label>
+          <Label htmlFor="confidence" className="text-sm font-medium text-gray-700 mb-2 block">
+            Confidence (%)
+          </Label>
           <Select 
             value={newFeature.confidence} 
             onValueChange={(value) => onFeatureChange('confidence', value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className="border-gray-200 focus:border-blue-500 focus:ring-blue-500">
               <SelectValue placeholder="Select confidence level" />
             </SelectTrigger>
             <SelectContent>
@@ -93,7 +105,9 @@ const FeatureForm = ({ newFeature, onFeatureChange, onAddFeature }: FeatureFormP
         </div>
 
         <div>
-          <Label htmlFor="effort">Effort (person-months)</Label>
+          <Label htmlFor="effort" className="text-sm font-medium text-gray-700 mb-2 block">
+            Effort (person-months)
+          </Label>
           <Input
             id="effort"
             type="number"
@@ -102,16 +116,20 @@ const FeatureForm = ({ newFeature, onFeatureChange, onAddFeature }: FeatureFormP
             placeholder="2.5"
             value={newFeature.effort}
             onChange={(e) => onFeatureChange('effort', e.target.value)}
+            className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
           />
           <p className="text-xs text-gray-500 mt-1">How much work will this require from your team?</p>
         </div>
 
-        <Button onClick={onAddFeature} className="w-full">
+        <Button 
+          onClick={onAddFeature} 
+          className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium py-3 rounded-lg transition-all duration-200 transform hover:scale-105"
+        >
           <Plus className="w-4 h-4 mr-2" />
           Calculate & Add
         </Button>
       </CardContent>
-    </Card>
+    </>
   );
 };
 

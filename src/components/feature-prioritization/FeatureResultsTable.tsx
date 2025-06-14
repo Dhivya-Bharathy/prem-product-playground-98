@@ -30,7 +30,7 @@ const FeatureResultsTable = ({ features, onRemoveFeature }: FeatureResultsTableP
   if (features.length === 0) {
     return (
       <div className="text-center py-12">
-        <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+        <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full flex items-center justify-center">
           <div className="w-8 h-8 border-2 border-gray-300 rounded"></div>
         </div>
         <h3 className="text-lg font-medium text-gray-900 mb-2">No features added yet</h3>
@@ -46,16 +46,20 @@ const FeatureResultsTable = ({ features, onRemoveFeature }: FeatureResultsTableP
           <h3 className="text-lg font-semibold">Prioritized Features</h3>
           <p className="text-sm text-gray-600">{features.length} feature{features.length !== 1 ? 's' : ''} ranked by RICE score</p>
         </div>
-        <Button onClick={handleDownload} size="sm" className="gap-2">
+        <Button 
+          onClick={handleDownload} 
+          size="sm" 
+          className="gap-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+        >
           <Download className="w-4 h-4" />
           Export to Excel
         </Button>
       </div>
 
-      <div className="border rounded-lg overflow-hidden">
+      <div className="border rounded-lg overflow-hidden bg-white/50 backdrop-blur-sm">
         <Table>
           <TableHeader>
-            <TableRow className="bg-gray-50">
+            <TableRow className="bg-gradient-to-r from-gray-50 to-gray-100">
               <TableHead className="w-16">Rank</TableHead>
               <TableHead>Feature</TableHead>
               <TableHead className="w-24">RICE Score</TableHead>
@@ -69,10 +73,10 @@ const FeatureResultsTable = ({ features, onRemoveFeature }: FeatureResultsTableP
           </TableHeader>
           <TableBody>
             {features.map((feature, index) => (
-              <TableRow key={feature.id} className="hover:bg-gray-50">
+              <TableRow key={feature.id} className="hover:bg-white/70 transition-colors">
                 <TableCell>
                   <div className="flex items-center justify-center">
-                    <Badge variant="outline" className="w-8 h-8 rounded-full p-0 flex items-center justify-center">
+                    <Badge variant="outline" className="w-8 h-8 rounded-full p-0 flex items-center justify-center bg-gradient-to-r from-blue-50 to-purple-50">
                       {index + 1}
                     </Badge>
                   </div>
@@ -82,7 +86,7 @@ const FeatureResultsTable = ({ features, onRemoveFeature }: FeatureResultsTableP
                     <div className="font-medium">{feature.name}</div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div 
-                        className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                        className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
                         style={{ width: `${getScoreBarWidth(feature.riceScore)}%` }}
                       ></div>
                     </div>
