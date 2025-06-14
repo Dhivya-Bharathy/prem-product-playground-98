@@ -29,10 +29,17 @@ const MetricsDashboard = () => {
         return metric;
       }
       
-      // Migrate old format
+      // Migrate old format - safely handle the old metric structure
       const oldMetric = metric as any;
-      return {
-        ...metric,
+      const newMetric: MetricData = {
+        id: metric.id,
+        name: metric.name,
+        value: metric.value,
+        previousValue: metric.previousValue,
+        change: metric.change,
+        changePercentage: metric.changePercentage,
+        trend: metric.trend,
+        category: metric.category,
         measurementPeriod: {
           type: 'predefined' as const,
           predefinedPeriod: 'last_30_days' as const,
@@ -42,8 +49,11 @@ const MetricsDashboard = () => {
           type: 'previous_period' as const,
           label: 'Previous period'
         },
-        periodType: 'rolling' as const
+        periodType: 'rolling' as const,
+        target: metric.target,
+        targetDate: metric.targetDate
       };
+      return newMetric;
     });
     
     setMetrics(migratedMetrics);

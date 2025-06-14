@@ -1,3 +1,4 @@
+
 import { MetricData, ChartDataPoint } from "@/types/metrics";
 
 export const generateSampleMetricData = (): MetricData[] => {
@@ -11,7 +12,16 @@ export const generateSampleMetricData = (): MetricData[] => {
       changePercentage: 11.16,
       trend: 'up',
       category: 'acquisition',
-      period: 'Last 30 days',
+      measurementPeriod: {
+        type: 'predefined',
+        predefinedPeriod: 'last_30_days',
+        label: 'Last 30 days'
+      },
+      comparisonPeriod: {
+        type: 'previous_period',
+        label: 'Previous period'
+      },
+      periodType: 'rolling',
       target: 15000
     },
     {
@@ -23,7 +33,16 @@ export const generateSampleMetricData = (): MetricData[] => {
       changePercentage: 17.77,
       trend: 'up',
       category: 'activation',
-      period: 'Last 30 days',
+      measurementPeriod: {
+        type: 'predefined',
+        predefinedPeriod: 'last_30_days',
+        label: 'Last 30 days'
+      },
+      comparisonPeriod: {
+        type: 'previous_period',
+        label: 'Previous period'
+      },
+      periodType: 'rolling',
       target: 35
     },
     {
@@ -35,7 +54,16 @@ export const generateSampleMetricData = (): MetricData[] => {
       changePercentage: -13.19,
       trend: 'down',
       category: 'retention',
-      period: 'Last 30 days',
+      measurementPeriod: {
+        type: 'predefined',
+        predefinedPeriod: 'last_30_days',
+        label: 'Last 30 days'
+      },
+      comparisonPeriod: {
+        type: 'previous_period',
+        label: 'Previous period'
+      },
+      periodType: 'rolling',
       target: 20
     },
     {
@@ -47,7 +75,16 @@ export const generateSampleMetricData = (): MetricData[] => {
       changePercentage: 7.8,
       trend: 'up',
       category: 'revenue',
-      period: 'Last 30 days',
+      measurementPeriod: {
+        type: 'predefined',
+        predefinedPeriod: 'last_30_days',
+        label: 'Last 30 days'
+      },
+      comparisonPeriod: {
+        type: 'previous_period',
+        label: 'Previous period'
+      },
+      periodType: 'rolling',
       target: 50000
     },
     {
@@ -59,7 +96,16 @@ export const generateSampleMetricData = (): MetricData[] => {
       changePercentage: 3.23,
       trend: 'up',
       category: 'engagement',
-      period: 'Last 30 days',
+      measurementPeriod: {
+        type: 'predefined',
+        predefinedPeriod: 'last_30_days',
+        label: 'Last 30 days'
+      },
+      comparisonPeriod: {
+        type: 'previous_period',
+        label: 'Previous period'
+      },
+      periodType: 'rolling',
       target: 4
     },
     {
@@ -71,7 +117,16 @@ export const generateSampleMetricData = (): MetricData[] => {
       changePercentage: 10.53,
       trend: 'up',
       category: 'referral',
-      period: 'Last 30 days',
+      measurementPeriod: {
+        type: 'predefined',
+        predefinedPeriod: 'last_30_days',
+        label: 'Last 30 days'
+      },
+      comparisonPeriod: {
+        type: 'previous_period',
+        label: 'Previous period'
+      },
+      periodType: 'rolling',
       target: 50
     }
   ];
@@ -138,7 +193,9 @@ export const downloadMetricsAsExcel = async (metrics: MetricData[], toast: any) 
       'Change %',
       'Trend',
       'Target',
-      'Period'
+      'Measurement Period',
+      'Comparison Period',
+      'Period Type'
     ];
     
     const csvContent = [
@@ -152,7 +209,9 @@ export const downloadMetricsAsExcel = async (metrics: MetricData[], toast: any) 
         `${metric.changePercentage.toFixed(2)}%`,
         metric.trend,
         metric.target || 'N/A',
-        `"${metric.period.replace(/"/g, '""')}"`
+        `"${metric.measurementPeriod.label.replace(/"/g, '""')}"`,
+        `"${metric.comparisonPeriod.label.replace(/"/g, '""')}"`,
+        metric.periodType
       ].join(','))
     ].join('\n');
 
