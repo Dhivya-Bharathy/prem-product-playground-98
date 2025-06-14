@@ -1,10 +1,8 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Brain } from "lucide-react";
+import { Lightbulb } from "lucide-react";
 
 interface DVFIdeaFormProps {
   title: string;
@@ -22,55 +20,56 @@ export const DVFIdeaForm = ({
   notes,
   onTitleChange,
   onDescriptionChange,
-  onNotesChange,
-  onEvaluate
+  onNotesChange
 }: DVFIdeaFormProps) => {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 mb-4">
-        <Brain className="w-5 h-5 text-blue-600" />
-        <h3 className="text-lg font-semibold">Idea Details</h3>
+        <Lightbulb className="w-5 h-5 text-orange-500" />
+        <h3 className="text-lg font-semibold text-gray-900">Idea Details</h3>
       </div>
       
-      <div className="space-y-3">
+      <div className="space-y-4">
         <div>
-          <Label htmlFor="title" className="text-sm font-medium">Idea Title *</Label>
+          <Label htmlFor="title" className="text-sm font-medium text-gray-700 mb-2 block">
+            Idea Title *
+          </Label>
           <Input
             id="title"
-            placeholder="Enter your idea title"
+            placeholder="Enter your brilliant idea..."
             value={title}
             onChange={(e) => onTitleChange(e.target.value)}
-            className="mt-1"
+            className="border-gray-200 focus:border-blue-500 focus:ring-blue-500"
           />
         </div>
         
         <div>
-          <Label htmlFor="description" className="text-sm font-medium">Description</Label>
+          <Label htmlFor="description" className="text-sm font-medium text-gray-700 mb-2 block">
+            Description
+          </Label>
           <Textarea
             id="description"
-            placeholder="Describe your idea..."
+            placeholder="Describe what your idea is about..."
             value={description}
             onChange={(e) => onDescriptionChange(e.target.value)}
-            rows={2}
-            className="mt-1"
+            rows={3}
+            className="border-gray-200 focus:border-blue-500 focus:ring-blue-500 resize-none"
           />
         </div>
         
         <div>
-          <Label htmlFor="notes" className="text-sm font-medium">Notes</Label>
+          <Label htmlFor="notes" className="text-sm font-medium text-gray-700 mb-2 block">
+            Additional Notes
+          </Label>
           <Textarea
             id="notes"
-            placeholder="Additional thoughts..."
+            placeholder="Any additional thoughts or considerations..."
             value={notes}
             onChange={(e) => onNotesChange(e.target.value)}
             rows={2}
-            className="mt-1"
+            className="border-gray-200 focus:border-blue-500 focus:ring-blue-500 resize-none"
           />
         </div>
-        
-        <Button onClick={onEvaluate} className="w-full">
-          Evaluate Idea
-        </Button>
       </div>
     </div>
   );
