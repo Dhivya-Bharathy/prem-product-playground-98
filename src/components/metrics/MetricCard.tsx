@@ -1,11 +1,10 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, TrendingDown, Minus, Target } from "lucide-react";
 import { MetricData } from "@/types/metrics";
-import { formatMetricValue, getCategoryColor } from "@/utils/metricsUtils";
+import { formatMetricValue, generateChartData } from "@/utils/metricsUtils";
+import { getCategoryColor } from "@/utils/metricsConfig";
 import { LineChart, Line, ResponsiveContainer } from "recharts";
-import { generateChartData } from "@/utils/metricsUtils";
 
 interface MetricCardProps {
   metric: MetricData;
