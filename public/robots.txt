@@ -1,9 +1,10 @@
 
+
 User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://your-domain.com/sitemap.xml
+Sitemap: https://www.prempradeep.com/sitemap.xml
 
 # Crawl-delay for respectful crawling
 Crawl-delay: 1
@@ -39,3 +40,4 @@ Allow: /
 
 User-agent: LinkedInBot
 Allow: /
+

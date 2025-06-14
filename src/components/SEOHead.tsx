@@ -1,4 +1,5 @@
 
+
 import { Helmet } from 'react-helmet-async';
 
 interface SEOHeadProps {
@@ -15,7 +16,7 @@ export const SEOHead = ({
   description = "Master product management with practical tools, frameworks, and assessments designed by product expert Prem Pradeep.",
   keywords = "product management, product strategy, user stories, feature prioritization, product roadmap",
   canonical,
-  ogImage = "https://your-domain.com/og-image.jpg",
+  ogImage = "https://www.prempradeep.com/og-image.jpg",
   structuredData
 }: SEOHeadProps) => {
   const fullTitle = title.includes('Prem Pradeep') ? title : `${title} | Prem Pradeep`;
@@ -48,3 +49,4 @@ export const SEOHead = ({
     </Helmet>
   );
 };
+
