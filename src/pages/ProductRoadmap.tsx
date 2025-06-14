@@ -2,10 +2,10 @@
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowLeft, FileImage, FileText } from "lucide-react";
+import { ArrowLeft, FileSpreadsheet } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { RoadmapItem } from "@/types/roadmap";
-import { downloadAsImage, downloadAsWord } from "@/utils/roadmapUtils";
+import { downloadAsExcel } from "@/utils/roadmapUtils";
 import RoadmapItemForm from "@/components/roadmap/RoadmapItemForm";
 import RoadmapTimeline from "@/components/roadmap/RoadmapTimeline";
 import RoadmapTips from "@/components/roadmap/RoadmapTips";
@@ -38,8 +38,7 @@ const ProductRoadmap = () => {
     });
   };
 
-  const handleDownloadImage = () => downloadAsImage(roadmapRef, roadmapItems, toast);
-  const handleDownloadWord = () => downloadAsWord(roadmapItems, toast);
+  const handleDownloadExcel = () => downloadAsExcel(roadmapItems, toast);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -61,16 +60,10 @@ const ProductRoadmap = () => {
             </div>
             
             {roadmapItems.length > 0 && (
-              <div className="flex gap-2">
-                <Button onClick={handleDownloadImage} variant="outline" size="sm">
-                  <FileImage className="w-4 h-4 mr-2" />
-                  Download Image
-                </Button>
-                <Button onClick={handleDownloadWord} variant="outline" size="sm">
-                  <FileText className="w-4 h-4 mr-2" />
-                  Download Word
-                </Button>
-              </div>
+              <Button onClick={handleDownloadExcel} variant="outline" size="sm">
+                <FileSpreadsheet className="w-4 h-4 mr-2" />
+                Download Excel
+              </Button>
             )}
           </div>
         </div>

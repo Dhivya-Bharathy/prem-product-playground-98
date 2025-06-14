@@ -1,7 +1,4 @@
 
-import html2canvas from "html2canvas";
-import { Document, Packer, Paragraph, TextRun, HeadingLevel } from "docx";
-import { saveAs } from "file-saver";
 import { RoadmapItem } from "@/types/roadmap";
 import { QUARTERS } from "@/types/roadmap";
 
@@ -24,50 +21,7 @@ export const getPriorityColor = (priority: string) => {
   }
 };
 
-export const downloadAsImage = async (roadmapRef: React.RefObject<HTMLDivElement>, roadmapItems: RoadmapItem[], toast: any) => {
-  if (!roadmapRef.current || roadmapItems.length === 0) {
-    toast({
-      title: "No Content",
-      description: "Add items to your roadmap before downloading.",
-      variant: "destructive"
-    });
-    return;
-  }
-
-  try {
-    const canvas = await html2canvas(roadmapRef.current, {
-      backgroundColor: '#ffffff',
-      scale: 3, // Increased from 2 to 3 for higher resolution
-      logging: false,
-      useCORS: true,
-      allowTaint: true,
-      foreignObjectRendering: true,
-      width: roadmapRef.current.scrollWidth,
-      height: roadmapRef.current.scrollHeight,
-      windowWidth: roadmapRef.current.scrollWidth,
-      windowHeight: roadmapRef.current.scrollHeight
-    });
-    
-    canvas.toBlob((blob) => {
-      if (blob) {
-        saveAs(blob, 'product-roadmap.png');
-        toast({
-          title: "Download Complete",
-          description: "High-quality roadmap image has been saved."
-        });
-      }
-    }, 'image/png', 1.0); // Maximum quality PNG
-  } catch (error) {
-    console.error('Error generating image:', error);
-    toast({
-      title: "Download Failed",
-      description: "Could not generate image. Please try again.",
-      variant: "destructive"
-    });
-  }
-};
-
-export const downloadAsWord = async (roadmapItems: RoadmapItem[], toast: any) => {
+export const downloadAsExcel = async (roadmapItems: RoadmapItem[], toast: any) => {
   if (roadmapItems.length === 0) {
     toast({
       title: "No Content",
@@ -78,82 +32,39 @@ export const downloadAsWord = async (roadmapItems: RoadmapItem[], toast: any) =>
   }
 
   try {
-    const groupedItems = QUARTERS.reduce((acc, quarter) => {
-      acc[quarter] = roadmapItems.filter(item => item.quarter === quarter);
-      return acc;
-    }, {} as Record<string, RoadmapItem[]>);
+    // Create CSV content (Excel compatible)
+    const headers = ['Quarter', 'Title', 'Status', 'Priority', 'Description'];
+    const csvContent = [
+      headers.join(','),
+      ...roadmapItems.map(item => [
+        item.quarter,
+        `"${item.title.replace(/"/g, '""')}"`,
+        item.status,
+        item.priority,
+        `"${item.description.replace(/"/g, '""')}"`
+      ].join(','))
+    ].join('\n');
 
-    const docChildren = [
-      new Paragraph({
-        text: "Product Roadmap",
-        heading: HeadingLevel.TITLE,
-      }),
-      new Paragraph({
-        text: `Generated on ${new Date().toLocaleDateString()}`,
-        spacing: { after: 400 }
-      }),
-    ];
+    // Create and download file
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'product-roadmap.csv');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 
-    QUARTERS.forEach(quarter => {
-      const quarterItems = groupedItems[quarter] || [];
-      
-      docChildren.push(
-        new Paragraph({
-          text: quarter,
-          heading: HeadingLevel.HEADING_1,
-          spacing: { before: 400, after: 200 }
-        })
-      );
-
-      if (quarterItems.length > 0) {
-        quarterItems.forEach(item => {
-          docChildren.push(
-            new Paragraph({
-              children: [
-                new TextRun({ text: item.title, bold: true }),
-                new TextRun({ text: ` (${item.priority} Priority, ${item.status})` })
-              ],
-              spacing: { after: 100 }
-            })
-          );
-          
-          if (item.description) {
-            docChildren.push(
-              new Paragraph({
-                text: item.description,
-                spacing: { after: 200 }
-              })
-            );
-          }
-        });
-      } else {
-        docChildren.push(
-          new Paragraph({
-            text: "No items planned for this quarter",
-            spacing: { after: 200 }
-          })
-        );
-      }
-    });
-
-    const doc = new Document({
-      sections: [{
-        children: docChildren
-      }]
-    });
-
-    const blob = await Packer.toBlob(doc);
-    saveAs(blob, 'product-roadmap.docx');
-    
     toast({
       title: "Download Complete",
-      description: "Roadmap document has been saved."
+      description: "Roadmap Excel file has been saved."
     });
   } catch (error) {
-    console.error('Error generating Word document:', error);
+    console.error('Error generating Excel file:', error);
     toast({
       title: "Download Failed",
-      description: "Could not generate document. Please try again.",
+      description: "Could not generate Excel file. Please try again.",
       variant: "destructive"
     });
   }
