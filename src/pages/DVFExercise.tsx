@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Brain, TrendingUp, Target, Zap } from "lucide-react";
 import { DVFEvaluation, DVFScore } from "@/types/dvf";
@@ -9,6 +8,7 @@ import { DVFScoringSection } from "@/components/dvf/DVFScoringSection";
 import { DVFResultsSection } from "@/components/dvf/DVFResultsSection";
 import { DVFLiveScore } from "@/components/dvf/DVFLiveScore";
 import { DVFQuickStats } from "@/components/dvf/DVFQuickStats";
+import { DVFGuide } from "@/components/dvf/DVFGuide";
 import { exportToExcel } from "@/utils/dvfExport";
 
 const DVFExercise = () => {
@@ -231,6 +231,11 @@ const DVFExercise = () => {
                 )}
               </div>
             </div>
+          </div>
+
+          {/* DVF Framework Guide Section */}
+          <div className="mt-12 bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
+            <DVFGuide />
           </div>
         </div>
       </div>
