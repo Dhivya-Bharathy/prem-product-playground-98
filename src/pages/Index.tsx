@@ -14,7 +14,9 @@ import {
   Star,
   ArrowRight,
   Linkedin,
-  Mail
+  Mail,
+  Brain,
+  BookOpen
 } from "lucide-react";
 
 const tools = [
@@ -55,22 +57,22 @@ const tools = [
     difficulty: "Intermediate"
   },
   {
-    id: "sprint-planner",
-    title: "Sprint Planning Tool",
-    description: "Plan and manage your agile sprints effectively",
-    icon: CheckSquare,
-    path: "/tools/sprint-planner",
-    category: "Agile",
-    difficulty: "Beginner"
+    id: "dvf-exercise",
+    title: "DVF Exercise",
+    description: "Evaluate ideas using Desirability, Viability, Feasibility framework",
+    icon: Brain,
+    path: "/tools/dvf-exercise",
+    category: "Validation",
+    difficulty: "Intermediate"
   },
   {
-    id: "idea-validator",
-    title: "Product Idea Validator",
-    description: "Validate product ideas using proven frameworks",
-    icon: Lightbulb,
-    path: "/tools/idea-validator",
-    category: "Innovation",
-    difficulty: "Advanced"
+    id: "dvf-framework",
+    title: "DVF Framework Guide",
+    description: "Learn and apply the DVF methodology with templates and examples",
+    icon: BookOpen,
+    path: "/tools/dvf-framework",
+    category: "Education",
+    difficulty: "Beginner"
   }
 ];
 
