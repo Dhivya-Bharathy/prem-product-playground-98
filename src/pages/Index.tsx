@@ -93,10 +93,10 @@ const Index = () => {
                 </a>
               </Button>
               <Button size="sm" asChild>
-                <a href="mailto:contact@prempradeep.com">
+                <Link to="/contact">
                   <Mail className="w-4 h-4 mr-2" />
                   Contact
-                </a>
+                </Link>
               </Button>
             </div>
           </div>
@@ -217,6 +217,12 @@ const Index = () => {
                 <Linkedin className="w-4 h-4 mr-2" />
                 Connect
               </a>
+            </Button>
+            <Button variant="outline" size="sm" asChild className="text-white border-white hover:bg-white hover:text-gray-900">
+              <Link to="/contact">
+                <Mail className="w-4 h-4 mr-2" />
+                Contact
+              </Link>
             </Button>
           </div>
         </div>

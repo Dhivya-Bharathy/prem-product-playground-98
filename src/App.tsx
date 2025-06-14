@@ -11,6 +11,7 @@ import ProductRoadmap from "./pages/ProductRoadmap";
 import MetricsDashboard from "./pages/MetricsDashboard";
 import SprintPlanner from "./pages/SprintPlanner";
 import IdeaValidator from "./pages/IdeaValidator";
+import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/tools/metrics-dashboard" element={<MetricsDashboard />} />
           <Route path="/tools/sprint-planner" element={<SprintPlanner />} />
           <Route path="/tools/idea-validator" element={<IdeaValidator />} />
+          <Route path="/contact" element={<Contact />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
