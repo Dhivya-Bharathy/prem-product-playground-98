@@ -30,7 +30,6 @@ const DarkPatternsAssessment = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [progress, setProgress] = useState<AnalysisProgress | null>(null);
   const [results, setResults] = useState<AnalysisResults | null>(null);
-  const [showGuide, setShowGuide] = useState(false);
   const { toast } = useToast();
 
   const handleAnalyze = async () => {
@@ -134,200 +133,188 @@ const DarkPatternsAssessment = () => {
         {/* Header */}
         <div className="bg-white/80 backdrop-blur-sm border-b">
           <div className="container mx-auto px-4 py-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-blue-100 rounded-xl">
-                  <Shield className="w-8 h-8 text-blue-600" />
-                </div>
-                <div>
-                  <h1 className="text-3xl font-bold text-gray-900">Dark Patterns Assessment</h1>
-                  <p className="text-gray-600">Analyze websites for deceptive design patterns and user manipulation</p>
-                </div>
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-blue-100 rounded-xl">
+                <Shield className="w-8 h-8 text-blue-600" />
               </div>
-              <Button 
-                variant="outline" 
-                onClick={() => setShowGuide(!showGuide)}
-                className="flex items-center gap-2"
-              >
-                <BookOpen className="w-4 h-4" />
-                {showGuide ? 'Hide Guide' : 'Show Guide'}
-              </Button>
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Dark Patterns Assessment</h1>
+                <p className="text-gray-600">Analyze websites for deceptive design patterns and user manipulation</p>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="container mx-auto px-4 py-8">
-          {/* Guide Section */}
-          {showGuide && (
-            <div className="mb-8 space-y-6">
-              {/* Dark Patterns Guide */}
-              <Card className="border-red-200">
-                <CardHeader className="bg-red-50">
-                  <CardTitle className="flex items-center gap-2 text-red-700">
-                    <AlertTriangle className="w-5 h-5" />
-                    Dark Patterns - Deceptive Design
-                  </CardTitle>
-                  <CardDescription>
-                    Intentionally deceptive UX practices designed to manipulate users into unintended actions
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4 pt-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="font-semibold text-red-800 mb-2">Common Examples:</h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        <li>• <strong>Bait and Switch:</strong> Promising one outcome but delivering another</li>
-                        <li>• <strong>Hidden Costs:</strong> Revealing additional charges at checkout</li>
-                        <li>• <strong>Roach Motel:</strong> Easy to get in, hard to get out (subscriptions)</li>
-                        <li>• <strong>Privacy Zuckering:</strong> Tricking users into sharing personal data</li>
-                        <li>• <strong>Forced Continuity:</strong> Auto-renewal without clear consent</li>
-                        <li>• <strong>Friend Spam:</strong> Requesting contacts then spamming them</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-red-800 mb-2">Industry Standards & Regulations:</h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        <li>• <strong>EU GDPR:</strong> Explicit consent requirements</li>
-                        <li>• <strong>Digital Services Act (DSA):</strong> Prohibits dark patterns</li>
-                        <li>• <strong>California CPRA:</strong> Transparent data practices</li>
-                        <li>• <strong>FTC Guidelines:</strong> No deceptive practices</li>
-                        <li>• <strong>ISO 9241-11:</strong> Usability standards</li>
-                        <li>• <strong>WCAG 2.1:</strong> Accessibility compliance</li>
-                      </ul>
-                    </div>
+          {/* Guide Section - Always Visible */}
+          <div className="mb-8 space-y-6">
+            {/* Dark Patterns Guide */}
+            <Card className="border-red-200">
+              <CardHeader className="bg-red-50">
+                <CardTitle className="flex items-center gap-2 text-red-700">
+                  <AlertTriangle className="w-5 h-5" />
+                  Dark Patterns - Deceptive Design
+                </CardTitle>
+                <CardDescription>
+                  Intentionally deceptive UX practices designed to manipulate users into unintended actions
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4 pt-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="font-semibold text-red-800 mb-2">Common Examples:</h4>
+                    <ul className="space-y-2 text-sm text-gray-700">
+                      <li>• <strong>Bait and Switch:</strong> Promising one outcome but delivering another</li>
+                      <li>• <strong>Hidden Costs:</strong> Revealing additional charges at checkout</li>
+                      <li>• <strong>Roach Motel:</strong> Easy to get in, hard to get out (subscriptions)</li>
+                      <li>• <strong>Privacy Zuckering:</strong> Tricking users into sharing personal data</li>
+                      <li>• <strong>Forced Continuity:</strong> Auto-renewal without clear consent</li>
+                      <li>• <strong>Friend Spam:</strong> Requesting contacts then spamming them</li>
+                    </ul>
                   </div>
-                </CardContent>
-              </Card>
+                  <div>
+                    <h4 className="font-semibold text-red-800 mb-2">Industry Standards & Regulations:</h4>
+                    <ul className="space-y-2 text-sm text-gray-700">
+                      <li>• <strong>EU GDPR:</strong> Explicit consent requirements</li>
+                      <li>• <strong>Digital Services Act (DSA):</strong> Prohibits dark patterns</li>
+                      <li>• <strong>California CPRA:</strong> Transparent data practices</li>
+                      <li>• <strong>FTC Guidelines:</strong> No deceptive practices</li>
+                      <li>• <strong>ISO 9241-11:</strong> Usability standards</li>
+                      <li>• <strong>WCAG 2.1:</strong> Accessibility compliance</li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
-              {/* Grey Patterns Guide */}
-              <Card className="border-gray-200">
-                <CardHeader className="bg-gray-50">
-                  <CardTitle className="flex items-center gap-2 text-gray-700">
-                    <Shield className="w-5 h-5" />
-                    Grey Patterns - Ethically Ambiguous
-                  </CardTitle>
-                  <CardDescription>
-                    Design practices that aren't clearly deceptive but may still influence user behavior
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4 pt-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="font-semibold text-gray-800 mb-2">Common Examples:</h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        <li>• <strong>Social Proof:</strong> Showing popularity metrics to influence decisions</li>
-                        <li>• <strong>Urgency/Scarcity:</strong> Limited time offers or stock counters</li>
-                        <li>• <strong>Default Settings:</strong> Pre-selected options that favor the business</li>
-                        <li>• <strong>Nudging:</strong> Subtle guidance toward preferred actions</li>
-                        <li>• <strong>Progress Indicators:</strong> Making tasks seem shorter than they are</li>
-                        <li>• <strong>Gamification:</strong> Using game elements to increase engagement</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-800 mb-2">Evaluation Criteria:</h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        <li>• Does it benefit the user or just the business?</li>
-                        <li>• Is the intent clearly communicated?</li>
-                        <li>• Can users easily reverse their actions?</li>
-                        <li>• Are alternatives clearly presented?</li>
-                        <li>• Does it respect user autonomy?</li>
-                        <li>• Is the information truthful and accurate?</li>
-                      </ul>
-                    </div>
+            {/* Grey Patterns Guide */}
+            <Card className="border-gray-200">
+              <CardHeader className="bg-gray-50">
+                <CardTitle className="flex items-center gap-2 text-gray-700">
+                  <Shield className="w-5 h-5" />
+                  Grey Patterns - Ethically Ambiguous
+                </CardTitle>
+                <CardDescription>
+                  Design practices that aren't clearly deceptive but may still influence user behavior
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4 pt-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="font-semibold text-gray-800 mb-2">Common Examples:</h4>
+                    <ul className="space-y-2 text-sm text-gray-700">
+                      <li>• <strong>Social Proof:</strong> Showing popularity metrics to influence decisions</li>
+                      <li>• <strong>Urgency/Scarcity:</strong> Limited time offers or stock counters</li>
+                      <li>• <strong>Default Settings:</strong> Pre-selected options that favor the business</li>
+                      <li>• <strong>Nudging:</strong> Subtle guidance toward preferred actions</li>
+                      <li>• <strong>Progress Indicators:</strong> Making tasks seem shorter than they are</li>
+                      <li>• <strong>Gamification:</strong> Using game elements to increase engagement</li>
+                    </ul>
                   </div>
-                </CardContent>
-              </Card>
+                  <div>
+                    <h4 className="font-semibold text-gray-800 mb-2">Evaluation Criteria:</h4>
+                    <ul className="space-y-2 text-sm text-gray-700">
+                      <li>• Does it benefit the user or just the business?</li>
+                      <li>• Is the intent clearly communicated?</li>
+                      <li>• Can users easily reverse their actions?</li>
+                      <li>• Are alternatives clearly presented?</li>
+                      <li>• Does it respect user autonomy?</li>
+                      <li>• Is the information truthful and accurate?</li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
-              {/* White Patterns Guide */}
-              <Card className="border-green-200">
-                <CardHeader className="bg-green-50">
-                  <CardTitle className="flex items-center gap-2 text-green-700">
-                    <CheckCircle className="w-5 h-5" />
-                    White Patterns - Ethical Design
-                  </CardTitle>
-                  <CardDescription>
-                    Transparent, honest design practices that prioritize user needs and well-being
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4 pt-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="font-semibold text-green-800 mb-2">Best Practices:</h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        <li>• <strong>Clear Pricing:</strong> Transparent cost breakdown upfront</li>
-                        <li>• <strong>Easy Cancellation:</strong> Simple unsubscribe/cancel processes</li>
-                        <li>• <strong>Honest Marketing:</strong> Accurate product descriptions</li>
-                        <li>• <strong>Privacy First:</strong> Minimal data collection with clear consent</li>
-                        <li>• <strong>User Control:</strong> Easy settings and preference management</li>
-                        <li>• <strong>Accessible Design:</strong> Inclusive for all users</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-green-800 mb-2">Industry Recognition:</h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        <li>• <strong>B Corp Certification:</strong> Ethical business practices</li>
-                        <li>• <strong>Privacy by Design:</strong> GDPR compliance framework</li>
-                        <li>• <strong>Ethical Design Handbook:</strong> Industry guidelines</li>
-                        <li>• <strong>Humane Technology:</strong> User well-being focus</li>
-                        <li>• <strong>Fair Trade UX:</strong> Equitable design principles</li>
-                        <li>• <strong>Sustainable UX:</strong> Environmental responsibility</li>
-                      </ul>
-                    </div>
+            {/* White Patterns Guide */}
+            <Card className="border-green-200">
+              <CardHeader className="bg-green-50">
+                <CardTitle className="flex items-center gap-2 text-green-700">
+                  <CheckCircle className="w-5 h-5" />
+                  White Patterns - Ethical Design
+                </CardTitle>
+                <CardDescription>
+                  Transparent, honest design practices that prioritize user needs and well-being
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4 pt-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="font-semibold text-green-800 mb-2">Best Practices:</h4>
+                    <ul className="space-y-2 text-sm text-gray-700">
+                      <li>• <strong>Clear Pricing:</strong> Transparent cost breakdown upfront</li>
+                      <li>• <strong>Easy Cancellation:</strong> Simple unsubscribe/cancel processes</li>
+                      <li>• <strong>Honest Marketing:</strong> Accurate product descriptions</li>
+                      <li>• <strong>Privacy First:</strong> Minimal data collection with clear consent</li>
+                      <li>• <strong>User Control:</strong> Easy settings and preference management</li>
+                      <li>• <strong>Accessible Design:</strong> Inclusive for all users</li>
+                    </ul>
                   </div>
-                </CardContent>
-              </Card>
+                  <div>
+                    <h4 className="font-semibold text-green-800 mb-2">Industry Recognition:</h4>
+                    <ul className="space-y-2 text-sm text-gray-700">
+                      <li>• <strong>B Corp Certification:</strong> Ethical business practices</li>
+                      <li>• <strong>Privacy by Design:</strong> GDPR compliance framework</li>
+                      <li>• <strong>Ethical Design Handbook:</strong> Industry guidelines</li>
+                      <li>• <strong>Humane Technology:</strong> User well-being focus</li>
+                      <li>• <strong>Fair Trade UX:</strong> Equitable design principles</li>
+                      <li>• <strong>Sustainable UX:</strong> Environmental responsibility</li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
-              {/* Regulatory Compliance */}
-              <Card className="border-blue-200">
-                <CardHeader className="bg-blue-50">
-                  <CardTitle className="flex items-center gap-2 text-blue-700">
-                    <Scale className="w-5 h-5" />
-                    Regulatory Compliance & Standards
-                  </CardTitle>
-                  <CardDescription>
-                    Latest legal requirements and industry standards for ethical design
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4 pt-6">
-                  <div className="grid md:grid-cols-3 gap-6">
-                    <div>
-                      <h4 className="font-semibold text-blue-800 mb-3 flex items-center gap-1">
-                        <Globe className="w-4 h-4" />
-                        EU Regulations
-                      </h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        <li>• <strong>GDPR (2018):</strong> Data protection and consent</li>
-                        <li>• <strong>Digital Services Act (2024):</strong> Dark patterns prohibition</li>
-                        <li>• <strong>Digital Markets Act (2024):</strong> Platform fairness</li>
-                        <li>• <strong>ePrivacy Directive:</strong> Cookie consent</li>
-                        <li>• <strong>Consumer Rights Directive:</strong> Clear information</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-blue-800 mb-3">US Regulations</h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        <li>• <strong>FTC Act:</strong> No deceptive practices</li>
-                        <li>• <strong>CCPA/CPRA:</strong> California privacy rights</li>
-                        <li>• <strong>ADA Compliance:</strong> Digital accessibility</li>
-                        <li>• <strong>COPPA:</strong> Children's privacy protection</li>
-                        <li>• <strong>Section 508:</strong> Federal accessibility</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-blue-800 mb-3">Industry Standards</h4>
-                      <ul className="space-y-2 text-sm text-gray-700">
-                        <li>• <strong>ISO 9241:</strong> Human-centered design</li>
-                        <li>• <strong>WCAG 2.1:</strong> Web accessibility</li>
-                        <li>• <strong>IEEE 2857:</strong> Privacy engineering</li>
-                        <li>• <strong>ISO 27001:</strong> Information security</li>
-                        <li>• <strong>NIST Framework:</strong> Cybersecurity standards</li>
-                      </ul>
-                    </div>
+            {/* Regulatory Compliance */}
+            <Card className="border-blue-200">
+              <CardHeader className="bg-blue-50">
+                <CardTitle className="flex items-center gap-2 text-blue-700">
+                  <Scale className="w-5 h-5" />
+                  Regulatory Compliance & Standards
+                </CardTitle>
+                <CardDescription>
+                  Latest legal requirements and industry standards for ethical design
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4 pt-6">
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div>
+                    <h4 className="font-semibold text-blue-800 mb-3 flex items-center gap-1">
+                      <Globe className="w-4 h-4" />
+                      EU Regulations
+                    </h4>
+                    <ul className="space-y-2 text-sm text-gray-700">
+                      <li>• <strong>GDPR (2018):</strong> Data protection and consent</li>
+                      <li>• <strong>Digital Services Act (2024):</strong> Dark patterns prohibition</li>
+                      <li>• <strong>Digital Markets Act (2024):</strong> Platform fairness</li>
+                      <li>• <strong>ePrivacy Directive:</strong> Cookie consent</li>
+                      <li>• <strong>Consumer Rights Directive:</strong> Clear information</li>
+                    </ul>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
-          )}
+                  <div>
+                    <h4 className="font-semibold text-blue-800 mb-3">US Regulations</h4>
+                    <ul className="space-y-2 text-sm text-gray-700">
+                      <li>• <strong>FTC Act:</strong> No deceptive practices</li>
+                      <li>• <strong>CCPA/CPRA:</strong> California privacy rights</li>
+                      <li>• <strong>ADA Compliance:</strong> Digital accessibility</li>
+                      <li>• <strong>COPPA:</strong> Children's privacy protection</li>
+                      <li>• <strong>Section 508:</strong> Federal accessibility</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-blue-800 mb-3">Industry Standards</h4>
+                    <ul className="space-y-2 text-sm text-gray-700">
+                      <li>• <strong>ISO 9241:</strong> Human-centered design</li>
+                      <li>• <strong>WCAG 2.1:</strong> Web accessibility</li>
+                      <li>• <strong>IEEE 2857:</strong> Privacy engineering</li>
+                      <li>• <strong>ISO 27001:</strong> Information security</li>
+                      <li>• <strong>NIST Framework:</strong> Cybersecurity standards</li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
           {/* Info Banner */}
           <Card className="mb-8 border-amber-200 bg-amber-50">
