@@ -1,8 +1,7 @@
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Star, ArrowRight, Users, TrendingUp, Target } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export const HeroSection = () => {
   return (
@@ -18,14 +17,6 @@ export const HeroSection = () => {
       </div>
 
       <div className="container mx-auto px-4 text-center relative">
-        {/* Professional Badge */}
-        <div className="mb-8 animate-fade-in">
-          <Badge className="bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 text-sm font-medium px-6 py-2 border-0">
-            <Star className="w-4 h-4 mr-2" />
-            Product Management Expert
-          </Badge>
-        </div>
-
         {/* Main Headline */}
         <div className="mb-12 animate-fade-in">
           <h1 className="text-5xl md:text-7xl font-bold mb-8">
@@ -51,28 +42,6 @@ export const HeroSection = () => {
                 Get in Touch
               </Link>
             </Button>
-          </div>
-        </div>
-
-        {/* Expertise Cards - Simplified */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto animate-fade-in">
-          <div className="p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300">
-            <div className="p-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl w-12 h-12 mx-auto mb-4 flex items-center justify-center">
-              <Users className="w-6 h-6 text-white" />
-            </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">User Acquisition</h3>
-          </div>
-          <div className="p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300">
-            <div className="p-3 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl w-12 h-12 mx-auto mb-4 flex items-center justify-center">
-              <TrendingUp className="w-6 h-6 text-white" />
-            </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Growth Strategies</h3>
-          </div>
-          <div className="p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300">
-            <div className="p-3 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-xl w-12 h-12 mx-auto mb-4 flex items-center justify-center">
-              <Target className="w-6 h-6 text-white" />
-            </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Product Optimization</h3>
           </div>
         </div>
       </div>
