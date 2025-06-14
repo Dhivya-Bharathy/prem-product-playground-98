@@ -37,9 +37,15 @@ export const downloadAsImage = async (roadmapRef: React.RefObject<HTMLDivElement
   try {
     const canvas = await html2canvas(roadmapRef.current, {
       backgroundColor: '#ffffff',
-      scale: 2,
+      scale: 3, // Increased from 2 to 3 for higher resolution
       logging: false,
-      useCORS: true
+      useCORS: true,
+      allowTaint: true,
+      foreignObjectRendering: true,
+      width: roadmapRef.current.scrollWidth,
+      height: roadmapRef.current.scrollHeight,
+      windowWidth: roadmapRef.current.scrollWidth,
+      windowHeight: roadmapRef.current.scrollHeight
     });
     
     canvas.toBlob((blob) => {
@@ -47,10 +53,10 @@ export const downloadAsImage = async (roadmapRef: React.RefObject<HTMLDivElement
         saveAs(blob, 'product-roadmap.png');
         toast({
           title: "Download Complete",
-          description: "Roadmap image has been saved."
+          description: "High-quality roadmap image has been saved."
         });
       }
-    });
+    }, 'image/png', 1.0); // Maximum quality PNG
   } catch (error) {
     console.error('Error generating image:', error);
     toast({
