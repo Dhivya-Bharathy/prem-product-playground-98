@@ -61,5 +61,14 @@ export const tools = [
     path: "/tools/jobs-to-be-done",
     category: "Research",
     difficulty: "Intermediate"
+  },
+  {
+    id: "pm-competency",
+    title: "PM Competency Assessment",
+    description: "Assess your product management competencies and discover your PM archetype",
+    icon: Brain,
+    path: "/tools/pm-competency",
+    category: "Assessment",
+    difficulty: "All Levels"
   }
 ];
