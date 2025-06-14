@@ -12,6 +12,21 @@ import MetricCard from "@/components/metrics/MetricCard";
 import MetricsFrameworkGuide from "@/components/metrics/MetricsFrameworkGuide";
 import MetricDataForm from "@/components/metrics/MetricDataForm";
 
+// Type for old metric format to handle migration
+interface OldMetricData {
+  id: string;
+  name: string;
+  value: number;
+  previousValue: number;
+  change: number;
+  changePercentage: number;
+  trend: 'up' | 'down' | 'stable';
+  category: string;
+  period?: string; // Old format had this
+  target?: number;
+  targetDate?: string;
+}
+
 const MetricsDashboard = () => {
   const { toast } = useToast();
   const [metrics, setMetrics] = useState<MetricData[]>([]);
@@ -23,23 +38,23 @@ const MetricsDashboard = () => {
     const storedMetrics = loadMetricsFromStorage();
     
     // Migrate old metrics format to new format
-    const migratedMetrics = storedMetrics.map(metric => {
+    const migratedMetrics = storedMetrics.map((metric): MetricData => {
       // Check if metric already has new format
       if ('measurementPeriod' in metric && 'comparisonPeriod' in metric) {
         return metric;
       }
       
       // Migrate old format - safely handle the old metric structure
-      const oldMetric = metric as any;
+      const oldMetric = metric as unknown as OldMetricData;
       const newMetric: MetricData = {
-        id: metric.id,
-        name: metric.name,
-        value: metric.value,
-        previousValue: metric.previousValue,
-        change: metric.change,
-        changePercentage: metric.changePercentage,
-        trend: metric.trend,
-        category: metric.category,
+        id: oldMetric.id,
+        name: oldMetric.name,
+        value: oldMetric.value,
+        previousValue: oldMetric.previousValue,
+        change: oldMetric.change,
+        changePercentage: oldMetric.changePercentage,
+        trend: oldMetric.trend,
+        category: oldMetric.category as any,
         measurementPeriod: {
           type: 'predefined' as const,
           predefinedPeriod: 'last_30_days' as const,
@@ -50,8 +65,8 @@ const MetricsDashboard = () => {
           label: 'Previous period'
         },
         periodType: 'rolling' as const,
-        target: metric.target,
-        targetDate: metric.targetDate
+        target: oldMetric.target,
+        targetDate: oldMetric.targetDate
       };
       return newMetric;
     });
