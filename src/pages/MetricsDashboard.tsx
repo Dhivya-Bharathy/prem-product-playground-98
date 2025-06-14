@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,7 +9,6 @@ import { downloadMetricsAsExcel } from "@/utils/metricsUtils";
 import { saveMetricsToStorage, loadMetricsFromStorage } from "@/utils/metricsStorage";
 import { MetricData } from "@/types/metrics";
 import MetricCard from "@/components/metrics/MetricCard";
-import MetricsOverviewChart from "@/components/metrics/MetricsOverviewChart";
 import MetricsFrameworkGuide from "@/components/metrics/MetricsFrameworkGuide";
 import MetricDataForm from "@/components/metrics/MetricDataForm";
 
@@ -154,43 +152,40 @@ const MetricsDashboard = () => {
                 ))}
               </div>
               
-              <div className="grid gap-6 lg:grid-cols-2">
-                <MetricsOverviewChart metrics={metrics} />
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Quick Insights</CardTitle>
-                    <CardDescription>Key performance indicators summary</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="grid gap-4">
-                      {metrics.length > 0 && (
-                        <>
-                          <div className="flex justify-between items-center p-3 bg-green-50 rounded">
-                            <span className="text-sm font-medium">Best Performing</span>
-                            <span className="text-sm text-green-600 font-semibold">
-                              {metrics.reduce((best, current) => 
-                                current.changePercentage > best.changePercentage ? current : best
-                              ).name}
-                            </span>
-                          </div>
-                          <div className="flex justify-between items-center p-3 bg-red-50 rounded">
-                            <span className="text-sm font-medium">Needs Attention</span>
-                            <span className="text-sm text-red-600 font-semibold">
-                              {metrics.reduce((worst, current) => 
-                                current.changePercentage < worst.changePercentage ? current : worst
-                              ).name}
-                            </span>
-                          </div>
-                        </>
-                      )}
-                      <div className="flex justify-between items-center p-3 bg-blue-50 rounded">
-                        <span className="text-sm font-medium">Total Metrics Tracked</span>
-                        <span className="text-sm text-blue-600 font-semibold">{metrics.length}</span>
-                      </div>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Quick Insights</CardTitle>
+                  <CardDescription>Key performance indicators summary</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid gap-4">
+                    {metrics.length > 0 && (
+                      <>
+                        <div className="flex justify-between items-center p-3 bg-green-50 rounded">
+                          <span className="text-sm font-medium">Best Performing</span>
+                          <span className="text-sm text-green-600 font-semibold">
+                            {metrics.reduce((best, current) => 
+                              current.changePercentage > best.changePercentage ? current : best
+                            ).name}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center p-3 bg-red-50 rounded">
+                          <span className="text-sm font-medium">Needs Attention</span>
+                          <span className="text-sm text-red-600 font-semibold">
+                            {metrics.reduce((worst, current) => 
+                              current.changePercentage < worst.changePercentage ? current : worst
+                            ).name}
+                          </span>
+                        </div>
+                      </>
+                    )}
+                    <div className="flex justify-between items-center p-3 bg-blue-50 rounded">
+                      <span className="text-sm font-medium">Total Metrics Tracked</span>
+                      <span className="text-sm text-blue-600 font-semibold">{metrics.length}</span>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
+                  </div>
+                </CardContent>
+              </Card>
             </TabsContent>
 
             {categories.slice(1).map((category) => (
