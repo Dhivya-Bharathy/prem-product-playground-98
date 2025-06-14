@@ -38,8 +38,8 @@ const FeaturePrioritization = () => {
   };
 
   const getPriorityLevel = (score: number) => {
-    if (score >= 100) return "High";
-    if (score >= 50) return "Medium";
+    if (score >= 75) return "High";
+    if (score >= 25) return "Medium";
     return "Low";
   };
 
@@ -129,7 +129,7 @@ const FeaturePrioritization = () => {
               </div>
 
               <div>
-                <Label htmlFor="reach">Reach (users affected per month)</Label>
+                <Label htmlFor="reach">Reach (users per time period)</Label>
                 <Input
                   id="reach"
                   type="number"
@@ -137,34 +137,39 @@ const FeaturePrioritization = () => {
                   value={newFeature.reach || ""}
                   onChange={(e) => setNewFeature(prev => ({ ...prev, reach: Number(e.target.value) }))}
                 />
+                <p className="text-xs text-gray-500 mt-1">How many users will this impact in a given time period?</p>
               </div>
 
               <div>
-                <Label htmlFor="impact">Impact (1-3 scale)</Label>
+                <Label htmlFor="impact">Impact</Label>
                 <Select onValueChange={(value) => setNewFeature(prev => ({ ...prev, impact: Number(value) }))}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select impact" />
+                    <SelectValue placeholder="Select impact level" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="1">1 - Minimal</SelectItem>
-                    <SelectItem value="2">2 - Moderate</SelectItem>
-                    <SelectItem value="3">3 - High</SelectItem>
+                    <SelectItem value="3">3 - Massive impact</SelectItem>
+                    <SelectItem value="2">2 - High impact</SelectItem>
+                    <SelectItem value="1">1 - Medium impact</SelectItem>
+                    <SelectItem value="0.5">0.5 - Low impact</SelectItem>
+                    <SelectItem value="0.25">0.25 - Minimal impact</SelectItem>
                   </SelectContent>
                 </Select>
+                <p className="text-xs text-gray-500 mt-1">How much will this impact each user when they encounter it?</p>
               </div>
 
               <div>
-                <Label htmlFor="confidence">Confidence (% as decimal)</Label>
+                <Label htmlFor="confidence">Confidence</Label>
                 <Select onValueChange={(value) => setNewFeature(prev => ({ ...prev, confidence: Number(value) }))}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select confidence" />
+                    <SelectValue placeholder="Select confidence level" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="0.5">50% - Low confidence</SelectItem>
-                    <SelectItem value="0.8">80% - Medium confidence</SelectItem>
                     <SelectItem value="1.0">100% - High confidence</SelectItem>
+                    <SelectItem value="0.8">80% - Medium confidence</SelectItem>
+                    <SelectItem value="0.5">50% - Low confidence</SelectItem>
                   </SelectContent>
                 </Select>
+                <p className="text-xs text-gray-500 mt-1">How confident are you in your Reach and Impact estimates?</p>
               </div>
 
               <div>
@@ -172,11 +177,12 @@ const FeaturePrioritization = () => {
                 <Input
                   id="effort"
                   type="number"
-                  step="0.5"
-                  placeholder="2"
+                  step="0.1"
+                  placeholder="2.5"
                   value={newFeature.effort || ""}
                   onChange={(e) => setNewFeature(prev => ({ ...prev, effort: Number(e.target.value) }))}
                 />
+                <p className="text-xs text-gray-500 mt-1">How much work will this require from your team?</p>
               </div>
 
               <Button onClick={addFeature} className="w-full">
@@ -194,29 +200,42 @@ const FeaturePrioritization = () => {
                 RICE Framework
               </CardTitle>
               <CardDescription>
-                Understanding the RICE scoring model
+                Understanding the RICE scoring methodology
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
                 <h4 className="font-semibold text-blue-600">Reach</h4>
-                <p className="text-sm text-gray-600">How many users will be affected by this feature per time period?</p>
+                <p className="text-sm text-gray-600">How many people will this feature reach within a time period? Example: 2,000 customers per quarter.</p>
               </div>
               <div>
                 <h4 className="font-semibold text-green-600">Impact</h4>
-                <p className="text-sm text-gray-600">How much will this impact each user? (1=minimal, 2=moderate, 3=high)</p>
+                <p className="text-sm text-gray-600">How much will this feature impact each person when they encounter it?</p>
+                <ul className="text-xs text-gray-500 mt-1 ml-4">
+                  <li>• 3 = Massive impact</li>
+                  <li>• 2 = High impact</li>
+                  <li>• 1 = Medium impact</li>
+                  <li>• 0.5 = Low impact</li>
+                  <li>• 0.25 = Minimal impact</li>
+                </ul>
               </div>
               <div>
                 <h4 className="font-semibold text-purple-600">Confidence</h4>
-                <p className="text-sm text-gray-600">How confident are you in your estimates? (0.5-1.0)</p>
+                <p className="text-sm text-gray-600">How confident are you about your Reach and Impact estimates?</p>
+                <ul className="text-xs text-gray-500 mt-1 ml-4">
+                  <li>• 100% = High confidence</li>
+                  <li>• 80% = Medium confidence</li>
+                  <li>• 50% = Low confidence</li>
+                </ul>
               </div>
               <div>
                 <h4 className="font-semibold text-orange-600">Effort</h4>
-                <p className="text-sm text-gray-600">How much work will this require? (person-months)</p>
+                <p className="text-sm text-gray-600">How much work will this require from your team? Estimate in person-months.</p>
               </div>
               <div className="pt-4 border-t">
                 <h4 className="font-semibold">Formula</h4>
                 <p className="text-sm text-gray-600">RICE Score = (Reach × Impact × Confidence) ÷ Effort</p>
+                <p className="text-xs text-gray-500 mt-1">Higher score = Higher priority</p>
               </div>
             </CardContent>
           </Card>
@@ -226,7 +245,7 @@ const FeaturePrioritization = () => {
             <CardHeader>
               <CardTitle>Prioritized Features</CardTitle>
               <CardDescription>
-                Features ranked by RICE score
+                Features ranked by RICE score (higher = better)
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -253,10 +272,10 @@ const FeaturePrioritization = () => {
                         </Button>
                       </div>
                       <div className="grid grid-cols-2 gap-2 text-sm mb-3">
-                        <div>Reach: {feature.reach}</div>
+                        <div>Reach: {feature.reach.toLocaleString()}</div>
                         <div>Impact: {feature.impact}</div>
                         <div>Confidence: {(feature.confidence * 100).toFixed(0)}%</div>
-                        <div>Effort: {feature.effort}m</div>
+                        <div>Effort: {feature.effort} months</div>
                       </div>
                       <div className="flex items-center justify-between">
                         <Badge 
