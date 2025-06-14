@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,6 +13,7 @@ import DVFFramework from "./pages/DVFFramework";
 import IdeaValidator from "./pages/IdeaValidator";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import JobsToBeDone from "./pages/JobsToBeDone";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +31,7 @@ const App = () => (
           <Route path="/tools/metrics-dashboard" element={<MetricsDashboard />} />
           <Route path="/tools/dvf-exercise" element={<DVFExercise />} />
           <Route path="/tools/dvf-framework" element={<DVFFramework />} />
+          <Route path="/tools/jobs-to-be-done" element={<JobsToBeDone />} />
           <Route path="/tools/idea-validator" element={<IdeaValidator />} />
           <Route path="/contact" element={<Contact />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

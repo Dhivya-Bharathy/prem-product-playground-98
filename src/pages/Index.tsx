@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -66,13 +65,13 @@ const tools = [
     difficulty: "Intermediate"
   },
   {
-    id: "dvf-framework",
-    title: "DVF Framework Guide",
-    description: "Learn and apply the DVF methodology with templates and examples",
-    icon: BookOpen,
-    path: "/tools/dvf-framework",
-    category: "Education",
-    difficulty: "Beginner"
+    id: "jobs-to-be-done",
+    title: "Jobs to be Done Framework",
+    description: "Understand customer needs using Clayton Christensen's JTBD methodology",
+    icon: Target,
+    path: "/tools/jobs-to-be-done",
+    category: "Research",
+    difficulty: "Intermediate"
   }
 ];
 
