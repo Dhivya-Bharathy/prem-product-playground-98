@@ -34,20 +34,30 @@ const FeaturePrioritization = () => {
 
   const calculateRICE = (reach: number, impact: number, confidence: number, effort: number) => {
     if (effort === 0) return 0;
-    return (reach * impact * confidence) / effort;
+    const confidenceDecimal = confidence / 100; // Convert percentage to decimal
+    return (reach * impact * confidenceDecimal) / effort;
   };
 
   const getPriorityLevel = (score: number) => {
-    if (score >= 75) return "High";
-    if (score >= 25) return "Medium";
+    if (score >= 10) return "High";
+    if (score >= 5) return "Medium";
     return "Low";
   };
 
   const addFeature = () => {
-    if (!newFeature.name) {
+    if (!newFeature.name.trim()) {
       toast({
         title: "Missing Information",
         description: "Please enter a feature name.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (newFeature.reach <= 0 || newFeature.impact <= 0 || newFeature.confidence <= 0 || newFeature.effort <= 0) {
+      toast({
+        title: "Invalid Values",
+        description: "All RICE values must be greater than 0.",
         variant: "destructive"
       });
       return;
@@ -62,26 +72,34 @@ const FeaturePrioritization = () => {
 
     const feature: Feature = {
       id: Date.now().toString(),
-      name: newFeature.name,
+      name: newFeature.name.trim(),
       reach: newFeature.reach,
       impact: newFeature.impact,
       confidence: newFeature.confidence,
       effort: newFeature.effort,
-      riceScore,
+      riceScore: Number(riceScore.toFixed(2)),
       priority: getPriorityLevel(riceScore)
     };
 
-    setFeatures(prev => [...prev, feature].sort((a, b) => b.riceScore - a.riceScore));
+    setFeatures(prev => {
+      const updated = [...prev, feature];
+      return updated.sort((a, b) => b.riceScore - a.riceScore);
+    });
+    
     setNewFeature({ name: "", reach: 0, impact: 0, confidence: 0, effort: 0 });
 
     toast({
       title: "Feature Added",
-      description: `${feature.name} has been added with a RICE score of ${riceScore.toFixed(1)}.`
+      description: `${feature.name} has been added with a RICE score of ${riceScore.toFixed(2)}.`
     });
   };
 
   const removeFeature = (id: string) => {
     setFeatures(prev => prev.filter(f => f.id !== id));
+    toast({
+      title: "Feature Removed",
+      description: "Feature has been removed from the list."
+    });
   };
 
   return (
@@ -133,9 +151,10 @@ const FeaturePrioritization = () => {
                 <Input
                   id="reach"
                   type="number"
+                  min="1"
                   placeholder="1000"
                   value={newFeature.reach || ""}
-                  onChange={(e) => setNewFeature(prev => ({ ...prev, reach: Number(e.target.value) }))}
+                  onChange={(e) => setNewFeature(prev => ({ ...prev, reach: Number(e.target.value) || 0 }))}
                 />
                 <p className="text-xs text-gray-500 mt-1">How many users will this impact in a given time period?</p>
               </div>
@@ -158,15 +177,15 @@ const FeaturePrioritization = () => {
               </div>
 
               <div>
-                <Label htmlFor="confidence">Confidence</Label>
+                <Label htmlFor="confidence">Confidence (%)</Label>
                 <Select onValueChange={(value) => setNewFeature(prev => ({ ...prev, confidence: Number(value) }))}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select confidence level" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="1.0">100% - High confidence</SelectItem>
-                    <SelectItem value="0.8">80% - Medium confidence</SelectItem>
-                    <SelectItem value="0.5">50% - Low confidence</SelectItem>
+                    <SelectItem value="100">100% - High confidence</SelectItem>
+                    <SelectItem value="80">80% - Medium confidence</SelectItem>
+                    <SelectItem value="50">50% - Low confidence</SelectItem>
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-gray-500 mt-1">How confident are you in your Reach and Impact estimates?</p>
@@ -177,10 +196,11 @@ const FeaturePrioritization = () => {
                 <Input
                   id="effort"
                   type="number"
+                  min="0.1"
                   step="0.1"
                   placeholder="2.5"
                   value={newFeature.effort || ""}
-                  onChange={(e) => setNewFeature(prev => ({ ...prev, effort: Number(e.target.value) }))}
+                  onChange={(e) => setNewFeature(prev => ({ ...prev, effort: Number(e.target.value) || 0 }))}
                 />
                 <p className="text-xs text-gray-500 mt-1">How much work will this require from your team?</p>
               </div>
@@ -234,7 +254,7 @@ const FeaturePrioritization = () => {
               </div>
               <div className="pt-4 border-t">
                 <h4 className="font-semibold">Formula</h4>
-                <p className="text-sm text-gray-600">RICE Score = (Reach × Impact × Confidence) ÷ Effort</p>
+                <p className="text-sm text-gray-600">RICE Score = (Reach × Impact × Confidence%) ÷ Effort</p>
                 <p className="text-xs text-gray-500 mt-1">Higher score = Higher priority</p>
               </div>
             </CardContent>
@@ -245,7 +265,7 @@ const FeaturePrioritization = () => {
             <CardHeader>
               <CardTitle>Prioritized Features</CardTitle>
               <CardDescription>
-                Features ranked by RICE score (higher = better)
+                Features ranked by RICE score ({features.length} feature{features.length !== 1 ? 's' : ''})
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -255,36 +275,38 @@ const FeaturePrioritization = () => {
                   <p>Add features to see them prioritized here</p>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-4 max-h-96 overflow-y-auto">
                   {features.map((feature, index) => (
-                    <div key={feature.id} className="p-4 border rounded-lg bg-white">
+                    <div key={feature.id} className="p-4 border rounded-lg bg-white shadow-sm">
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center gap-2">
-                          <Badge variant="outline">#{index + 1}</Badge>
-                          <h4 className="font-semibold">{feature.name}</h4>
+                          <Badge variant="outline" className="text-xs">#{index + 1}</Badge>
+                          <h4 className="font-semibold text-sm">{feature.name}</h4>
                         </div>
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => removeFeature(feature.id)}
+                          className="h-8 w-8 p-0"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>
-                      <div className="grid grid-cols-2 gap-2 text-sm mb-3">
+                      <div className="grid grid-cols-2 gap-2 text-xs mb-3 text-gray-600">
                         <div>Reach: {feature.reach.toLocaleString()}</div>
                         <div>Impact: {feature.impact}</div>
-                        <div>Confidence: {(feature.confidence * 100).toFixed(0)}%</div>
+                        <div>Confidence: {feature.confidence}%</div>
                         <div>Effort: {feature.effort} months</div>
                       </div>
                       <div className="flex items-center justify-between">
                         <Badge 
                           variant={feature.priority === "High" ? "default" : feature.priority === "Medium" ? "secondary" : "outline"}
+                          className="text-xs"
                         >
                           {feature.priority} Priority
                         </Badge>
                         <div className="text-lg font-bold text-blue-600">
-                          {feature.riceScore.toFixed(1)}
+                          {feature.riceScore}
                         </div>
                       </div>
                     </div>
