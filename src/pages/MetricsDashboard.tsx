@@ -1,27 +1,40 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "react-router-dom";
-import { ArrowLeft, FileSpreadsheet, RefreshCw, TrendingUp } from "lucide-react";
+import { ArrowLeft, FileSpreadsheet, RefreshCw, TrendingUp, Settings, Database } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { generateSampleMetricData, downloadMetricsAsExcel } from "@/utils/metricsUtils";
+import { downloadMetricsAsExcel } from "@/utils/metricsUtils";
+import { saveMetricsToStorage, loadMetricsFromStorage } from "@/utils/metricsStorage";
 import { MetricData } from "@/types/metrics";
 import MetricCard from "@/components/metrics/MetricCard";
 import MetricsOverviewChart from "@/components/metrics/MetricsOverviewChart";
 import MetricsFrameworkGuide from "@/components/metrics/MetricsFrameworkGuide";
+import MetricDataForm from "@/components/metrics/MetricDataForm";
 
 const MetricsDashboard = () => {
   const { toast } = useToast();
-  const [metrics, setMetrics] = useState<MetricData[]>(generateSampleMetricData());
+  const [metrics, setMetrics] = useState<MetricData[]>([]);
   const [loading, setLoading] = useState(false);
+  const [showDataForm, setShowDataForm] = useState(false);
+
+  // Load metrics from localStorage on component mount
+  useEffect(() => {
+    const storedMetrics = loadMetricsFromStorage();
+    setMetrics(storedMetrics);
+  }, []);
+
+  const handleMetricsUpdate = (updatedMetrics: MetricData[]) => {
+    setMetrics(updatedMetrics);
+    saveMetricsToStorage(updatedMetrics);
+  };
 
   const handleRefreshData = async () => {
     setLoading(true);
-    // Simulate API call
+    // In a real app, this would fetch from your analytics API
     setTimeout(() => {
-      setMetrics(generateSampleMetricData());
       setLoading(false);
       toast({
         title: "Data Refreshed",
@@ -31,6 +44,14 @@ const MetricsDashboard = () => {
   };
 
   const handleDownloadExcel = () => {
+    if (metrics.length === 0) {
+      toast({
+        title: "No Data",
+        description: "Please add some metrics first before downloading.",
+        variant: "destructive"
+      });
+      return;
+    }
     downloadMetricsAsExcel(metrics, toast);
   };
 
@@ -68,6 +89,14 @@ const MetricsDashboard = () => {
             
             <div className="flex items-center gap-2">
               <Button 
+                onClick={() => setShowDataForm(!showDataForm)} 
+                variant="outline" 
+                size="sm"
+              >
+                <Database className="w-4 h-4 mr-2" />
+                {showDataForm ? 'Hide' : 'Manage'} Data
+              </Button>
+              <Button 
                 onClick={handleRefreshData} 
                 variant="outline" 
                 size="sm"
@@ -86,77 +115,105 @@ const MetricsDashboard = () => {
       </header>
 
       <div className="container mx-auto px-4 py-8">
-        <Tabs defaultValue="all" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-7">
-            {categories.map((category) => (
-              <TabsTrigger key={category.id} value={category.id} className="text-xs">
-                {category.name}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+        {showDataForm && (
+          <div className="mb-8">
+            <MetricDataForm metrics={metrics} onMetricsUpdate={handleMetricsUpdate} />
+          </div>
+        )}
 
-          <TabsContent value="all" className="space-y-6">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {metrics.map((metric) => (
-                <MetricCard key={metric.id} metric={metric} />
+        {metrics.length === 0 && !showDataForm && (
+          <Card className="mb-8">
+            <CardContent className="text-center py-12">
+              <Database className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold mb-2">No Metrics Data</h3>
+              <p className="text-gray-600 mb-4">
+                Start by adding your product metrics to see insights and analytics.
+              </p>
+              <Button onClick={() => setShowDataForm(true)}>
+                <Database className="w-4 h-4 mr-2" />
+                Add Your First Metric
+              </Button>
+            </CardContent>
+          </Card>
+        )}
+
+        {metrics.length > 0 && (
+          <Tabs defaultValue="all" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-7">
+              {categories.map((category) => (
+                <TabsTrigger key={category.id} value={category.id} className="text-xs">
+                  {category.name}
+                </TabsTrigger>
               ))}
-            </div>
-            
-            <div className="grid gap-6 lg:grid-cols-2">
-              <MetricsOverviewChart />
-              <Card>
-                <CardHeader>
-                  <CardTitle>Quick Insights</CardTitle>
-                  <CardDescription>Key performance indicators summary</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid gap-4">
-                    <div className="flex justify-between items-center p-3 bg-green-50 rounded">
-                      <span className="text-sm font-medium">Best Performing</span>
-                      <span className="text-sm text-green-600 font-semibold">
-                        {metrics.reduce((best, current) => 
-                          current.changePercentage > best.changePercentage ? current : best
-                        ).name}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-red-50 rounded">
-                      <span className="text-sm font-medium">Needs Attention</span>
-                      <span className="text-sm text-red-600 font-semibold">
-                        {metrics.reduce((worst, current) => 
-                          current.changePercentage < worst.changePercentage ? current : worst
-                        ).name}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-blue-50 rounded">
-                      <span className="text-sm font-medium">Total Metrics Tracked</span>
-                      <span className="text-sm text-blue-600 font-semibold">{metrics.length}</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
+            </TabsList>
 
-          {categories.slice(1).map((category) => (
-            <TabsContent key={category.id} value={category.id} className="space-y-6">
+            <TabsContent value="all" className="space-y-6">
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {getMetricsByCategory(category.id).map((metric) => (
+                {metrics.map((metric) => (
                   <MetricCard key={metric.id} metric={metric} />
                 ))}
               </div>
-              {getMetricsByCategory(category.id).length === 0 && (
+              
+              <div className="grid gap-6 lg:grid-cols-2">
+                <MetricsOverviewChart />
                 <Card>
-                  <CardContent className="text-center py-8">
-                    <p className="text-gray-500">No metrics available for this category.</p>
-                    <p className="text-sm text-gray-400 mt-2">
-                      Connect your analytics tools to start tracking {category.name.toLowerCase()} metrics.
-                    </p>
+                  <CardHeader>
+                    <CardTitle>Quick Insights</CardTitle>
+                    <CardDescription>Key performance indicators summary</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid gap-4">
+                      {metrics.length > 0 && (
+                        <>
+                          <div className="flex justify-between items-center p-3 bg-green-50 rounded">
+                            <span className="text-sm font-medium">Best Performing</span>
+                            <span className="text-sm text-green-600 font-semibold">
+                              {metrics.reduce((best, current) => 
+                                current.changePercentage > best.changePercentage ? current : best
+                              ).name}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center p-3 bg-red-50 rounded">
+                            <span className="text-sm font-medium">Needs Attention</span>
+                            <span className="text-sm text-red-600 font-semibold">
+                              {metrics.reduce((worst, current) => 
+                                current.changePercentage < worst.changePercentage ? current : worst
+                              ).name}
+                            </span>
+                          </div>
+                        </>
+                      )}
+                      <div className="flex justify-between items-center p-3 bg-blue-50 rounded">
+                        <span className="text-sm font-medium">Total Metrics Tracked</span>
+                        <span className="text-sm text-blue-600 font-semibold">{metrics.length}</span>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
-              )}
+              </div>
             </TabsContent>
-          ))}
-        </Tabs>
+
+            {categories.slice(1).map((category) => (
+              <TabsContent key={category.id} value={category.id} className="space-y-6">
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {getMetricsByCategory(category.id).map((metric) => (
+                    <MetricCard key={metric.id} metric={metric} />
+                  ))}
+                </div>
+                {getMetricsByCategory(category.id).length === 0 && (
+                  <Card>
+                    <CardContent className="text-center py-8">
+                      <p className="text-gray-500">No metrics available for this category.</p>
+                      <p className="text-sm text-gray-400 mt-2">
+                        Add {category.name.toLowerCase()} metrics using the "Manage Data" button above.
+                      </p>
+                    </CardContent>
+                  </Card>
+                )}
+              </TabsContent>
+            ))}
+          </Tabs>
+        )}
 
         <div className="mt-12">
           <MetricsFrameworkGuide />
