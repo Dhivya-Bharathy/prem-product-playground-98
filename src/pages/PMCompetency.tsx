@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { CompetencyIntro } from "@/components/competency/CompetencyIntro";
 import { AssessmentForm } from "@/components/competency/AssessmentForm";
@@ -28,7 +29,7 @@ const PMCompetency = () => {
     setCurrentStep('results');
     
     toast({
-      title: "Assessment Complete!",
+      title: "Assessment Complete! 🎉",
       description: `You've been identified as ${analysisResults.archetype.name}. Explore your detailed results below.`
     });
   };
@@ -66,51 +67,53 @@ const PMCompetency = () => {
     URL.revokeObjectURL(url);
 
     toast({
-      title: "Results Exported",
+      title: "Results Exported ✅",
       description: "Your competency assessment results have been downloaded."
     });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-6">
-          <Button variant="outline" size="sm" asChild>
-            <Link to="/">
-              <ChevronLeft className="w-4 h-4 mr-2" />
-              Back to Tools
-            </Link>
-          </Button>
-        </div>
+    <div className="min-h-screen">
+      {currentStep === 'intro' && (
+        <CompetencyIntro onStart={handleStartAssessment} />
+      )}
 
-        {currentStep === 'intro' && (
-          <CompetencyIntro onStart={handleStartAssessment} />
-        )}
+      {currentStep === 'assessment' && (
+        <AssessmentForm 
+          onComplete={handleAssessmentComplete}
+          onBack={handleBackToIntro}
+        />
+      )}
 
-        {currentStep === 'assessment' && (
-          <AssessmentForm 
-            onComplete={handleAssessmentComplete}
-            onBack={handleBackToIntro}
-          />
-        )}
+      {currentStep === 'results' && results && (
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+          <div className="container mx-auto px-6 py-8">
+            <div className="mb-8">
+              <Button variant="outline" size="sm" asChild className="rounded-xl">
+                <Link to="/">
+                  <ChevronLeft className="w-4 h-4 mr-2" />
+                  Back to Tools
+                </Link>
+              </Button>
+            </div>
 
-        {currentStep === 'results' && results && (
-          <div className="space-y-8">
-            <ArchetypeResults 
-              archetype={results.archetype}
-              shapePattern={results.shapePattern}
-            />
-            
-            <ShapeVisualization shape={results.shape} />
-            
-            <InsightsPanel 
-              results={results}
-              onExport={handleExport}
-              onReset={handleReset}
-            />
+            <div className="space-y-12">
+              <ArchetypeResults 
+                archetype={results.archetype}
+                shapePattern={results.shapePattern}
+              />
+              
+              <ShapeVisualization shape={results.shape} />
+              
+              <InsightsPanel 
+                results={results}
+                onExport={handleExport}
+                onReset={handleReset}
+              />
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
