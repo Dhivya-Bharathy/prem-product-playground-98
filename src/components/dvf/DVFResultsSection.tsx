@@ -41,8 +41,8 @@ export const DVFResultsSection = ({ evaluations, onDeleteEvaluation }: DVFResult
   }
 
   const averageScores = calculateAverageScores(evaluations);
-  const recommendations = evaluations.reduce((acc, eval) => {
-    acc[eval.recommendation] = (acc[eval.recommendation] || 0) + 1;
+  const recommendations = evaluations.reduce((acc, evaluation) => {
+    acc[evaluation.recommendation] = (acc[evaluation.recommendation] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 

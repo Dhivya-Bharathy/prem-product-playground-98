@@ -27,10 +27,10 @@ const DVFExercise = () => {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        const evaluationsWithDates = parsed.map((eval: any) => ({
-          ...eval,
-          createdAt: new Date(eval.createdAt),
-          updatedAt: new Date(eval.updatedAt)
+        const evaluationsWithDates = parsed.map((evaluation: any) => ({
+          ...evaluation,
+          createdAt: new Date(evaluation.createdAt),
+          updatedAt: new Date(evaluation.updatedAt)
         }));
         setEvaluations(evaluationsWithDates);
       } catch (error) {
@@ -124,7 +124,7 @@ const DVFExercise = () => {
   };
 
   const handleDeleteEvaluation = (id: string) => {
-    setEvaluations(prev => prev.filter(eval => eval.id !== id));
+    setEvaluations(prev => prev.filter(evaluation => evaluation.id !== id));
     toast({
       title: "Evaluation Deleted",
       description: "The evaluation has been removed."
