@@ -4,6 +4,13 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
 export const HeroSection = () => {
+  const scrollToTools = () => {
+    const toolsSection = document.getElementById('tools');
+    if (toolsSection) {
+      toolsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="relative py-32 overflow-hidden">
       {/* Background Pattern */}
@@ -31,11 +38,9 @@ export const HeroSection = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" asChild className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 px-8 py-4 text-lg">
-              <Link to="#tools">
-                Explore Tools
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Link>
+            <Button size="lg" onClick={scrollToTools} className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 px-8 py-4 text-lg">
+              Explore Tools
+              <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
             <Button variant="outline" size="lg" asChild className="px-8 py-4 text-lg">
               <Link to="/contact">
