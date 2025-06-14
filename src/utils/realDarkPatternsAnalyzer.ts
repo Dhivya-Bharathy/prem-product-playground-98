@@ -15,7 +15,7 @@ export const analyzeWebsite = async (
     onProgress({
       stage: 'initializing',
       progress: 10,
-      message: 'Initializing browser and security checks...'
+      message: 'Initializing analysis (Note: Using demo mode - real scraping requires server-side implementation)...'
     });
 
     // Validate URL
@@ -28,7 +28,7 @@ export const analyzeWebsite = async (
     onProgress({
       stage: 'scraping',
       progress: 30,
-      message: 'Loading and rendering webpage...'
+      message: 'Generating website analysis simulation...'
     });
 
     const scrapedData = await webScrapingService.scrapeWebsite(url);

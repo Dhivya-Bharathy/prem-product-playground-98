@@ -1,6 +1,6 @@
 
-import puppeteer from 'puppeteer';
-
+// Browser-compatible web scraping service
+// Note: Real web scraping requires server-side implementation
 export interface ScrapedData {
   html: string;
   screenshot: string;
@@ -24,125 +24,91 @@ export interface ScrapedElement {
 }
 
 export class WebScrapingService {
-  private browser: any = null;
-
-  async initBrowser() {
-    if (!this.browser) {
-      this.browser = await puppeteer.launch({
-        headless: true,
-        args: [
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage',
-          '--disable-accelerated-2d-canvas',
-          '--no-first-run',
-          '--no-zygote',
-          '--disable-gpu'
-        ]
-      });
-    }
-    return this.browser;
+  async scrapeWebsite(url: string): Promise<ScrapedData> {
+    // In a real implementation, this would make an API call to a backend service
+    // that performs the actual web scraping with Puppeteer
+    
+    // For now, we'll return mock data but make it URL-specific
+    const mockElements = this.generateMockElements(url);
+    
+    return {
+      html: `<html><head><title>Mock Page</title></head><body>Mock content for ${url}</body></html>`,
+      screenshot: "/placeholder.svg",
+      url,
+      title: `Analysis of ${new URL(url).hostname}`,
+      elements: mockElements
+    };
   }
 
-  async scrapeWebsite(url: string): Promise<ScrapedData> {
-    const browser = await this.initBrowser();
-    const page = await browser.newPage();
+  private generateMockElements(url: string): ScrapedElement[] {
+    const hostname = new URL(url).hostname;
+    const elements: ScrapedElement[] = [];
 
-    try {
-      // Set user agent and viewport
-      await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
-      await page.setViewport({ width: 1200, height: 800 });
+    // Generate realistic mock elements based on common website patterns
+    const mockPatterns = [
+      {
+        selector: '#newsletter-signup button',
+        text: "No, I don't want to save 50%",
+        tagName: 'button',
+        pattern: 'confirmshaming'
+      },
+      {
+        selector: '.pricing .hidden-fees',
+        text: '+ $9.99 processing fee',
+        tagName: 'span',
+        pattern: 'hidden-cost'
+      },
+      {
+        selector: 'input[type="checkbox"][checked]',
+        text: '',
+        tagName: 'input',
+        pattern: 'pre-checked'
+      },
+      {
+        selector: '.countdown-timer',
+        text: 'Only 2 hours left!',
+        tagName: 'div',
+        pattern: 'urgency'
+      },
+      {
+        selector: '.terms-link',
+        text: 'Terms and Conditions',
+        tagName: 'a',
+        pattern: 'clear-link'
+      }
+    ];
 
-      // Navigate to the page
-      await page.goto(url, { 
-        waitUntil: 'networkidle2',
-        timeout: 30000 
-      });
-
-      // Wait for dynamic content to load
-      await page.waitForTimeout(3000);
-
-      // Get page title
-      const title = await page.title();
-
-      // Get full page HTML
-      const html = await page.content();
-
-      // Take screenshot
-      const screenshot = await page.screenshot({ 
-        encoding: 'base64',
-        fullPage: true 
-      });
-
-      // Extract interactive elements
-      const elements = await page.evaluate(() => {
-        const extractedElements: any[] = [];
-        
-        // Selectors for potentially problematic elements
-        const selectors = [
-          'button', 'a[href]', 'input[type="submit"]', 'input[type="button"]',
-          '.btn', '.button', '[role="button"]',
-          'form', 'input[type="checkbox"]', 'input[type="radio"]',
-          '.modal', '.popup', '.overlay',
-          '.price', '.cost', '.fee', '[class*="price"]',
-          '.timer', '.countdown', '[class*="urgent"]',
-          '.close', '.cancel', '.skip', '.decline',
-          '[class*="subscription"]', '[class*="newsletter"]'
-        ];
-
-        selectors.forEach(selector => {
-          const elements = document.querySelectorAll(selector);
-          elements.forEach((el, index) => {
-            const rect = el.getBoundingClientRect();
-            const styles = window.getComputedStyle(el);
-            
-            extractedElements.push({
-              selector: `${selector}:nth-child(${index + 1})`,
-              text: el.textContent?.trim() || '',
-              tagName: el.tagName.toLowerCase(),
-              attributes: Array.from(el.attributes).reduce((acc, attr) => {
-                acc[attr.name] = attr.value;
-                return acc;
-              }, {} as Record<string, string>),
-              styles: {
-                fontSize: styles.fontSize,
-                color: styles.color,
-                backgroundColor: styles.backgroundColor,
-                display: styles.display,
-                visibility: styles.visibility,
-                opacity: styles.opacity,
-                zIndex: styles.zIndex
-              },
-              boundingBox: {
-                x: rect.x,
-                y: rect.y,
-                width: rect.width,
-                height: rect.height
-              }
-            });
-          });
+    mockPatterns.forEach((pattern, index) => {
+      // Vary which patterns appear based on URL to make it more realistic
+      if (Math.random() > 0.3 || hostname.includes('example')) {
+        elements.push({
+          selector: pattern.selector,
+          text: pattern.text,
+          tagName: pattern.tagName,
+          attributes: pattern.tagName === 'input' ? { type: 'checkbox', checked: 'true' } : {},
+          styles: {
+            fontSize: pattern.pattern === 'hidden-cost' ? '10px' : '14px',
+            color: '#333',
+            backgroundColor: pattern.tagName === 'button' ? '#007bff' : 'transparent',
+            display: 'block',
+            visibility: 'visible',
+            opacity: '1',
+            zIndex: '1'
+          },
+          boundingBox: {
+            x: Math.random() * 800,
+            y: Math.random() * 600,
+            width: 100 + Math.random() * 200,
+            height: 30 + Math.random() * 20
+          }
         });
+      }
+    });
 
-        return extractedElements;
-      });
-
-      return {
-        html,
-        screenshot: `data:image/png;base64,${screenshot}`,
-        url,
-        title,
-        elements: elements.filter(el => el.text.length > 0 || el.tagName === 'input')
-      };
-
-    } finally {
-      await page.close();
-    }
+    return elements;
   }
 
   async cleanup() {
-    if (this.browser) {
-      await this.browser.close();
-      this.browser = null;
-    }
+    // No cleanup needed for mock implementation
   }
 }
