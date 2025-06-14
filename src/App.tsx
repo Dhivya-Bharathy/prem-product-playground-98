@@ -16,6 +16,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import JobsToBeDone from "./pages/JobsToBeDone";
 import PMCompetency from "./pages/PMCompetency";
+import DarkPatternsAssessment from "./pages/DarkPatternsAssessment";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/tools/dvf-framework" element={<DVFFramework />} />
           <Route path="/tools/jobs-to-be-done" element={<JobsToBeDone />} />
           <Route path="/tools/pm-competency" element={<PMCompetency />} />
+          <Route path="/tools/dark-patterns-assessment" element={<DarkPatternsAssessment />} />
           <Route path="/tools/idea-validator" element={<IdeaValidator />} />
           <Route path="/contact" element={<Contact />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
