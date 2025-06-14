@@ -105,14 +105,6 @@ export const AboutSection = () => {
               );
             })}
           </div>
-
-          {/* Bottom CTA */}
-          <div className="text-center mt-16">
-            <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 cursor-pointer group">
-              <span className="text-lg font-medium">Ready to level up your PM skills?</span>
-              <Target className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
-            </div>
-          </div>
         </div>
       </div>
     </section>
