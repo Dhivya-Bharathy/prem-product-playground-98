@@ -18,10 +18,40 @@ const MetricsDashboard = () => {
   const [loading, setLoading] = useState(false);
   const [showDataForm, setShowDataForm] = useState(false);
 
-  // Load metrics from localStorage on component mount
+  // Load metrics from localStorage on component mount and migrate old format if needed
   useEffect(() => {
     const storedMetrics = loadMetricsFromStorage();
-    setMetrics(storedMetrics);
+    
+    // Migrate old metrics format to new format
+    const migratedMetrics = storedMetrics.map(metric => {
+      // Check if metric already has new format
+      if ('measurementPeriod' in metric && 'comparisonPeriod' in metric) {
+        return metric;
+      }
+      
+      // Migrate old format
+      const oldMetric = metric as any;
+      return {
+        ...metric,
+        measurementPeriod: {
+          type: 'predefined' as const,
+          predefinedPeriod: 'last_30_days' as const,
+          label: oldMetric.period || 'Last 30 days'
+        },
+        comparisonPeriod: {
+          type: 'previous_period' as const,
+          label: 'Previous period'
+        },
+        periodType: 'rolling' as const
+      };
+    });
+    
+    setMetrics(migratedMetrics);
+    
+    // Save migrated metrics back to storage
+    if (migratedMetrics.some((m, i) => JSON.stringify(m) !== JSON.stringify(storedMetrics[i]))) {
+      saveMetricsToStorage(migratedMetrics);
+    }
   }, []);
 
   const handleMetricsUpdate = (updatedMetrics: MetricData[]) => {

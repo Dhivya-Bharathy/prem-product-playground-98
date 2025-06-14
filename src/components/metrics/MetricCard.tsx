@@ -1,9 +1,11 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, TrendingDown, Minus, Target } from "lucide-react";
+import { TrendingUp, TrendingDown, Minus, Target, Calendar, Clock } from "lucide-react";
 import { MetricData } from "@/types/metrics";
 import { formatMetricValue, generateChartData } from "@/utils/metricsUtils";
 import { getCategoryColor } from "@/utils/metricsConfig";
+import { formatTimePeriod, formatComparisonPeriod, calculateDaysToTarget, getTargetProgressStatus } from "@/utils/timePeriodUtils";
 import { LineChart, Line, ResponsiveContainer } from "recharts";
 
 interface MetricCardProps {
@@ -12,6 +14,8 @@ interface MetricCardProps {
 
 const MetricCard = ({ metric }: MetricCardProps) => {
   const chartData = generateChartData(7);
+  const daysToTarget = calculateDaysToTarget(metric.targetDate);
+  const targetStatus = metric.target ? getTargetProgressStatus(metric.value, metric.target, daysToTarget) : 'unknown';
   
   const getTrendIcon = () => {
     switch (metric.trend) {
@@ -35,6 +39,29 @@ const MetricCard = ({ metric }: MetricCardProps) => {
     return Math.min((metric.value / metric.target) * 100, 100);
   };
 
+  const getTargetStatusColor = () => {
+    switch (targetStatus) {
+      case 'ahead': return 'text-green-600';
+      case 'on-track': return 'text-blue-600';
+      case 'behind': return 'text-red-600';
+      default: return 'text-gray-600';
+    }
+  };
+
+  const getTargetStatusBadge = () => {
+    if (!metric.target || !daysToTarget) return null;
+    
+    const badgeVariant = targetStatus === 'ahead' ? 'default' : 
+                        targetStatus === 'on-track' ? 'secondary' : 'destructive';
+    
+    return (
+      <Badge variant={badgeVariant} className="text-xs">
+        {targetStatus === 'ahead' ? 'Target Exceeded' : 
+         targetStatus === 'on-track' ? 'On Track' : 'Behind Schedule'}
+      </Badge>
+    );
+  };
+
   return (
     <Card className="hover:shadow-lg transition-shadow">
       <CardHeader className="pb-2">
@@ -42,9 +69,12 @@ const MetricCard = ({ metric }: MetricCardProps) => {
           <CardTitle className="text-sm font-medium text-gray-600">
             {metric.name}
           </CardTitle>
-          <Badge variant="outline" className={getCategoryColor(metric.category)}>
-            {metric.category}
-          </Badge>
+          <div className="flex gap-1">
+            <Badge variant="outline" className={getCategoryColor(metric.category)}>
+              {metric.category}
+            </Badge>
+            {getTargetStatusBadge()}
+          </div>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -73,7 +103,7 @@ const MetricCard = ({ metric }: MetricCardProps) => {
             <span className="font-medium">
               {metric.changePercentage > 0 ? '+' : ''}{metric.changePercentage.toFixed(1)}%
             </span>
-            <span className="text-gray-500">vs last period</span>
+            <span className="text-gray-500">vs {formatComparisonPeriod(metric.comparisonPeriod)}</span>
           </div>
         </div>
 
@@ -96,11 +126,25 @@ const MetricCard = ({ metric }: MetricCardProps) => {
                 style={{ width: `${getProgressPercentage()}%` }}
               />
             </div>
+            {metric.targetDate && daysToTarget && (
+              <div className={`flex items-center gap-1 text-xs ${getTargetStatusColor()}`}>
+                <Clock className="w-3 h-3" />
+                {daysToTarget > 0 ? `${daysToTarget} days remaining` : 
+                 daysToTarget === 0 ? 'Target date is today' : 
+                 `${Math.abs(daysToTarget)} days overdue`}
+              </div>
+            )}
           </div>
         )}
 
-        <div className="text-xs text-gray-500">
-          {metric.period}
+        <div className="space-y-1">
+          <div className="flex items-center gap-1 text-xs text-gray-500">
+            <Calendar className="w-3 h-3" />
+            <span>Period: {formatTimePeriod(metric.measurementPeriod)}</span>
+          </div>
+          <div className="text-xs text-gray-400">
+            Period type: {metric.periodType.replace('_', ' ')}
+          </div>
         </div>
       </CardContent>
     </Card>

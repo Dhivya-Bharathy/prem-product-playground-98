@@ -8,9 +8,44 @@ export interface MetricData {
   changePercentage: number;
   trend: 'up' | 'down' | 'stable';
   category: MetricCategory;
-  period: string;
+  measurementPeriod: MeasurementPeriod;
+  comparisonPeriod: ComparisonPeriod;
   target?: number;
+  targetDate?: string;
+  periodType: 'fixed' | 'rolling' | 'custom';
 }
+
+export interface MeasurementPeriod {
+  type: 'predefined' | 'custom';
+  predefinedPeriod?: PredefinedPeriod;
+  customRange?: {
+    startDate: string;
+    endDate: string;
+  };
+  label: string;
+}
+
+export interface ComparisonPeriod {
+  type: 'previous_period' | 'same_period_last_year' | 'custom';
+  label: string;
+  customRange?: {
+    startDate: string;
+    endDate: string;
+  };
+}
+
+export type PredefinedPeriod = 
+  | 'last_7_days'
+  | 'last_30_days'
+  | 'last_90_days'
+  | 'this_week'
+  | 'this_month'
+  | 'this_quarter'
+  | 'this_year'
+  | 'last_week'
+  | 'last_month'
+  | 'last_quarter'
+  | 'last_year';
 
 export interface ChartDataPoint {
   date: string;
