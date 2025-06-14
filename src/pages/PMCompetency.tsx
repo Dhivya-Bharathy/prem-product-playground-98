@@ -43,33 +43,10 @@ const PMCompetency = () => {
     setCurrentStep('intro');
   };
 
+  // This function is now handled within InsightsPanel component
   const handleExport = () => {
-    if (!results) return;
-
-    const exportData = {
-      archetype: results.archetype.name,
-      shapePattern: results.shapePattern.description,
-      competencyScores: results.shape,
-      topStrengths: results.topStrengths,
-      developmentAreas: results.developmentAreas,
-      recommendations: results.recommendations,
-      completedAt: new Date().toISOString()
-    };
-
-    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'pm-competency-assessment-results.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    toast({
-      title: "Results Exported ✅",
-      description: "Your competency assessment results have been downloaded."
-    });
+    // Legacy function - now handled by InsightsPanel
+    console.log('Export handled by InsightsPanel component');
   };
 
   return (
