@@ -12,41 +12,38 @@ export const ToolsGrid = () => {
     return (
       <Card 
         key={tool.id} 
-        className="group hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm hover:bg-white overflow-hidden relative"
+        className="group hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 border-0 bg-white hover:bg-white overflow-hidden relative"
         style={{ animationDelay: `${index * 100}ms` }}
       >
-        {/* Gradient overlay on hover */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         
-        <CardHeader className="relative">
+        <CardHeader className="relative pb-4">
           <div className="flex items-center justify-between mb-4">
-            <div className="p-4 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl group-hover:from-blue-200 group-hover:to-indigo-200 transition-all duration-300 group-hover:scale-110">
+            <div className="p-4 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl group-hover:from-blue-200 group-hover:to-indigo-200 transition-all duration-300 group-hover:scale-110">
               <IconComponent className="w-8 h-8 text-blue-600" />
             </div>
-            <div className="flex gap-2">
-              <Badge 
-                variant="outline" 
-                className={`${
-                  tool.difficulty === 'Beginner' ? 'border-green-200 text-green-700 bg-green-50' :
-                  tool.difficulty === 'Intermediate' ? 'border-yellow-200 text-yellow-700 bg-yellow-50' :
-                  tool.difficulty === 'Advanced' ? 'border-red-200 text-red-700 bg-red-50' :
-                  'border-blue-200 text-blue-700 bg-blue-50'
-                }`}
-              >
-                {tool.difficulty}
-              </Badge>
-            </div>
+            <Badge 
+              variant="outline" 
+              className={`${
+                tool.difficulty === 'Beginner' ? 'border-green-200 text-green-700 bg-green-50' :
+                tool.difficulty === 'Intermediate' ? 'border-yellow-200 text-yellow-700 bg-yellow-50' :
+                tool.difficulty === 'Advanced' ? 'border-red-200 text-red-700 bg-red-50' :
+                'border-blue-200 text-blue-700 bg-blue-50'
+              }`}
+            >
+              {tool.difficulty}
+            </Badge>
           </div>
-          <CardTitle className="text-xl group-hover:text-blue-600 transition-colors duration-300">
+          <CardTitle className="text-xl group-hover:text-blue-600 transition-colors duration-300 mb-2">
             {tool.title}
           </CardTitle>
-          <CardDescription className="text-gray-600 leading-relaxed">
+          <CardDescription className="text-gray-600 leading-relaxed text-sm">
             {tool.description}
           </CardDescription>
         </CardHeader>
-        <CardContent className="relative">
+        <CardContent className="relative pt-0">
           <div className="flex items-center justify-between">
-            <Badge variant="secondary" className="bg-gray-100 text-gray-700">
+            <Badge variant="secondary" className="bg-gray-100 text-gray-700 text-xs">
               {tool.category}
             </Badge>
             <Button asChild size="sm" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 group/btn">
@@ -62,21 +59,21 @@ export const ToolsGrid = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-white to-gray-50">
+    <section id="tools" className="py-24 bg-white">
       <div className="container mx-auto px-4">
         {/* Product Management Tools Section */}
         <div className="mb-20">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 rounded-full text-blue-700 text-sm font-medium mb-4">
-              <Sparkles className="w-4 h-4" />
+            <Badge className="bg-blue-100 text-blue-700 text-sm font-medium px-4 py-2 mb-6 border-0">
+              <Sparkles className="w-4 h-4 mr-2" />
               Core Tools
-            </div>
+            </Badge>
             <h3 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Product Management
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Tools</span>
             </h3>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Essential tools and frameworks for product managers to plan, execute, and optimize their product strategy.
+              Essential frameworks for planning, executing, and optimizing your product strategy.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -87,16 +84,16 @@ export const ToolsGrid = () => {
         {/* Assessment Tools Section */}
         <div>
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-purple-100 rounded-full text-purple-700 text-sm font-medium mb-4">
-              <Sparkles className="w-4 h-4" />
+            <Badge className="bg-purple-100 text-purple-700 text-sm font-medium px-4 py-2 mb-6 border-0">
+              <Sparkles className="w-4 h-4 mr-2" />
               Assessments
-            </div>
+            </Badge>
             <h3 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Assessment
               <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"> Tools</span>
             </h3>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Evaluate your skills, competencies, and analyze design patterns to improve your product management practice.
+              Evaluate your skills and analyze design patterns to improve your practice.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
