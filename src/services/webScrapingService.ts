@@ -1,6 +1,5 @@
 
 import puppeteer from 'puppeteer';
-import * as cheerio from 'cheerio';
 
 export interface ScrapedData {
   html: string;
