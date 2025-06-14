@@ -155,7 +155,7 @@ const MetricsDashboard = () => {
               </div>
               
               <div className="grid gap-6 lg:grid-cols-2">
-                <MetricsOverviewChart />
+                <MetricsOverviewChart metrics={metrics} />
                 <Card>
                   <CardHeader>
                     <CardTitle>Quick Insights</CardTitle>

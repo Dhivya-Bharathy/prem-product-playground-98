@@ -1,4 +1,3 @@
-
 import { MetricData, ChartDataPoint } from "@/types/metrics";
 
 export const generateSampleMetricData = (): MetricData[] => {
