@@ -8,6 +8,6 @@ export interface RoadmapItem {
   description: string;
 }
 
-export const QUARTERS = ["Q1 2024", "Q2 2024", "Q3 2024", "Q4 2024", "Q1 2025"];
+export const QUARTERS = ["Q1", "Q2", "Q3", "Q4"];
 export const STATUSES = ["Planning", "In Progress", "Testing", "Completed"];
 export const PRIORITIES = ["High", "Medium", "Low"];

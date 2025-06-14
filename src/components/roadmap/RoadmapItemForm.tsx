@@ -54,7 +54,7 @@ const RoadmapItemForm = ({ onAddItem }: RoadmapItemFormProps) => {
 
         <div>
           <Label htmlFor="quarter">Quarter *</Label>
-          <Select onValueChange={(value) => setNewItem(prev => ({ ...prev, quarter: value }))}>
+          <Select value={newItem.quarter} onValueChange={(value) => setNewItem(prev => ({ ...prev, quarter: value }))}>
             <SelectTrigger>
               <SelectValue placeholder="Select quarter" />
             </SelectTrigger>
@@ -68,7 +68,7 @@ const RoadmapItemForm = ({ onAddItem }: RoadmapItemFormProps) => {
 
         <div>
           <Label htmlFor="status">Status *</Label>
-          <Select onValueChange={(value) => setNewItem(prev => ({ ...prev, status: value }))}>
+          <Select value={newItem.status} onValueChange={(value) => setNewItem(prev => ({ ...prev, status: value }))}>
             <SelectTrigger>
               <SelectValue placeholder="Select status" />
             </SelectTrigger>
@@ -82,7 +82,7 @@ const RoadmapItemForm = ({ onAddItem }: RoadmapItemFormProps) => {
 
         <div>
           <Label htmlFor="priority">Priority *</Label>
-          <Select onValueChange={(value) => setNewItem(prev => ({ ...prev, priority: value }))}>
+          <Select value={newItem.priority} onValueChange={(value) => setNewItem(prev => ({ ...prev, priority: value }))}>
             <SelectTrigger>
               <SelectValue placeholder="Select priority" />
             </SelectTrigger>
