@@ -4,10 +4,11 @@ import {
   Users, 
   BarChart3, 
   GitBranch,
-  Brain
+  Brain,
+  Shield
 } from "lucide-react";
 
-export const tools = [
+export const productTools = [
   {
     id: "user-story-generator",
     title: "User Story Generator",
@@ -61,7 +62,10 @@ export const tools = [
     path: "/tools/jobs-to-be-done",
     category: "Research",
     difficulty: "Intermediate"
-  },
+  }
+];
+
+export const assessmentTools = [
   {
     id: "pm-competency",
     title: "PM Competency Assessment",
@@ -70,5 +74,17 @@ export const tools = [
     path: "/tools/pm-competency",
     category: "Assessment",
     difficulty: "All Levels"
+  },
+  {
+    id: "dark-patterns-assessment",
+    title: "Dark Patterns Website Assessment",
+    description: "Analyze websites for deceptive design patterns and user manipulation",
+    icon: Shield,
+    path: "/tools/dark-patterns-assessment",
+    category: "Assessment",
+    difficulty: "Intermediate"
   }
 ];
+
+// Legacy export for backward compatibility
+export const tools = [...productTools, ...assessmentTools];
