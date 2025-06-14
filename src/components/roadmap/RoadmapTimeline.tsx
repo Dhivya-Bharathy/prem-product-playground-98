@@ -18,10 +18,12 @@ const RoadmapTimeline = forwardRef<HTMLDivElement, RoadmapTimelineProps>(
     }, {} as Record<string, RoadmapItem[]>);
 
     return (
-      <Card>
+      <>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Calendar className="w-5 h-5" />
+            <div className="p-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg">
+              <Calendar className="w-5 h-5 text-white" />
+            </div>
             Roadmap Timeline
           </CardTitle>
           <CardDescription>
@@ -32,7 +34,9 @@ const RoadmapTimeline = forwardRef<HTMLDivElement, RoadmapTimelineProps>(
           <div ref={ref}>
             {roadmapItems.length === 0 ? (
               <div className="text-center text-gray-500 py-12">
-                <GitBranch className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                <div className="p-4 bg-gradient-to-r from-orange-500 to-pink-600 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                  <GitBranch className="w-8 h-8 text-white" />
+                </div>
                 <p>Add items to see your roadmap here</p>
               </div>
             ) : (
@@ -55,7 +59,7 @@ const RoadmapTimeline = forwardRef<HTMLDivElement, RoadmapTimelineProps>(
                       <div className="flex-1">
                         <h3 className="text-xl font-bold text-gray-900 mb-1">{quarter}</h3>
                         <div className="flex items-center gap-2">
-                          <Badge variant="outline" className="text-xs">
+                          <Badge variant="outline" className="text-xs bg-white/50">
                             {groupedItems[quarter]?.length || 0} items
                           </Badge>
                           {groupedItems[quarter]?.length > 0 && (
@@ -86,7 +90,7 @@ const RoadmapTimeline = forwardRef<HTMLDivElement, RoadmapTimelineProps>(
                           {groupedItems[quarter].map((item, itemIndex) => (
                             <div 
                               key={item.id} 
-                              className="group relative p-4 bg-white border-2 border-gray-100 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 hover:border-blue-200"
+                              className="group relative p-4 bg-gradient-to-br from-white to-gray-50/50 border-2 border-gray-100 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 hover:border-blue-200 hover:scale-105"
                             >
                               {/* Item connector line */}
                               <div className="absolute -left-12 top-6 w-8 h-0.5 bg-gray-300 group-hover:bg-blue-300 transition-colors"></div>
@@ -121,14 +125,14 @@ const RoadmapTimeline = forwardRef<HTMLDivElement, RoadmapTimelineProps>(
                               </div>
                               
                               {/* Item number indicator */}
-                              <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 text-white text-xs rounded-full flex items-center justify-center font-medium shadow-sm">
+                              <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs rounded-full flex items-center justify-center font-medium shadow-sm">
                                 {itemIndex + 1}
                               </div>
                             </div>
                           ))}
                         </div>
                       ) : (
-                        <div className="p-6 bg-gray-50 border-2 border-dashed border-gray-200 rounded-lg text-center">
+                        <div className="p-6 bg-gradient-to-r from-gray-50 to-blue-50/30 border-2 border-dashed border-gray-200 rounded-lg text-center">
                           <p className="text-gray-500 text-sm">No items planned for this quarter</p>
                           <p className="text-gray-400 text-xs mt-1">Add items to see them here</p>
                         </div>
@@ -140,7 +144,7 @@ const RoadmapTimeline = forwardRef<HTMLDivElement, RoadmapTimelineProps>(
             )}
           </div>
         </CardContent>
-      </Card>
+      </>
     );
   }
 );
