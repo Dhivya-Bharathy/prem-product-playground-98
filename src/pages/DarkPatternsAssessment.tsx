@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Shield, AlertTriangle, CheckCircle, Download, ExternalLink, Zap } from "lucide-react";
+import { Shield, AlertTriangle, CheckCircle, Download, ExternalLink, Zap, Info } from "lucide-react";
 import { AnalysisResults, AnalysisProgress } from "@/types/darkPatterns";
 import { analyzeWebsite } from "@/utils/darkPatternsAnalyzer";
 import { generateDarkPatternsPDF } from "@/utils/darkPatternsPdfGenerator";
@@ -46,15 +46,24 @@ const DarkPatternsAssessment = () => {
     try {
       const analysisResults = await analyzeWebsite(url, setProgress);
       setResults(analysisResults);
-      toast({
-        title: "Analysis Complete",
-        description: `Found ${analysisResults.patterns_detected.length} patterns to review`
-      });
+      
+      if (analysisResults.patterns_detected.length === 0) {
+        toast({
+          title: "No Results Available",
+          description: "Unable to analyze website. Real analysis requires server-side implementation.",
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Analysis Complete",
+          description: `Found ${analysisResults.patterns_detected.length} patterns to review`
+        });
+      }
     } catch (error) {
       console.error('Analysis error:', error);
       toast({
         title: "Analysis Failed",
-        description: "Unable to analyze the website. Please check the URL and try again.",
+        description: "Unable to analyze the website. Real analysis requires server-side implementation.",
         variant: "destructive"
       });
     } finally {
@@ -73,23 +82,7 @@ const DarkPatternsAssessment = () => {
     }
   };
 
-  const getPatternTypeIcon = (type: string) => {
-    switch (type) {
-      case 'dark': return AlertTriangle;
-      case 'grey': return Shield;
-      case 'white': return CheckCircle;
-      default: return Shield;
-    }
-  };
-
-  const getPatternTypeColor = (type: string) => {
-    switch (type) {
-      case 'dark': return 'bg-red-100 text-red-800 border-red-200';
-      case 'grey': return 'bg-gray-100 text-gray-800 border-gray-200';
-      case 'white': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
-    }
-  };
+  const hasNoResults = results && results.patterns_detected.length === 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -109,6 +102,21 @@ const DarkPatternsAssessment = () => {
       </div>
 
       <div className="container mx-auto px-4 py-8">
+        {/* Info Banner */}
+        <Card className="mb-8 border-amber-200 bg-amber-50">
+          <CardContent className="py-4">
+            <div className="flex items-start gap-3">
+              <Info className="w-5 h-5 text-amber-600 mt-0.5" />
+              <div>
+                <p className="text-amber-800 text-sm">
+                  <strong>Note:</strong> Real web scraping and analysis requires server-side implementation. 
+                  This tool currently cannot bypass browser security restrictions to analyze external websites.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Input Section */}
         <Card className="mb-8">
           <CardHeader>
@@ -155,8 +163,28 @@ const DarkPatternsAssessment = () => {
           </Card>
         )}
 
-        {/* Results Section */}
-        {results && (
+        {/* No Results Section */}
+        {hasNoResults && (
+          <Card className="text-center py-12">
+            <CardContent>
+              <div className="flex flex-col items-center gap-4">
+                <div className="p-4 bg-gray-100 rounded-full">
+                  <Shield className="w-8 h-8 text-gray-400" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">No Results Available</h3>
+                  <p className="text-gray-600 max-w-md">
+                    Unable to analyze the website. Real dark patterns analysis requires server-side implementation 
+                    to bypass browser security restrictions and perform actual web scraping.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Results Section - Only show if we have actual patterns */}
+        {results && results.patterns_detected.length > 0 && (
           <div className="space-y-8">
             {/* Summary Cards */}
             <div className="grid md:grid-cols-4 gap-6">
