@@ -20,78 +20,85 @@ export const JTBDGuide = () => {
 
       <Tabs defaultValue="theory" className="w-full">
         <TooltipProvider>
-          <TabsList
+          <div
             className={[
-              // On mobile: horizontal scroll flex row
-              "flex flex-row gap-2 overflow-x-auto scrollbar-hide min-w-0",
-              // On desktop: grid
-              "sm:grid sm:grid-cols-4 sm:gap-0",
-              // General styles
-              "mb-4 sm:mb-0 bg-muted rounded-lg border",
+              // Mobile: overflow scroll but hide scrollbar and with bottom padding for space
+              "sm:overflow-visible overflow-x-auto scrollbar-hide -mx-2 sm:mx-0 pb-2 sm:pb-0",
             ].join(" ")}
             style={{ WebkitOverflowScrolling: 'touch' }}
           >
-            {/* Theory */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <TabsTrigger
-                  value="theory"
-                  className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[72px] sm:min-w-[120px] px-2 py-2 gap-1"
-                >
-                  <BookOpen className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-yellow-700" />
-                  <span className="text-[11px] font-medium text-gray-600 sm:inline hidden">Theory</span>
-                </TabsTrigger>
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                Theory
-              </TooltipContent>
-            </Tooltip>
-            {/* Framework */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <TabsTrigger
-                  value="framework"
-                  className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[72px] sm:min-w-[120px] px-2 py-2 gap-1"
-                >
-                  <Target className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-blue-700" />
-                  <span className="text-[11px] font-medium text-gray-600 sm:inline hidden">Framework</span>
-                </TabsTrigger>
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                Framework
-              </TooltipContent>
-            </Tooltip>
-            {/* Examples */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <TabsTrigger
-                  value="examples"
-                  className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[72px] sm:min-w-[120px] px-2 py-2 gap-1"
-                >
-                  <Users className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-purple-700" />
-                  <span className="text-[11px] font-medium text-gray-600 sm:inline hidden">Examples</span>
-                </TabsTrigger>
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                Examples
-              </TooltipContent>
-            </Tooltip>
-            {/* Best Practices */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <TabsTrigger
-                  value="best-practices"
-                  className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[72px] sm:min-w-[120px] px-2 py-2 gap-1"
-                >
-                  <Lightbulb className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-green-700" />
-                  <span className="text-[11px] font-medium text-gray-600 sm:inline hidden">Best Practices</span>
-                </TabsTrigger>
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                Best Practices
-              </TooltipContent>
-            </Tooltip>
-          </TabsList>
+            <TabsList
+              className={[
+                // On mobile: flex row
+                "flex flex-row gap-2 min-w-0 sm:grid sm:grid-cols-4 sm:gap-0",
+                // Hide scrollbars on mobile, make tabs easy to tap
+                "bg-muted rounded-lg border px-2 sm:px-0",
+                "w-full",
+              ].join(" ")}
+              style={{ minWidth: "402px", WebkitOverflowScrolling: 'touch' }}
+            >
+              {/* Theory */}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <TabsTrigger
+                    value="theory"
+                    className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[80px] sm:min-w-[120px] px-2 py-2 gap-1"
+                  >
+                    <BookOpen className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-yellow-700" />
+                    <span className="text-[11px] font-medium text-gray-600 sm:inline hidden">Theory</span>
+                  </TabsTrigger>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  Theory
+                </TooltipContent>
+              </Tooltip>
+              {/* Framework */}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <TabsTrigger
+                    value="framework"
+                    className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[80px] sm:min-w-[120px] px-2 py-2 gap-1"
+                  >
+                    <Target className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-blue-700" />
+                    <span className="text-[11px] font-medium text-gray-600 sm:inline hidden">Framework</span>
+                  </TabsTrigger>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  Framework
+                </TooltipContent>
+              </Tooltip>
+              {/* Examples */}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <TabsTrigger
+                    value="examples"
+                    className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[80px] sm:min-w-[120px] px-2 py-2 gap-1"
+                  >
+                    <Users className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-purple-700" />
+                    <span className="text-[11px] font-medium text-gray-600 sm:inline hidden">Examples</span>
+                  </TabsTrigger>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  Examples
+                </TooltipContent>
+              </Tooltip>
+              {/* Best Practices */}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <TabsTrigger
+                    value="best-practices"
+                    className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[80px] sm:min-w-[120px] px-2 py-2 gap-1"
+                  >
+                    <Lightbulb className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-green-700" />
+                    <span className="text-[11px] font-medium text-gray-600 sm:inline hidden">Best Practices</span>
+                  </TabsTrigger>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  Best Practices
+                </TooltipContent>
+              </Tooltip>
+            </TabsList>
+          </div>
         </TooltipProvider>
 
         <TabsContent value="theory" className="space-y-4">
