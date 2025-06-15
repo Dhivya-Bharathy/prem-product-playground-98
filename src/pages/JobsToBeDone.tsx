@@ -1,17 +1,14 @@
+
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Download, Trash2, Users, BookOpen, Edit, List } from "lucide-react";
-import { Link } from "react-router-dom";
-import { JTBDStatement, JTBDTemplate } from "@/types/jtbd";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { JTBDGuide } from "@/components/jtbd/JTBDGuide";
 import { JTBDBuilder } from "@/components/jtbd/JTBDBuilder";
 import { JTBDTemplates } from "@/components/jtbd/JTBDTemplates";
 import { useToast } from "@/hooks/use-toast";
-import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { JTBDMainTabs } from "@/components/jtbd/JTBDMainTabs";
+import { JTBDHeader } from "@/components/jtbd/JTBDHeader";
+import { JTBDStatementsList } from "@/components/jtbd/JTBDStatementsList";
+import { JTBDStatement, JTBDTemplate } from "@/types/jtbd";
 
 const JobsToBeDone = () => {
   const { toast } = useToast();
@@ -46,9 +43,7 @@ const JobsToBeDone = () => {
   };
 
   const handleUseTemplate = (template: JTBDTemplate) => {
-    // Switch to builder tab and populate with template
     setActiveTab("builder");
-    
     toast({
       title: "Template Applied",
       description: `${template.name} template is ready to customize in the builder.`
@@ -106,172 +101,43 @@ const JobsToBeDone = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      {/* Header */}
-      <header className="bg-white/70 backdrop-blur-sm shadow-sm border-b border-white/20">
-        <div className="container mx-auto px-4 py-4">
-          {/* Make header top actions wrap and scroll on mobile */}
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
-              <Button variant="ghost" size="sm" asChild className="px-2 sm:px-3">
-                <Link to="/">
-                  <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
-                  <span className="hidden xs:inline">Back to Tools</span>
-                </Link>
-              </Button>
-              <div>
-                <h1 className="text-lg sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-                  Jobs to be Done Framework
-                </h1>
-                <p className="text-xs sm:text-gray-600 mt-1">
-                  Understand customer needs using Clayton Christensen's methodology
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2 flex-wrap sm:gap-3 sm:flex-nowrap overflow-x-auto -mx-1 sm:mx-0 pb-1">
-              {statements.length > 0 && (
-                <>
-                  <Badge variant="secondary" className="px-2 py-1 sm:px-3 sm:py-1">
-                    <Users className="w-4 h-4 mr-1" />
-                    {statements.length}
-                    <span className="hidden xs:inline">&nbsp;Statements</span>
-                  </Badge>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={handleExportAll}
-                    className="bg-white/80 hover:bg-white min-w-[40px] px-2 sm:px-3"
-                  >
-                    <Download className="w-4 h-4 mr-1 sm:mr-2" />
-                    <span className="hidden xs:inline">Export All</span>
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={handleClearAll}
-                    className="bg-white/80 hover:bg-white min-w-[40px] px-2 sm:px-3"
-                  >
-                    <Trash2 className="w-4 h-4 mr-1 sm:mr-2" />
-                    <span className="hidden xs:inline">Clear All</span>
-                  </Button>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </header>
+      <JTBDHeader
+        statementCount={statements.length}
+        onExportAll={handleExportAll}
+        onClearAll={handleClearAll}
+      />
 
-      {/* Main Content */}
       <div className="container mx-auto px-2 py-6 sm:px-4 sm:py-8">
         <div className="max-w-7xl mx-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            {/* Use the improved main tab navigation */}
             <JTBDMainTabs
               activeTab={activeTab}
               setActiveTab={setActiveTab}
               statementCount={statements.length}
             />
 
-            {/* --- GUIDE TAB --- */}
             <TabsContent value="guide">
               <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
                 <JTBDGuide />
               </div>
             </TabsContent>
-
-            {/* --- BUILDER TAB --- */}
             <TabsContent value="builder">
               <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
                 <JTBDBuilder onSaveStatement={handleSaveStatement} />
               </div>
             </TabsContent>
-
-            {/* --- TEMPLATES TAB --- */}
             <TabsContent value="templates">
               <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
                 <JTBDTemplates onUseTemplate={handleUseTemplate} />
               </div>
             </TabsContent>
-
-            {/* --- STATEMENTS TAB --- */}
             <TabsContent value="statements">
               <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <h2 className="text-2xl font-bold text-gray-900">My JTBD Statements</h2>
-                    <p className="text-gray-600">Your saved job statements and insights</p>
-                  </div>
-                  {statements.length > 0 && (
-                    <Badge className="bg-blue-100 text-blue-800">
-                      {statements.length} Statements
-                    </Badge>
-                  )}
-                </div>
-
-                {statements.length === 0 ? (
-                  <div className="text-center py-12">
-                    <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-xl font-semibold text-gray-600 mb-2">No Statements Yet</h3>
-                    <p className="text-gray-500 mb-6">
-                      Create your first JTBD statement using the builder or templates.
-                    </p>
-                    <div className="flex gap-3 justify-center">
-                      <Button onClick={() => setActiveTab("builder")}>
-                        Start Building
-                      </Button>
-                      <Button variant="outline" onClick={() => setActiveTab("templates")}>
-                        Browse Templates
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {statements.map((statement) => (
-                      <Card key={statement.id} className="hover:shadow-md transition-shadow">
-                        <CardHeader>
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <CardTitle className="text-lg text-gray-900 mb-2">
-                                "{statement.fullStatement}"
-                              </CardTitle>
-                              {statement.customerContext && (
-                                <div className="p-2 bg-blue-50 rounded text-sm text-blue-800 mb-2">
-                                  <strong>Context:</strong> {statement.customerContext}
-                                </div>
-                              )}
-                            </div>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              onClick={() => handleDeleteStatement(statement.id)}
-                              className="text-red-500 hover:text-red-700"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </Button>
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="grid md:grid-cols-3 gap-3 text-sm">
-                            <div className="p-2 bg-blue-50 rounded">
-                              <strong className="text-blue-700">Situation:</strong>
-                              <p className="text-blue-800">{statement.situation}</p>
-                            </div>
-                            <div className="p-2 bg-green-50 rounded">
-                              <strong className="text-green-700">Motivation:</strong>
-                              <p className="text-green-800">{statement.job}</p>
-                            </div>
-                            <div className="p-2 bg-purple-50 rounded">
-                              <strong className="text-purple-700">Outcome:</strong>
-                              <p className="text-purple-800">{statement.outcome}</p>
-                            </div>
-                          </div>
-                          <div className="flex justify-between items-center mt-4 text-xs text-gray-500">
-                            <span>Created: {statement.createdAt.toLocaleDateString()}</span>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                )}
+                <JTBDStatementsList
+                  statements={statements}
+                  onDelete={handleDeleteStatement}
+                  onSetActiveTab={setActiveTab}
+                />
               </div>
             </TabsContent>
           </Tabs>
