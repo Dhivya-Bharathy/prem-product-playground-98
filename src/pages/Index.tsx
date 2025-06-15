@@ -2,6 +2,7 @@
 import { Header } from "@/components/home/Header";
 import { HeroSection } from "@/components/home/HeroSection";
 import { ToolsGrid } from "@/components/home/ToolsGrid";
+import { AboutPremSection } from "@/components/home/AboutPremSection";
 import { Footer } from "@/components/home/Footer";
 import { SEOHead } from "@/components/SEOHead";
 
@@ -9,9 +10,9 @@ const Index = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Product Practice Excellence",
+    "name": "Prem Pradeep | Tools for Product Practice Excellence",
     "url": "https://www.prempradeep.com",
-    "description": "Comprehensive product management tools and frameworks for modern product professionals",
+    "description": "Explore product excellence tools, assessments, and frameworks by Prem Pradeep. Built to elevate product teams with clarity and impact.",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web Browser",
     "offers": {
@@ -22,16 +23,54 @@ const Index = () => {
     "creator": {
       "@type": "Person",
       "name": "Prem Pradeep",
-      "jobTitle": "Product Manager"
-    }
+      "jobTitle": "Product Practice Excellence Expert"
+    },
+    "hasPart": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "User Story Generator",
+        "description": "Create well-structured user stories with acceptance criteria",
+        "applicationCategory": "BusinessApplication"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Feature Prioritization Matrix",
+        "description": "Prioritize features using RICE, MoSCoW, and other frameworks",
+        "applicationCategory": "BusinessApplication"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Product Roadmap Planner",
+        "description": "Plan and visualize your product roadmap with priorities",
+        "applicationCategory": "BusinessApplication"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Product Metrics Dashboard",
+        "description": "Track and analyze key product metrics and KPIs",
+        "applicationCategory": "BusinessApplication"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "DVF Exercise",
+        "description": "Evaluate ideas using Desirability, Viability, Feasibility framework",
+        "applicationCategory": "BusinessApplication"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Jobs to be Done Framework",
+        "description": "Understand customer needs using Clayton Christensen's JTBD methodology",
+        "applicationCategory": "BusinessApplication"
+      }
+    ]
   };
 
   return (
     <>
       <SEOHead
-        title="Prem Pradeep - Product Management Tools & Frameworks | Product Strategy Expert"
-        description="Master product management with practical tools, frameworks, and assessments. Access user story generators, feature prioritization, roadmap planning, and more - designed by product expert Prem Pradeep."
-        keywords="product management, product strategy, user stories, feature prioritization, product roadmap, DVF framework, product tools, product manager, agile, product development, growth strategies"
+        title="Prem Pradeep | Tools for Product Practice Excellence"
+        description="Explore product excellence tools, assessments, and frameworks by Prem Pradeep. Built to elevate product teams with clarity and impact."
+        keywords="product management, product strategy, user stories, feature prioritization, product roadmap, DVF framework, product tools, product manager, agile, product development, growth strategies, Prem Pradeep"
         canonical="https://www.prempradeep.com/"
         structuredData={structuredData}
       />
@@ -40,6 +79,7 @@ const Index = () => {
         <main>
           <HeroSection />
           <ToolsGrid />
+          <AboutPremSection />
         </main>
         <Footer />
       </div>

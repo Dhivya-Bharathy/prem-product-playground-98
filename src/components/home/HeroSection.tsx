@@ -11,6 +11,13 @@ export const HeroSection = () => {
     }
   };
 
+  const scrollToAssessments = () => {
+    const assessmentsSection = document.getElementById('assessments');
+    if (assessmentsSection) {
+      assessmentsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="relative overflow-hidden bg-white pt-24 pb-20 sm:pt-32 sm:pb-24">
       {/* Background decoration */}
@@ -26,20 +33,20 @@ export const HeroSection = () => {
       
       <div className="container mx-auto px-4 text-center">
         <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl leading-tight">
-          Craft Products with
+          Accelerate Product Practice
           <span className="block bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            Purpose & Excellence
+            Excellence with Prem Pradeep
           </span>
         </h1>
         
         <p className="mt-6 text-lg leading-8 text-gray-600 max-w-2xl mx-auto">
-          A curated collection of tools and frameworks to elevate your product management practice, built on a foundation of ethical and sustainable innovation.
+          Tools and frameworks to elevate your product teams and outcomes.
         </p>
 
         <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-4">
-            <span className="flex items-center gap-2 text-sm text-gray-500"><CheckCircle className="w-4 h-4 text-green-500" /> 15+ Free Tools</span>
-            <span className="flex items-center gap-2 text-sm text-gray-500"><CheckCircle className="w-4 h-4 text-green-500" /> Ethical Frameworks</span>
-            <span className="flex items-center gap-2 text-sm text-gray-500"><CheckCircle className="w-4 h-4 text-green-500" /> Growth Focused</span>
+            <span className="flex items-center gap-2 text-sm text-gray-500"><CheckCircle className="w-4 h-4 text-green-500" /> 6 Featured Tools</span>
+            <span className="flex items-center gap-2 text-sm text-gray-500"><CheckCircle className="w-4 h-4 text-green-500" /> 2 Strategic Assessments</span>
+            <span className="flex items-center gap-2 text-sm text-gray-500"><CheckCircle className="w-4 h-4 text-green-500" /> Practice Excellence Focus</span>
         </div>
         
         <div className="mt-10 flex items-center justify-center gap-x-6">
@@ -54,12 +61,10 @@ export const HeroSection = () => {
           <Button 
             variant="ghost" 
             size="lg" 
-            asChild 
+            onClick={scrollToAssessments}
             className="group font-semibold text-gray-700"
           >
-            <Link to="/contact">
-              Get in Touch <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </Link>
+            Take an Assessment <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Button>
         </div>
         

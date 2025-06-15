@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Linkedin, Mail, Sparkles } from "lucide-react";
+import { Linkedin, Mail, Sparkles, Twitter } from "lucide-react";
 
 export const Footer = () => {
   const toolsLinks = [
@@ -34,14 +34,14 @@ export const Footer = () => {
               </h3>
             </div>
             <p className="text-gray-600 mb-6 text-sm leading-relaxed max-w-xs">
-              Empowering product professionals with ethical frameworks and practical tools for sustainable innovation.
+              Tools and frameworks by Prem Pradeep for product excellence, strategy, and team empowerment.
             </p>
           </div>
 
           {/* Links */}
           <div className="lg:col-span-2">
             <h4 className="font-semibold mb-4 text-gray-900">
-              Product Tools
+              Tools
             </h4>
             <nav className="space-y-2">
               {toolsLinks.slice(0, 5).map((link) => (
@@ -58,7 +58,7 @@ export const Footer = () => {
 
           <div className="lg:col-span-2">
             <h4 className="font-semibold mb-4 text-gray-900">
-              Frameworks
+              Assessments
             </h4>
             <nav className="space-y-2">
               {frameworkLinks.map((link) => (
@@ -75,9 +75,12 @@ export const Footer = () => {
 
           <div className="lg:col-span-2">
             <h4 className="font-semibold mb-4 text-gray-900">
-              Resources
+              About
             </h4>
             <nav className="space-y-2">
+              <Link to="/about" className="block text-sm text-gray-600 hover:text-indigo-600 hover:translate-x-1 transition-all duration-200">
+                About Prem
+              </Link>
               <Link to="/contact" className="block text-sm text-gray-600 hover:text-indigo-600 hover:translate-x-1 transition-all duration-200">
                 Contact
               </Link>
@@ -87,7 +90,7 @@ export const Footer = () => {
                 rel="noopener noreferrer"
                 className="block text-sm text-gray-600 hover:text-indigo-600 hover:translate-x-1 transition-all duration-200"
               >
-                About Creator
+                LinkedIn Profile
               </a>
             </nav>
           </div>
@@ -95,10 +98,13 @@ export const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-200 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
-            <p className="text-sm text-gray-500">&copy; 2024 Product Practice. Built by Prem Pradeep.</p>
+            <p className="text-sm text-gray-500">&copy; 2025 Prem Pradeep. All rights reserved.</p>
             <div className="flex gap-4 mt-4 sm:mt-0">
               <a href="https://www.linkedin.com/in/prempradeep/" target="_blank" rel="noopener noreferrer" aria-label="Connect on LinkedIn" className="text-gray-400 hover:text-gray-600">
                 <Linkedin className="h-5 w-5" />
+              </a>
+              <a href="https://twitter.com/prempradeep" target="_blank" rel="noopener noreferrer" aria-label="Follow on Twitter" className="text-gray-400 hover:text-gray-600">
+                <Twitter className="h-5 w-5" />
               </a>
               <Link to="/contact" aria-label="Contact us" className="text-gray-400 hover:text-gray-600">
                 <Mail className="h-5 w-5" />

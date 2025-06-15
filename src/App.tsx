@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,6 +15,7 @@ import DVFExercise from "./pages/DVFExercise";
 import DVFFramework from "./pages/DVFFramework";
 import IdeaValidator from "./pages/IdeaValidator";
 import Contact from "./pages/Contact";
+import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import JobsToBeDone from "./pages/JobsToBeDone";
 import PMCompetency from "./pages/PMCompetency";
@@ -42,6 +44,7 @@ const App = () => (
             <Route path="/tools/dark-patterns-assessment" element={<DarkPatternsAssessment />} />
             <Route path="/tools/idea-validator" element={<IdeaValidator />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
