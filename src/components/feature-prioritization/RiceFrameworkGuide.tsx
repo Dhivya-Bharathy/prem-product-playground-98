@@ -1,8 +1,32 @@
 
-import { BookOpen, Calculator, Users, Target, Lightbulb, TrendingUp } from "lucide-react";
+import { BookOpen, Calculator, Users, Target, Lightbulb, TrendingUp, LayoutList, BadgePercent, FileBarChart, ClipboardCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+
+const GUIDE_TABS = [
+  {
+    value: "overview",
+    label: "Overview",
+    Icon: Lightbulb,
+  },
+  {
+    value: "components",
+    label: "Components",
+    Icon: LayoutList,
+  },
+  {
+    value: "calculation",
+    label: "Calculation",
+    Icon: FileBarChart,
+  },
+  {
+    value: "best-practices",
+    label: "Best Practices",
+    Icon: ClipboardCheck,
+  },
+];
 
 export const RiceFrameworkGuide = () => {
   return (
@@ -20,12 +44,32 @@ export const RiceFrameworkGuide = () => {
       </div>
 
       <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="components">Components</TabsTrigger>
-          <TabsTrigger value="calculation">Calculation</TabsTrigger>
-          <TabsTrigger value="best-practices">Best Practices</TabsTrigger>
-        </TabsList>
+        <div className="overflow-x-auto hide-scrollbar mb-4 -mx-2 sm:mx-0 px-1 sm:px-0">
+          <TabsList
+            className="flex w-full min-w-[320px] gap-1 sm:gap-0 border rounded-lg bg-slate-100 flex-nowrap"
+            style={{ minWidth: 260 }}
+          >
+            {GUIDE_TABS.map(({ value, label, Icon }) => (
+              <TabsTrigger
+                key={value}
+                value={value}
+                className="flex-1 min-w-[64px] sm:min-w-[120px] flex flex-col items-center justify-center py-2 px-1 text-xs sm:text-sm focus-visible:outline-none"
+              >
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="flex justify-center">
+                      <Icon className="w-5 h-5 sm:mr-2 text-blue-600" />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    {label}
+                  </TooltipContent>
+                </Tooltip>
+                <span className="hidden sm:block mt-1">{label}</span>
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
 
         <TabsContent value="overview" className="space-y-4">
           <Card>
