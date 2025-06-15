@@ -11,7 +11,7 @@ import { UserStoryBuilder } from "@/components/user-story/UserStoryBuilder";
 import { UserStoryTemplates } from "@/components/user-story/UserStoryTemplates";
 import { useToast } from "@/hooks/use-toast";
 import { userStoryTabIcons } from "@/components/user-story/UserStoryTabsIconMap";
-import { Tooltip } from "@/components/ui/tooltip";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 
 const UserStoryGenerator = () => {
   const { toast } = useToast();
@@ -177,14 +177,14 @@ const UserStoryGenerator = () => {
                   >
                     <div className="flex justify-center">
                       <Tooltip>
-                        <Tooltip.Trigger asChild>
+                        <TooltipTrigger asChild>
                           <div>
                             <Icon className="w-5 h-5 sm:mr-2 text-blue-600" />
                           </div>
-                        </Tooltip.Trigger>
-                        <Tooltip.Content>
+                        </TooltipTrigger>
+                        <TooltipContent>
                           {label}
-                        </Tooltip.Content>
+                        </TooltipContent>
                       </Tooltip>
                     </div>
                     <span className="hidden sm:block mt-1">{label}</span>
