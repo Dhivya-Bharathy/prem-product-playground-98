@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/home/HeroSection";
 import { ToolsGrid } from "@/components/home/ToolsGrid";
 import { Footer } from "@/components/home/Footer";
 import { SEOHead } from "@/components/SEOHead";
+import { AboutSection } from "@/components/home/AboutSection";
 
 const Index = () => {
   const structuredData = {
@@ -35,10 +36,15 @@ const Index = () => {
         canonical="https://www.prempradeep.com/"
         structuredData={structuredData}
       />
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <div className="min-h-screen bg-white">
         <Header />
-        <HeroSection />
-        <ToolsGrid />
+        <main>
+          <HeroSection />
+          <ToolsGrid />
+          <div className="bg-slate-900">
+            <AboutSection />
+          </div>
+        </main>
         <Footer />
       </div>
     </>

@@ -1,9 +1,8 @@
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Zap, Target, Star } from "lucide-react";
+import { ArrowRight, Zap, Target } from "lucide-react";
 import { productTools, assessmentTools } from "@/data/tools";
 
 export const ToolsGrid = () => {
@@ -24,95 +23,77 @@ export const ToolsGrid = () => {
     };
 
     return (
-      <Card 
-        key={tool.id} 
-        className="group hover:shadow-xl hover:shadow-blue-100/50 hover:-translate-y-1 transition-all duration-300 border border-gray-200 bg-white relative overflow-hidden"
-        style={{ animationDelay: `${index * 100}ms` }}
-      >
-        {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/0 to-purple-50/0 group-hover:from-blue-50/50 group-hover:to-purple-50/50 transition-all duration-300"></div>
-        
-        <CardHeader className="relative z-10 pb-4">
-          <div className="flex items-center justify-between mb-4">
-            <div className="p-3 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl group-hover:from-blue-200 group-hover:to-purple-200 transition-all duration-300">
-              <IconComponent className="w-6 h-6 text-blue-600" />
+      <Link to={tool.path} className="block group">
+        <Card 
+          key={tool.id} 
+          className="h-full transform transition-all duration-300 ease-in-out group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-purple-100 border border-gray-200/80 bg-white/50"
+          style={{ animationDelay: `${index * 100}ms` }}
+        >
+          <CardHeader className="pb-4">
+            <div className="flex items-start justify-between">
+              <div className="p-3 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-lg">
+                <IconComponent className="h-6 w-6 text-indigo-600" />
+              </div>
+              <Badge 
+                variant="outline" 
+                className={`${getDifficultyColor(tool.difficulty)} text-xs`}
+              >
+                {tool.difficulty}
+              </Badge>
             </div>
-            <Badge 
-              variant="outline" 
-              className={`${getDifficultyColor(tool.difficulty)} font-medium text-xs px-3 py-1`}
-            >
-              {tool.difficulty}
-            </Badge>
-          </div>
-          <CardTitle className="text-lg group-hover:text-blue-700 transition-colors duration-200 mb-2">
-            {tool.title}
-          </CardTitle>
-          <CardDescription className="text-gray-600 leading-relaxed text-sm">
-            {tool.description}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="relative z-10 pt-0">
-          <div className="flex items-center justify-between">
-            <Badge variant="secondary" className="bg-gray-100 text-gray-700 text-xs font-medium">
-              {tool.category}
-            </Badge>
-            <Button 
-              asChild 
-              size="sm" 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 group/btn shadow-md hover:shadow-lg transition-all duration-200"
-            >
-              <Link to={tool.path} className="flex items-center">
-                Try Tool
-                <ArrowRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform duration-200" />
-              </Link>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+          </CardHeader>
+          <CardContent>
+            <CardTitle className="text-lg font-semibold text-gray-800 mb-2 group-hover:text-indigo-600">
+              {tool.title}
+            </CardTitle>
+            <p className="text-sm text-gray-600 leading-relaxed mb-4">
+              {tool.description}
+            </p>
+            <div className="flex items-center text-sm font-medium text-indigo-600">
+              Try Tool
+              <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
     );
   };
 
   return (
-    <section id="tools" className="py-20 bg-gray-50/50">
+    <section id="tools" className="py-24 bg-gray-50">
       <div className="container mx-auto px-4">
         {/* Product Management Tools Section */}
         <div className="mb-20">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-blue-100 border border-blue-200 rounded-full px-4 py-2 mb-6">
-              <Zap className="w-4 h-4 text-blue-600" />
-              <span className="text-blue-700 font-semibold text-sm">CORE TOOLS</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Product Management
-              <span className="block text-blue-600">Arsenal</span>
+          <div className="text-center mb-12">
+            <Badge variant="outline" className="text-sm font-semibold border-purple-300 bg-purple-50 text-purple-700 py-1 px-4 mb-4">
+              CORE TOOLS
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Your Product Management Arsenal
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Comprehensive frameworks for planning, executing, and optimizing your product strategy with 
-              <span className="font-semibold text-gray-800"> ethical considerations</span> at the core.
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              A suite of practical tools to help you build, launch, and grow products your customers will love.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {productTools.map((tool, index) => renderToolCard(tool, index))}
           </div>
         </div>
 
         {/* Assessment Tools Section */}
         <div>
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-purple-100 border border-purple-200 rounded-full px-4 py-2 mb-6">
-              <Target className="w-4 h-4 text-purple-600" />
-              <span className="text-purple-700 font-semibold text-sm">ASSESSMENTS</span>
-            </div>
+          <div className="text-center mb-12">
+            <Badge variant="outline" className="text-sm font-semibold border-teal-300 bg-teal-50 text-teal-700 py-1 px-4 mb-4">
+              SKILL ASSESSMENTS
+            </Badge>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Skill Enhancement
-              <span className="block text-purple-600">Suite</span>
+              Enhance Your PM Craft
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Evaluate your skills and analyze design patterns to advance your practice and ensure 
-              <span className="font-semibold text-gray-800"> responsible product development</span>.
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Evaluate your competencies and analyze design patterns to advance your practice.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {assessmentTools.map((tool, index) => renderToolCard(tool, index))}
           </div>
         </div>

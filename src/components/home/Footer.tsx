@@ -1,7 +1,6 @@
 
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Linkedin, Mail, Target, CheckSquare, TrendingUp, Globe, Shield, Sparkles } from "lucide-react";
+import { Linkedin, Mail, Sparkles } from "lucide-react";
 
 export const Footer = () => {
   const toolsLinks = [
@@ -23,56 +22,33 @@ export const Footer = () => {
   return (
     <footer className="bg-white border-t border-gray-200">
       <div className="container mx-auto px-4 py-16">
-        <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-12 md:grid-cols-2 gap-8">
           {/* Brand Section */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <Sparkles className="w-4 h-4 text-white" />
+          <div className="lg:col-span-4">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500">
+                <Sparkles className="h-4 w-4 text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900">
                 Product Practice
               </h3>
             </div>
-            <p className="text-gray-600 mb-6 leading-relaxed">
+            <p className="text-gray-600 mb-6 text-sm leading-relaxed max-w-xs">
               Empowering product professionals with ethical frameworks and practical tools for sustainable innovation.
             </p>
-            <div className="flex gap-2">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                asChild 
-                className="text-gray-600 border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 transition-all duration-200"
-              >
-                <a href="https://www.linkedin.com/in/prempradeep/" target="_blank" rel="noopener noreferrer" aria-label="Connect on LinkedIn">
-                  <Linkedin className="w-4 h-4" />
-                </a>
-              </Button>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                asChild 
-                className="text-gray-600 border-gray-300 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 transition-all duration-200"
-              >
-                <Link to="/contact" aria-label="Contact us">
-                  <Mail className="w-4 h-4" />
-                </Link>
-              </Button>
-            </div>
           </div>
 
-          {/* Product Tools */}
-          <div>
-            <h4 className="text-lg font-semibold mb-6 text-gray-900 flex items-center">
-              <Target className="w-5 h-5 mr-2 text-blue-600" />
+          {/* Links */}
+          <div className="lg:col-span-2">
+            <h4 className="font-semibold mb-4 text-gray-900">
               Product Tools
             </h4>
-            <nav className="space-y-3">
-              {toolsLinks.map((link) => (
+            <nav className="space-y-2">
+              {toolsLinks.slice(0, 5).map((link) => (
                 <Link
                   key={link.name}
                   to={link.href}
-                  className="block text-gray-600 hover:text-blue-600 hover:translate-x-1 transition-all duration-200"
+                  className="block text-sm text-gray-600 hover:text-indigo-600 hover:translate-x-1 transition-all duration-200"
                 >
                   {link.name}
                 </Link>
@@ -80,18 +56,16 @@ export const Footer = () => {
             </nav>
           </div>
 
-          {/* Frameworks */}
-          <div>
-            <h4 className="text-lg font-semibold mb-6 text-gray-900 flex items-center">
-              <CheckSquare className="w-5 h-5 mr-2 text-purple-600" />
+          <div className="lg:col-span-2">
+            <h4 className="font-semibold mb-4 text-gray-900">
               Frameworks
             </h4>
-            <nav className="space-y-3">
+            <nav className="space-y-2">
               {frameworkLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.href}
-                  className="block text-gray-600 hover:text-purple-600 hover:translate-x-1 transition-all duration-200"
+                  className="block text-sm text-gray-600 hover:text-indigo-600 hover:translate-x-1 transition-all duration-200"
                 >
                   {link.name}
                 </Link>
@@ -99,46 +73,37 @@ export const Footer = () => {
             </nav>
           </div>
 
-          {/* Resources */}
-          <div>
-            <h4 className="text-lg font-semibold mb-6 text-gray-900 flex items-center">
-              <TrendingUp className="w-5 h-5 mr-2 text-green-600" />
+          <div className="lg:col-span-2">
+            <h4 className="font-semibold mb-4 text-gray-900">
               Resources
             </h4>
-            <nav className="space-y-3">
-              <Link to="/contact" className="block text-gray-600 hover:text-green-600 hover:translate-x-1 transition-all duration-200">
-                Contact Support
+            <nav className="space-y-2">
+              <Link to="/contact" className="block text-sm text-gray-600 hover:text-indigo-600 hover:translate-x-1 transition-all duration-200">
+                Contact
               </Link>
               <a 
                 href="https://www.linkedin.com/in/prempradeep/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="block text-gray-600 hover:text-green-600 hover:translate-x-1 transition-all duration-200"
+                className="block text-sm text-gray-600 hover:text-indigo-600 hover:translate-x-1 transition-all duration-200"
               >
-                About the Creator
+                About Creator
               </a>
             </nav>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-200 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="text-gray-500 mb-4 md:mb-0">
-              <p>&copy; 2024 Product Practice Excellence. Built by <span className="text-gray-700 font-semibold">Prem Pradeep</span>.</p>
-              <p className="mt-1 text-sm">Empowering product professionals worldwide through ethical innovation.</p>
+        <div className="border-t border-gray-200 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
+            <p className="text-sm text-gray-500">&copy; 2024 Product Practice. Built by Prem Pradeep.</p>
+            <div className="flex gap-4 mt-4 sm:mt-0">
+              <a href="https://www.linkedin.com/in/prempradeep/" target="_blank" rel="noopener noreferrer" aria-label="Connect on LinkedIn" className="text-gray-400 hover:text-gray-600">
+                <Linkedin className="h-5 w-5" />
+              </a>
+              <Link to="/contact" aria-label="Contact us" className="text-gray-400 hover:text-gray-600">
+                <Mail className="h-5 w-5" />
+              </Link>
             </div>
-            <div className="flex items-center gap-6 text-gray-500">
-              <span className="flex items-center gap-2 text-sm">
-                <Globe className="w-4 h-4 text-green-500" />
-                Free & Open Access
-              </span>
-              <span className="flex items-center gap-2 text-sm">
-                <Shield className="w-4 h-4 text-blue-500" />
-                Privacy Focused
-              </span>
-            </div>
-          </div>
         </div>
       </div>
     </footer>
