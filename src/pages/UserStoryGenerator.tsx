@@ -12,6 +12,8 @@ import { UserStoryTemplates } from "@/components/user-story/UserStoryTemplates";
 import { useToast } from "@/hooks/use-toast";
 import { userStoryTabIcons } from "@/components/user-story/UserStoryTabsIconMap";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import { UserStoryHeader } from "@/components/user-story/UserStoryHeader";
+import { UserStoryTabs } from "@/components/user-story/UserStoryTabs";
 
 const UserStoryGenerator = () => {
   const { toast } = useToast();
@@ -117,216 +119,25 @@ const UserStoryGenerator = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      {/* Header */}
-      <header className="bg-white/70 backdrop-blur-sm shadow-sm border-b border-white/20">
-        <div className="container mx-auto px-2 sm:px-4 py-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-2 sm:gap-4">
-              <Button variant="ghost" size="sm" asChild className="px-2">
-                <Link to="/" className="flex items-center">
-                  <ArrowLeft className="w-5 h-5" />
-                  <span className="hidden sm:inline ml-2">Back to Tools</span>
-                </Link>
-              </Button>
-              <div>
-                <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-                  User Story Generator
-                </h1>
-                <p className="text-gray-600 mt-1 text-sm sm:text-base">
-                  Create well-structured user stories using industry standards
-                </p>
-              </div>
-            </div>
-            {/* Responsive mobile button row */}
-            {stories.length > 0 && (
-              <>
-                <div className="flex flex-row gap-2 sm:hidden w-full mt-2">
-                  <Badge variant="secondary" className="px-2 py-1">
-                    <Users className="w-4 h-4 mr-1" />
-                    {stories.length}
-                  </Badge>
-                  <Button
-                    size="icon"
-                    variant="outline"
-                    onClick={handleExportAll}
-                    className="bg-white/80 hover:bg-white"
-                    aria-label="Export All"
-                  >
-                    <Download className="w-5 h-5" />
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="outline"
-                    onClick={handleClearAll}
-                    className="bg-white/80 hover:bg-white"
-                    aria-label="Clear All"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                  </Button>
-                </div>
-                <div className="hidden sm:flex flex-wrap items-center gap-2 sm:gap-3">
-                  <Badge variant="secondary" className="px-2 sm:px-3 py-1">
-                    <Users className="w-4 h-4 mr-1" />
-                    {stories.length} Stories
-                  </Badge>
-                  <Button size="sm" variant="outline" onClick={handleExportAll} className="bg-white/80 hover:bg-white w-full sm:w-auto">
-                    <Download className="w-4 h-4 mr-2" />
-                    <span className="hidden xs:inline">Export All</span>
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={handleClearAll} className="bg-white/80 hover:bg-white w-full sm:w-auto">
-                    <Trash2 className="w-4 h-4 mr-2" />
-                    <span className="hidden xs:inline">Clear All</span>
-                  </Button>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      </header>
+      <UserStoryHeader
+        storiesLength={stories.length}
+        handleExportAll={handleExportAll}
+        handleClearAll={handleClearAll}
+      />
 
-      {/* Main Content */}
       <div className="container mx-auto px-1 sm:px-4 py-4 sm:py-6">
         <div className="max-w-7xl mx-auto">
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            {/* Responsive TabsList with scrollable horizontal icons on mobile */}
-            <div className="overflow-x-auto hide-scrollbar mb-4 -mx-2 px-1 sm:px-2">
-              <TabsList
-                className="flex w-full min-w-[280px] sm:min-w-0 gap-1 sm:gap-0 border rounded-lg bg-slate-100"
-                style={{ minWidth: 220 }}
-              >
-                {Object.entries(userStoryTabIcons).map(([key, { Icon, label }]) => (
-                  <TabsTrigger
-                    key={key}
-                    value={key}
-                    className="flex-1 min-w-[68px] sm:min-w-[120px] text-xs sm:text-sm flex flex-col items-center justify-center py-2"
-                  >
-                    <div className="flex justify-center">
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <div>
-                            <Icon className="w-5 h-5 sm:mr-2 text-blue-600" />
-                          </div>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          {label}
-                        </TooltipContent>
-                      </Tooltip>
-                    </div>
-                    <span className="hidden sm:block mt-1">{label}</span>
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </div>
-
-            {/* Each TabsContent - Make sure inner content is not overflowing */}
-            <TabsContent value="guide">
-              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-3 sm:p-6">
-                <UserStoryGuide />
-              </div>
-            </TabsContent>
-            <TabsContent value="builder">
-              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-3 sm:p-6">
-                <UserStoryBuilder 
-                  onSaveStory={handleSaveStory} 
-                  templateToUse={templateToUse}
-                  onTemplateUsed={handleTemplateUsed}
-                />
-              </div>
-            </TabsContent>
-            <TabsContent value="templates">
-              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-3 sm:p-6">
-                <UserStoryTemplates onUseTemplate={handleUseTemplate} />
-              </div>
-            </TabsContent>
-            <TabsContent value="stories">
-              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-3 sm:p-6">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-2">
-                  <div>
-                    <h2 className="text-xl sm:text-2xl font-bold text-gray-900">My User Stories</h2>
-                    <p className="text-gray-600 text-sm">Your saved user stories and specifications</p>
-                  </div>
-                  {stories.length > 0 && (
-                    <Badge className="bg-blue-100 text-blue-800">
-                      {stories.length} Stories
-                    </Badge>
-                  )}
-                </div>
-                {stories.length === 0 ? (
-                  null
-                ) : (
-                  <div className="space-y-4">
-                    {stories.map((story) => (
-                      <Card key={story.id} className="hover:shadow-md transition-shadow">
-                        <CardHeader>
-                          <div className="flex flex-col md:flex-row items-start justify-between gap-2">
-                            <div className="flex-1">
-                              <CardTitle className="text-base sm:text-lg text-gray-900 mb-2">
-                                "{story.fullStory}"
-                              </CardTitle>
-                              <div className="flex flex-wrap gap-2 mb-2">
-                                <Badge className={getPriorityColor(story.priority)}>
-                                  {story.priority}
-                                </Badge>
-                                <Badge variant="outline">
-                                  {story.complexity}
-                                </Badge>
-                              </div>
-                            </div>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              onClick={() => handleDeleteStory(story.id)}
-                              className="text-red-500 hover:text-red-700"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </Button>
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm mb-4">
-                            <div className="p-2 bg-blue-50 rounded">
-                              <strong className="text-blue-700">User:</strong>
-                              <p className="text-blue-800 break-words">{story.userType}</p>
-                            </div>
-                            <div className="p-2 bg-green-50 rounded">
-                              <strong className="text-green-700">Goal:</strong>
-                              <p className="text-green-800 break-words">{story.goal}</p>
-                            </div>
-                            <div className="p-2 bg-purple-50 rounded">
-                              <strong className="text-purple-700">Benefit:</strong>
-                              <p className="text-purple-800 break-words">{story.benefit}</p>
-                            </div>
-                          </div>
-                          {story.acceptanceCriteria.length > 0 && (
-                            <div className="mb-4">
-                              <strong className="text-sm text-gray-700">Acceptance Criteria:</strong>
-                              <ul className="text-sm text-gray-600 mt-1 space-y-1">
-                                {story.acceptanceCriteria.map((criteria, index) => (
-                                  <li key={index} className="flex items-start">
-                                    <span className="text-green-600 mr-2">•</span>
-                                    <span className="break-words">{criteria}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-                          {story.notes && (
-                            <div className="mb-4 p-2 bg-yellow-50 rounded">
-                              <strong className="text-sm text-yellow-700">Notes:</strong>
-                              <p className="text-sm text-yellow-600 mt-1 break-words">{story.notes}</p>
-                            </div>
-                          )}
-                          <div className="flex justify-between items-center text-xs text-gray-500">
-                            <span>Created: {story.createdAt.toLocaleDateString()}</span>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </TabsContent>
-          </Tabs>
+          <UserStoryTabs
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            stories={stories}
+            handleSaveStory={handleSaveStory}
+            templateToUse={templateToUse}
+            handleTemplateUsed={handleTemplateUsed}
+            handleUseTemplate={handleUseTemplate}
+            handleDeleteStory={handleDeleteStory}
+            getPriorityColor={getPriorityColor}
+          />
         </div>
       </div>
     </div>
