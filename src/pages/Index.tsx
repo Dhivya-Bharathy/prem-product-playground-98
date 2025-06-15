@@ -1,7 +1,6 @@
 
 import { Header } from "@/components/home/Header";
 import { HeroSection } from "@/components/home/HeroSection";
-import { AboutSection } from "@/components/home/AboutSection";
 import { ToolsGrid } from "@/components/home/ToolsGrid";
 import { Footer } from "@/components/home/Footer";
 import { SEOHead } from "@/components/SEOHead";
@@ -55,7 +54,6 @@ const Index = () => {
         <div className="relative z-10">
           <Header />
           <HeroSection />
-          <AboutSection />
           <ToolsGrid />
           <Footer />
         </div>

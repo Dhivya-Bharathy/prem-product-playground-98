@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles, Zap, TrendingUp, Stars, Rocket } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 export const HeroSection = () => {
   const scrollToTools = () => {
@@ -28,14 +28,14 @@ export const HeroSection = () => {
           <div className="relative">
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-black leading-none tracking-tight">
               <span className="block text-white mb-4 relative">
-                Empowering
+                Product
                 <div className="absolute -inset-2 bg-gradient-to-r from-purple-600/20 to-pink-600/20 blur-xl rounded-lg"></div>
               </span>
               <span className="block bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent mb-4">
-                Teams Through
+                Practice
               </span>
               <span className="block text-white relative">
-                Ethics
+                Excellence
                 <div className="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-purple-500 to-cyan-400 transform skew-x-12"></div>
               </span>
             </h1>
