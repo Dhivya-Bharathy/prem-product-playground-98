@@ -1,10 +1,21 @@
-
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "react-router-dom";
-import { ArrowLeft, FileSpreadsheet, Calendar, GitBranch, Users, Download, Trash2 } from "lucide-react";
+import {
+  ArrowLeft,
+  FileSpreadsheet,
+  Calendar,
+  GitBranch,
+  Users,
+  Download,
+  Trash2,
+  BookOpen,
+  ClipboardList,
+  LayoutTemplate,
+  BarChart3,
+} from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { RoadmapItem } from "@/types/roadmap";
 import { downloadAsExcel } from "@/utils/roadmapUtils";
@@ -13,6 +24,14 @@ import RoadmapTimeline from "@/components/roadmap/RoadmapTimeline";
 import RoadmapTips from "@/components/roadmap/RoadmapTips";
 import { RoadmapGuide } from "@/components/roadmap/RoadmapGuide";
 import { RoadmapTemplates, RoadmapTemplate } from "@/components/roadmap/RoadmapTemplates";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+
+const ROADMAP_TABS = [
+  { value: "guide", label: "Framework Guide", Icon: BookOpen },
+  { value: "builder", label: "Roadmap Builder", Icon: ClipboardList },
+  { value: "templates", label: "Templates", Icon: LayoutTemplate },
+  { value: "roadmap", label: "My Roadmap", Icon: BarChart3 },
+];
 
 const ProductRoadmap = () => {
   const { toast } = useToast();
@@ -130,46 +149,63 @@ const ProductRoadmap = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       {/* Header */}
       <header className="bg-white/70 backdrop-blur-sm shadow-sm border-b border-white/20">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" asChild>
+        <div className="container mx-auto px-1 sm:px-4 py-4 sm:py-6">
+          <div className="flex flex-col gap-3 sm:gap-0 sm:flex-row items-start sm:items-center justify-between">
+            <div className="flex items-center gap-4 w-full">
+              <Button variant="ghost" size="sm" asChild className="px-2">
                 <Link to="/">
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Tools
+                  <span className="hidden xs:inline">Back to Tools</span>
                 </Link>
               </Button>
-              <div>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+              <div className="flex flex-col">
+                <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
                   Product Roadmap Planner
                 </h1>
-                <p className="text-gray-600 mt-1">
+                <p className="text-gray-600 mt-0.5 text-xs sm:text-base">
                   Strategic planning and visualization for product development
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              {roadmapItems.length > 0 && (
-                <>
-                  <Badge variant="secondary" className="px-3 py-1">
+            {roadmapItems.length > 0 && (
+              // Horizontal scroll wrap for actions on mobile
+              <div className="w-full sm:w-auto mt-2 sm:mt-0">
+                <div className="flex gap-2 overflow-x-auto hide-scrollbar py-1 px-0.5 sm:p-0">
+                  <Badge variant="secondary" className="px-3 py-1 flex-shrink-0">
                     <Users className="w-4 h-4 mr-1" />
-                    {roadmapItems.length} Items
+                    <span className="hidden xs:inline">{roadmapItems.length} Items</span>
+                    <span className="inline xs:hidden">{roadmapItems.length}</span>
                   </Badge>
-                  <Button size="sm" variant="outline" onClick={handleDownloadExcel} className="bg-white/80 hover:bg-white">
-                    <FileSpreadsheet className="w-4 h-4 mr-2" />
-                    Excel
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={handleExportAll} className="bg-white/80 hover:bg-white">
-                    <Download className="w-4 h-4 mr-2" />
-                    Export All
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={handleClearAll} className="bg-white/80 hover:bg-white">
-                    <Trash2 className="w-4 h-4 mr-2" />
-                    Clear All
-                  </Button>
-                </>
-              )}
-            </div>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button size="sm" variant="outline" onClick={handleDownloadExcel} className="bg-white/80 hover:bg-white flex-shrink-0 px-2 sm:px-4">
+                        <FileSpreadsheet className="w-4 h-4" />
+                        <span className="hidden sm:inline ml-2">Excel</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Download as Excel</TooltipContent>
+                  </Tooltip>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button size="sm" variant="outline" onClick={handleExportAll} className="bg-white/80 hover:bg-white flex-shrink-0 px-2 sm:px-4">
+                        <Download className="w-4 h-4" />
+                        <span className="hidden sm:inline ml-2">Export All</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Export All (JSON)</TooltipContent>
+                  </Tooltip>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button size="sm" variant="outline" onClick={handleClearAll} className="bg-white/80 hover:bg-white flex-shrink-0 px-2 sm:px-4">
+                        <Trash2 className="w-4 h-4" />
+                        <span className="hidden sm:inline ml-2">Clear All</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Remove all roadmap items</TooltipContent>
+                  </Tooltip>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </header>
@@ -177,9 +213,9 @@ const ProductRoadmap = () => {
       {/* Quick Stats Bar */}
       {roadmapItems.length > 0 && (
         <div className="bg-white/50 backdrop-blur-sm border-b border-white/20">
-          <div className="container mx-auto px-4 py-4">
+          <div className="container mx-auto px-1 sm:px-4 py-4">
             <div className="max-w-7xl mx-auto">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
                 <div className="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
                   <div className="p-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg">
                     <GitBranch className="w-4 h-4 text-white" />
@@ -223,51 +259,71 @@ const ProductRoadmap = () => {
       )}
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-1 sm:px-4 py-6 sm:py-8">
         <div className="max-w-7xl mx-auto">
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-4 mb-8">
-              <TabsTrigger value="guide">Framework Guide</TabsTrigger>
-              <TabsTrigger value="builder">Roadmap Builder</TabsTrigger>
-              <TabsTrigger value="templates">Templates</TabsTrigger>
-              <TabsTrigger value="roadmap">My Roadmap</TabsTrigger>
-            </TabsList>
+          {/* Mobile-friendly horizontally scrollable tabs with icons */}
+          <div className="overflow-x-auto hide-scrollbar mb-4 -mx-2 sm:mx-0 px-1 sm:px-0">
+            <Tabs
+              value={activeTab}
+              onValueChange={setActiveTab}
+            >
+              <TabsList
+                className="flex w-full min-w-[320px] gap-1 sm:gap-0 border rounded-lg bg-slate-100 flex-nowrap"
+                style={{ minWidth: 260 }}
+              >
+                {ROADMAP_TABS.map(({ value, label, Icon }) => (
+                  <TabsTrigger
+                    key={value}
+                    value={value}
+                    className="flex-1 min-w-[62px] sm:min-w-[150px] flex flex-col items-center justify-center py-2 px-1 text-xs sm:text-sm focus-visible:outline-none"
+                  >
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex items-center justify-center">
+                          <Icon className="w-5 h-5 sm:mr-2 text-blue-600" />
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent side="bottom">{label}</TooltipContent>
+                    </Tooltip>
+                    <span className="hidden sm:block mt-1">{label}</span>
+                  </TabsTrigger>
+                ))}
+              </TabsList>
 
-            <TabsContent value="guide">
-              <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
-                <RoadmapGuide />
-              </div>
-            </TabsContent>
-
-            <TabsContent value="builder">
-              <div className="grid lg:grid-cols-4 gap-8">
-                <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20">
-                  <RoadmapItemForm onAddItem={addRoadmapItem} />
+              {/* Tab contents */}
+              <TabsContent value="guide">
+                <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-4 sm:p-6">
+                  <RoadmapGuide />
                 </div>
-                <div className="lg:col-span-3">
+              </TabsContent>
+              <TabsContent value="builder">
+                <div className="grid lg:grid-cols-4 gap-8">
                   <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20">
-                    <RoadmapTimeline roadmapItems={roadmapItems} ref={roadmapRef} />
+                    <RoadmapItemForm onAddItem={addRoadmapItem} />
+                  </div>
+                  <div className="lg:col-span-3">
+                    <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20">
+                      <RoadmapTimeline roadmapItems={roadmapItems} ref={roadmapRef} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </TabsContent>
-
-            <TabsContent value="templates">
-              <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
-                <RoadmapTemplates onUseTemplate={handleUseTemplate} />
-              </div>
-            </TabsContent>
-
-            <TabsContent value="roadmap">
-              <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20">
-                <RoadmapTimeline roadmapItems={roadmapItems} ref={roadmapRef} />
-              </div>
-            </TabsContent>
-          </Tabs>
+              </TabsContent>
+              <TabsContent value="templates">
+                <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-4 sm:p-6">
+                  <RoadmapTemplates onUseTemplate={handleUseTemplate} />
+                </div>
+              </TabsContent>
+              <TabsContent value="roadmap">
+                <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20">
+                  <RoadmapTimeline roadmapItems={roadmapItems} ref={roadmapRef} />
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
 
           {/* Roadmap Tips */}
           {activeTab === "guide" && (
-            <div className="mt-8 bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
+            <div className="mt-8 bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-4 sm:p-6">
               <RoadmapTips />
             </div>
           )}
