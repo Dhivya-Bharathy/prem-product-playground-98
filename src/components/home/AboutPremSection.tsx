@@ -2,11 +2,11 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Linkedin, Mail, Award, User } from "lucide-react";
+import { Linkedin, Award, User } from "lucide-react";
 
 export const AboutPremSection = () => {
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
+    <section className="py-24 bg-white relative overflow-hidden" aria-labelledby="about-prem-heading">
       <div className="container mx-auto px-4 relative">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
@@ -15,7 +15,7 @@ export const AboutPremSection = () => {
               <User className="w-4 h-4 mr-2" />
               About the Creator
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 id="about-prem-heading" className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Meet Prem Pradeep
             </h2>
           </div>
@@ -26,8 +26,9 @@ export const AboutPremSection = () => {
               <div className="w-64 h-64 mx-auto rounded-full overflow-hidden mb-6 shadow-lg">
                 <img
                   src="/lovable-uploads/4cc61976-ba63-4fee-8c99-1ad76011fb54.png"
-                  alt="Prem Pradeep"
+                  alt="Professional headshot of Prem Pradeep, Product Practice Excellence Expert"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -50,7 +51,12 @@ export const AboutPremSection = () => {
                     </Link>
                   </Button>
                   <Button variant="outline" size="lg" asChild>
-                    <a href="https://www.linkedin.com/in/prempradeep/" target="_blank" rel="noopener noreferrer">
+                    <a 
+                      href="https://www.linkedin.com/in/prempradeep/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      aria-label="Connect with Prem Pradeep on LinkedIn"
+                    >
                       <Linkedin className="w-4 h-4 mr-2" />
                       Connect on LinkedIn
                     </a>
