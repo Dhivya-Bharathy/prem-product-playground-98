@@ -138,3 +138,28 @@
     transform: translateY(0);
   }
 }
+
+/* Print-specific overrides for PM Competency results */
+@media print {
+  body {
+    background: white !important;
+    color: #222 !important;
+    font-size: 12pt !important;
+  }
+  .print\:bg-white { background-color: #fff !important; }
+  .print\:text-black { color: #000 !important; }
+  .print\:border { border: 1px solid #e5e7eb !important; }
+  .print\:p-4 { padding: 1rem !important; }
+  .print\:shadow-none { box-shadow: none !important; }
+  .print\:mb-4 { margin-bottom: 1rem !important; }
+  .print\:hidden { display: none !important; }
+  .print\:block { display: block !important; }
+  .print\:rounded-none { border-radius: 0 !important; }
+}
+
+/* Hide navigation/sidebar/other elements on print for PM Competency route */
+@media print {
+  header, nav, .sidebar, .footer, .print-hide {
+    display: none !important;
+  }
+}

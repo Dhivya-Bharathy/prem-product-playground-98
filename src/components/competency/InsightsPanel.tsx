@@ -1,6 +1,5 @@
-
 import { Button } from "@/components/ui/button";
-import { Download, Share2 } from "lucide-react";
+import { Download, Share2, Printer } from "lucide-react";
 import { AssessmentResults } from "@/types/competency";
 import { useToast } from "@/hooks/use-toast";
 import { generateCompetencyPDF } from "@/utils/pdfGenerator";
@@ -49,39 +48,33 @@ export const InsightsPanel = ({ results, onExport, onReset }: InsightsPanelProps
     }
   };
 
-  const handleDownloadPDF = () => {
-    try {
-      generateCompetencyPDF(results);
-      toast({
-        title: "PDF Report Generated! 📄",
-        description: "Your visual competency assessment report has been downloaded."
-      });
-    } catch (error) {
-      console.error('Error generating PDF:', error);
-      toast({
-        title: "PDF Generation Failed",
-        description: "There was an error creating the PDF. Please try again.",
-        variant: "destructive"
-      });
-    }
+  // This function triggers browser print dialog (print or "Save as PDF")
+  const handlePrint = () => {
+    toast({
+      title: "Print or Save",
+      description: "Your browser's print dialog will open. Select 'Save as PDF' to export your results."
+    });
+    setTimeout(() => {
+      window.print();
+    }, 400);
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 print:bg-white print:text-black print:p-4 print:shadow-none">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between print:mb-4">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Your Personalized Insights</h2>
-          <p className="text-gray-600">Actionable recommendations based on your competency profile</p>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2 print:text-black">Your Personalized Insights</h2>
+          <p className="text-gray-600 print:text-black">Actionable recommendations based on your competency profile</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-3 print:hidden">
           <Button variant="outline" onClick={handleShare} className="rounded-xl">
             <Share2 className="w-4 h-4 mr-2" />
             Share Results
           </Button>
-          <Button variant="outline" onClick={handleDownloadPDF} className="rounded-xl">
-            <Download className="w-4 h-4 mr-2" />
-            Export PDF Report
+          <Button variant="outline" onClick={handlePrint} className="rounded-xl" aria-label="Print or Save as PDF">
+            <Printer className="w-4 h-4 mr-2" />
+            Print or Save
           </Button>
         </div>
       </div>
@@ -95,7 +88,7 @@ export const InsightsPanel = ({ results, onExport, onReset }: InsightsPanelProps
 
       <CallToAction 
         onReset={onReset}
-        onDownloadPDF={handleDownloadPDF}
+        onDownloadPDF={handlePrint}
       />
     </div>
   );
