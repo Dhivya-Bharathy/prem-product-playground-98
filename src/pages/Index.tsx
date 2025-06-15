@@ -4,7 +4,6 @@ import { HeroSection } from "@/components/home/HeroSection";
 import { ToolsGrid } from "@/components/home/ToolsGrid";
 import { Footer } from "@/components/home/Footer";
 import { SEOHead } from "@/components/SEOHead";
-import { AboutSection } from "@/components/home/AboutSection";
 
 const Index = () => {
   const structuredData = {
@@ -41,9 +40,6 @@ const Index = () => {
         <main>
           <HeroSection />
           <ToolsGrid />
-          <div className="bg-slate-900">
-            <AboutSection />
-          </div>
         </main>
         <Footer />
       </div>
