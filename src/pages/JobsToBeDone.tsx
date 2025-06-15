@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Download, Trash2, Users, BookOpen, Edit, Template } from "lucide-react";
+import { ArrowLeft, Download, Trash2, Users, BookOpen, Edit, List } from "lucide-react";
 import { Link } from "react-router-dom";
 import { JTBDStatement, JTBDTemplate } from "@/types/jtbd";
 import { JTBDGuide } from "@/components/jtbd/JTBDGuide";
@@ -214,7 +214,7 @@ const JobsToBeDone = () => {
                       value="templates"
                       className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[68px] sm:min-w-[110px] px-2 py-1 sm:px-3 sm:py-2 gap-1"
                     >
-                      <Template className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-purple-700" />
+                      <List className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-purple-700" />
                       <span className="text-xs sm:text-sm font-medium text-gray-600 sm:inline hidden">Templates</span>
                     </TabsTrigger>
                   </TooltipTrigger>
