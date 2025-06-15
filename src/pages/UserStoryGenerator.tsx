@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,6 +15,7 @@ const UserStoryGenerator = () => {
   const { toast } = useToast();
   const [stories, setStories] = useState<UserStory[]>([]);
   const [activeTab, setActiveTab] = useState("guide");
+  const [templateToUse, setTemplateToUse] = useState<UserStoryTemplate | null>(null);
 
   // Load stories from localStorage on mount
   useEffect(() => {
@@ -45,13 +45,14 @@ const UserStoryGenerator = () => {
   };
 
   const handleUseTemplate = (template: UserStoryTemplate) => {
-    // Switch to builder tab and populate with template
+    // Set the template data and switch to builder tab
+    setTemplateToUse(template);
     setActiveTab("builder");
-    
-    toast({
-      title: "Template Applied",
-      description: `${template.name} template is ready to customize in the builder.`
-    });
+  };
+
+  const handleTemplateUsed = () => {
+    // Clear the template after it's been used
+    setTemplateToUse(null);
   };
 
   const handleDeleteStory = (id: string) => {
@@ -175,7 +176,11 @@ const UserStoryGenerator = () => {
 
             <TabsContent value="builder">
               <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
-                <UserStoryBuilder onSaveStory={handleSaveStory} />
+                <UserStoryBuilder 
+                  onSaveStory={handleSaveStory} 
+                  templateToUse={templateToUse}
+                  onTemplateUsed={handleTemplateUsed}
+                />
               </div>
             </TabsContent>
 

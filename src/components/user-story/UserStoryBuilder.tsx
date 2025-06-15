@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,14 +7,16 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Wand2, Save, Download, Plus, Trash2 } from "lucide-react";
-import { UserStory } from "@/types/user-story";
+import { UserStory, UserStoryTemplate } from "@/types/user-story";
 import { useToast } from "@/hooks/use-toast";
 
 interface UserStoryBuilderProps {
   onSaveStory: (story: UserStory) => void;
+  templateToUse?: UserStoryTemplate | null;
+  onTemplateUsed?: () => void;
 }
 
-export const UserStoryBuilder = ({ onSaveStory }: UserStoryBuilderProps) => {
+export const UserStoryBuilder = ({ onSaveStory, templateToUse, onTemplateUsed }: UserStoryBuilderProps) => {
   const { toast } = useToast();
   const [userType, setUserType] = useState("");
   const [goal, setGoal] = useState("");
@@ -23,6 +25,35 @@ export const UserStoryBuilder = ({ onSaveStory }: UserStoryBuilderProps) => {
   const [complexity, setComplexity] = useState<"simple" | "moderate" | "complex" | "">("");
   const [acceptanceCriteria, setAcceptanceCriteria] = useState<string[]>([""]);
   const [notes, setNotes] = useState("");
+
+  // Effect to populate form when a template is provided
+  useEffect(() => {
+    if (templateToUse) {
+      // Parse the template to extract user type, goal, and benefit
+      const templateParts = templateToUse.template.match(/As a (.+?), I want to (.+?), so that (.+)\./);
+      
+      if (templateParts) {
+        setUserType(templateParts[1]);
+        setGoal(templateParts[2]);
+        setBenefit(templateParts[3]);
+      }
+      
+      setPriority(templateToUse.priority);
+      setComplexity(templateToUse.complexity);
+      setAcceptanceCriteria(templateToUse.acceptanceCriteria.length > 0 ? templateToUse.acceptanceCriteria : [""]);
+      setNotes(templateToUse.description);
+      
+      // Call the callback to clear the template
+      if (onTemplateUsed) {
+        onTemplateUsed();
+      }
+      
+      toast({
+        title: "Template Applied",
+        description: `${templateToUse.name} template has been loaded into the builder.`
+      });
+    }
+  }, [templateToUse, onTemplateUsed, toast]);
 
   const generateStory = () => {
     if (!userType.trim() || !goal.trim() || !benefit.trim()) {
@@ -130,6 +161,21 @@ export const UserStoryBuilder = ({ onSaveStory }: UserStoryBuilderProps) => {
     });
   };
 
+  const clearForm = () => {
+    setUserType("");
+    setGoal("");
+    setBenefit("");
+    setPriority("");
+    setComplexity("");
+    setAcceptanceCriteria([""]);
+    setNotes("");
+    
+    toast({
+      title: "Form Cleared",
+      description: "All fields have been reset."
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-6">
@@ -140,6 +186,11 @@ export const UserStoryBuilder = ({ onSaveStory }: UserStoryBuilderProps) => {
           <h3 className="text-xl font-bold text-gray-900">User Story Builder</h3>
           <p className="text-gray-600">Create well-structured user stories step by step</p>
         </div>
+        {(userType || goal || benefit || notes) && (
+          <Button size="sm" variant="outline" onClick={clearForm} className="ml-auto">
+            Clear Form
+          </Button>
+        )}
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
@@ -199,7 +250,7 @@ export const UserStoryBuilder = ({ onSaveStory }: UserStoryBuilderProps) => {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="priority">Priority</Label>
-                <Select onValueChange={(value: "high" | "medium" | "low") => setPriority(value)}>
+                <Select value={priority} onValueChange={(value: "high" | "medium" | "low") => setPriority(value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select priority" />
                   </SelectTrigger>
@@ -213,7 +264,7 @@ export const UserStoryBuilder = ({ onSaveStory }: UserStoryBuilderProps) => {
 
               <div className="space-y-2">
                 <Label htmlFor="complexity">Complexity</Label>
-                <Select onValueChange={(value: "simple" | "moderate" | "complex") => setComplexity(value)}>
+                <Select value={complexity} onValueChange={(value: "simple" | "moderate" | "complex") => setComplexity(value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select complexity" />
                   </SelectTrigger>
