@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -15,20 +14,28 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <header className="bg-white/70 backdrop-blur-sm shadow-sm border-b border-white/20">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-4">
-            <Button variant="outline" size="sm" asChild className="bg-white/80 hover:bg-white">
-              <Link to="/">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Home
+      <header className="bg-white/80 backdrop-blur-sm shadow-sm border-b border-white/20">
+        <div className="container mx-auto sm:px-4 px-2 py-2 sm:py-4">
+          <div className="flex flex-col xs:flex-row xs:items-center gap-2 xs:gap-4">
+            <Button
+              variant="outline"
+              size="sm"
+              asChild
+              className="bg-white/90 hover:bg-white px-2 xs:px-3 py-1 xs:py-2 w-fit flex items-center text-sm"
+            >
+              <Link to="/" className="flex items-center">
+                <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
+                <span className="hidden xs:inline text-xs sm:text-base">Back to Home</span>
+                <span className="inline xs:hidden text-xs">Back</span>
               </Link>
             </Button>
-            <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+            <div className="min-w-0">
+              <h1 className="text-base sm:text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent truncate">
                 Connect with Prem Pradeep
               </h1>
-              <p className="text-gray-600">Product Management Expert & Community Advocate</p>
+              <p className="text-xs sm:text-gray-600 text-gray-500 leading-tight">
+                Product Management Expert & Community Advocate
+              </p>
             </div>
           </div>
         </div>
