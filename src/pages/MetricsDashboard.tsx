@@ -1,10 +1,9 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "react-router-dom";
-import { ArrowLeft, FileSpreadsheet, RefreshCw, TrendingUp, Database } from "lucide-react";
+import { ArrowLeft, FileSpreadsheet, RefreshCw, TrendingUp, Database, Users, UserCheck, Repeat, DollarSign, Activity, Share2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { downloadMetricsAsExcel } from "@/utils/metricsUtils";
 import { saveMetricsToStorage, loadMetricsFromStorage } from "@/utils/metricsStorage";
@@ -12,6 +11,7 @@ import { MetricData } from "@/types/metrics";
 import MetricCard from "@/components/metrics/MetricCard";
 import MetricsFrameworkGuide from "@/components/metrics/MetricsFrameworkGuide";
 import MetricDataForm from "@/components/metrics/MetricDataForm";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 
 // Type for old metric format to handle migration
 interface OldMetricData {
@@ -113,61 +113,90 @@ const MetricsDashboard = () => {
     return metrics.filter(metric => metric.category === category);
   };
 
+  // Add icons for each category, similar to user story tabs
   const categories = [
     { id: 'all', name: 'All Metrics', icon: TrendingUp },
-    { id: 'acquisition', name: 'Acquisition', icon: TrendingUp },
-    { id: 'activation', name: 'Activation', icon: TrendingUp },
-    { id: 'retention', name: 'Retention', icon: TrendingUp },
-    { id: 'revenue', name: 'Revenue', icon: TrendingUp },
-    { id: 'engagement', name: 'Engagement', icon: TrendingUp },
-    { id: 'referral', name: 'Referral', icon: TrendingUp }
+    { id: 'acquisition', name: 'Acquisition', icon: Users },
+    { id: 'activation', name: 'Activation', icon: UserCheck },
+    { id: 'retention', name: 'Retention', icon: Repeat },
+    { id: 'revenue', name: 'Revenue', icon: DollarSign },
+    { id: 'engagement', name: 'Engagement', icon: Activity },
+    { id: 'referral', name: 'Referral', icon: Share2 }
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       <header className="bg-white/70 backdrop-blur-sm shadow-sm border-b border-white/20">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button variant="outline" size="sm" asChild className="bg-white/80 hover:bg-white">
-                <Link to="/">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Home
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+            {/* Left: Back + Title */}
+            <div className="flex items-center gap-3 w-full sm:w-auto">
+              <Button variant="outline" size="sm" asChild className="bg-white/80 hover:bg-white px-2 min-w-[44px]">
+                <Link to="/" className="flex items-center">
+                  <ArrowLeft className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden xs:inline">Back to Home</span>
                 </Link>
               </Button>
               <div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
                   Product Metrics Dashboard
                 </h1>
-                <p className="text-gray-600">Track and analyze key product metrics and KPIs</p>
+                <p className="text-gray-600 text-xs sm:text-base">Track and analyze key product metrics and KPIs</p>
               </div>
             </div>
-            
-            <div className="flex items-center gap-2">
-              <Button 
-                onClick={() => setShowDataForm(!showDataForm)} 
-                variant="outline" 
-                size="sm"
-                className="bg-white/80 hover:bg-white"
-              >
-                <Database className="w-4 h-4 mr-2" />
-                {showDataForm ? 'Hide' : 'Manage'} Data
-              </Button>
-              <Button 
-                onClick={handleRefreshData} 
-                variant="outline" 
-                size="sm"
-                disabled={loading}
-                className="bg-white/80 hover:bg-white"
-              >
-                <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-                Refresh Data
-              </Button>
-              <Button onClick={handleDownloadExcel} variant="outline" size="sm" className="bg-white/80 hover:bg-white">
-                <FileSpreadsheet className="w-4 h-4 mr-2" />
-                Download Excel
-              </Button>
-            </div>
+            {/* MOBILE-FRIENDLY HEADER ACTIONS */}
+            { (
+              <div className="w-full sm:w-auto mt-2 sm:mt-0">
+                <div className="flex gap-2 overflow-x-auto hide-scrollbar py-1 px-0.5 sm:p-0">
+                  {/* Manage Data */}
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button 
+                        onClick={() => setShowDataForm(!showDataForm)} 
+                        variant="outline" 
+                        size="sm"
+                        className="bg-white/80 hover:bg-white flex-shrink-0 min-w-[44px] px-2 sm:px-3"
+                      >
+                        <Database className="w-4 h-4" />
+                        <span className="hidden sm:inline ml-2">{showDataForm ? 'Hide' : 'Manage'} Data</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom">{showDataForm ? 'Hide Data Form' : 'Manage Data'}</TooltipContent>
+                  </Tooltip>
+                  {/* Refresh Data */}
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button 
+                        onClick={handleRefreshData}
+                        variant="outline"
+                        size="sm"
+                        className="bg-white/80 hover:bg-white flex-shrink-0 min-w-[44px] px-2 sm:px-3"
+                        disabled={loading}
+                      >
+                        <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                        <span className="hidden sm:inline ml-2">Refresh Data</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom">Refresh Data</TooltipContent>
+                  </Tooltip>
+                  {/* Download Excel */}
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        onClick={handleDownloadExcel}
+                        variant="outline"
+                        size="sm"
+                        className="bg-white/80 hover:bg-white flex-shrink-0 min-w-[44px] px-2 sm:px-3"
+                      >
+                        <FileSpreadsheet className="w-4 h-4" />
+                        <span className="hidden sm:inline ml-2">Download Excel</span>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom">Download as Excel</TooltipContent>
+                  </Tooltip>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </header>
@@ -201,13 +230,31 @@ const MetricsDashboard = () => {
           {metrics.length > 0 && (
             <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
               <Tabs defaultValue="all" className="space-y-6">
-                <TabsList className="grid w-full grid-cols-7">
-                  {categories.map((category) => (
-                    <TabsTrigger key={category.id} value={category.id} className="text-xs">
-                      {category.name}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
+                {/* Mobile-optimized, horizontally scrollable tab bar with icons */}
+                <div className="overflow-x-auto hide-scrollbar mb-4 -mx-2 sm:mx-0 px-1 sm:px-0">
+                  <TabsList
+                    className="flex w-full min-w-[320px] gap-1 sm:gap-0 border rounded-lg bg-slate-100 flex-nowrap"
+                    style={{ minWidth: 260 }}
+                  >
+                    {categories.map(({ id, name, icon: Icon }) => (
+                      <TabsTrigger
+                        key={id}
+                        value={id}
+                        className="flex-1 min-w-[62px] sm:min-w-[120px] flex flex-col items-center justify-center py-2 px-1 text-xs sm:text-sm focus-visible:outline-none"
+                      >
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="flex items-center justify-center">
+                              <Icon className="w-5 h-5 sm:mr-2 text-blue-600" />
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent side="bottom">{name}</TooltipContent>
+                        </Tooltip>
+                        <span className="hidden sm:block mt-1">{name}</span>
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                </div>
 
                 <TabsContent value="all" className="space-y-6">
                   <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
