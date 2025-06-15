@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Linkedin, Mail, Sparkles, Twitter } from "lucide-react";
+import { Linkedin, Mail, Sparkles, Instagram } from "lucide-react";
 
 export const Footer = () => {
   const toolsLinks = [
@@ -103,8 +103,8 @@ export const Footer = () => {
               <a href="https://www.linkedin.com/in/prempradeep/" target="_blank" rel="noopener noreferrer" aria-label="Connect on LinkedIn" className="text-gray-400 hover:text-gray-600">
                 <Linkedin className="h-5 w-5" />
               </a>
-              <a href="https://twitter.com/prempradeep" target="_blank" rel="noopener noreferrer" aria-label="Follow on Twitter" className="text-gray-400 hover:text-gray-600">
-                <Twitter className="h-5 w-5" />
+              <a href="https://www.instagram.com/prempradeep/" target="_blank" rel="noopener noreferrer" aria-label="Follow on Instagram" className="text-gray-400 hover:text-gray-600">
+                <Instagram className="h-5 w-5" />
               </a>
               <Link to="/contact" aria-label="Contact us" className="text-gray-400 hover:text-gray-600">
                 <Mail className="h-5 w-5" />
