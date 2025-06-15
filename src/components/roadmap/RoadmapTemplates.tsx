@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Template, Calendar, Zap, Globe, Smartphone } from "lucide-react";
+import { FileText, Calendar, Zap, Globe, Smartphone } from "lucide-react";
 import { RoadmapItem } from "@/types/roadmap";
 
 export interface RoadmapTemplate {
@@ -184,7 +184,7 @@ export const RoadmapTemplates = ({ onUseTemplate }: RoadmapTemplatesProps) => {
       case 'Startup': return Zap;
       case 'E-commerce': return Globe;
       case 'Mobile': return Smartphone;
-      default: return Template;
+      default: return FileText;
     }
   };
 
@@ -192,7 +192,7 @@ export const RoadmapTemplates = ({ onUseTemplate }: RoadmapTemplatesProps) => {
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-6">
         <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg">
-          <Template className="w-6 h-6 text-white" />
+          <FileText className="w-6 h-6 text-white" />
         </div>
         <div>
           <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
