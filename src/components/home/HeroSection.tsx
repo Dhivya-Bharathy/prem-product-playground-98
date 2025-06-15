@@ -23,16 +23,6 @@ export const HeroSection = () => {
       </div>
 
       <div className="container mx-auto px-4 text-center relative z-10">
-        {/* Glowing badge */}
-        <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-6 py-3 mb-12 group hover:bg-white/10 transition-all duration-300">
-          <div className="relative">
-            <Stars className="w-5 h-5 text-yellow-400 animate-pulse" />
-            <div className="absolute inset-0 bg-yellow-400 rounded-full blur opacity-20 animate-pulse"></div>
-          </div>
-          <span className="text-sm font-bold text-white tracking-wide">REVOLUTIONIZING PRODUCT MANAGEMENT</span>
-          <Rocket className="w-5 h-5 text-purple-400 group-hover:translate-x-1 transition-transform duration-300" />
-        </div>
-
         {/* Main headline with dramatic typography */}
         <div className="mb-16 space-y-8">
           <div className="relative">

@@ -19,9 +19,6 @@ export const Header = () => {
               <h1 className="text-3xl md:text-4xl font-black bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent">
                 Prem Pradeep
               </h1>
-              <p className="text-xs text-purple-300 hidden md:block font-medium tracking-wide">
-                PRODUCT PRACTICE EXCELLENCE
-              </p>
             </div>
           </div>
           <div className="flex gap-3">
