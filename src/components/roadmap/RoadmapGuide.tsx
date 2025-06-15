@@ -1,7 +1,32 @@
 
-import { BookOpen, Users, Target, Lightbulb, Calendar, GitBranch } from "lucide-react";
+import { BookOpen, Users, Target, Lightbulb, Calendar, GitBranch, LayoutList, FileBarChart, ClipboardCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+
+// Define icon map for tabs
+const ROADMAP_GUIDE_TABS = [
+  {
+    value: "theory",
+    label: "Theory",
+    Icon: Lightbulb
+  },
+  {
+    value: "framework",
+    label: "Framework",
+    Icon: LayoutList,
+  },
+  {
+    value: "examples",
+    label: "Examples",
+    Icon: FileBarChart,
+  },
+  {
+    value: "best-practices",
+    label: "Best Practices",
+    Icon: ClipboardCheck,
+  },
+];
 
 export const RoadmapGuide = () => {
   return (
@@ -19,12 +44,31 @@ export const RoadmapGuide = () => {
       </div>
 
       <Tabs defaultValue="theory" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="theory">Theory</TabsTrigger>
-          <TabsTrigger value="framework">Framework</TabsTrigger>
-          <TabsTrigger value="examples">Examples</TabsTrigger>
-          <TabsTrigger value="best-practices">Best Practices</TabsTrigger>
-        </TabsList>
+        {/* MOBILE-FRIENDLY TABS */}
+        <div className="overflow-x-auto hide-scrollbar mb-4 -mx-2 sm:mx-0 px-1 sm:px-0">
+          <TabsList
+            className="flex w-full min-w-[320px] gap-1 sm:gap-0 border rounded-lg bg-slate-100 flex-nowrap"
+            style={{ minWidth: 260 }}
+          >
+            {ROADMAP_GUIDE_TABS.map(({ value, label, Icon }) => (
+              <TabsTrigger
+                key={value}
+                value={value}
+                className="flex-1 min-w-[62px] sm:min-w-[140px] flex flex-col items-center justify-center py-2 px-1 text-xs sm:text-sm focus-visible:outline-none"
+              >
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="flex items-center justify-center">
+                      <Icon className="w-5 h-5 sm:mr-2 text-blue-600" />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">{label}</TooltipContent>
+                </Tooltip>
+                <span className="hidden sm:block mt-1">{label}</span>
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
 
         <TabsContent value="theory" className="space-y-4">
           <Card>
@@ -171,3 +215,4 @@ export const RoadmapGuide = () => {
     </div>
   );
 };
+
