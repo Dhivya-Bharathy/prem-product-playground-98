@@ -60,7 +60,7 @@ const About = () => {
                   </h2>
                   <p className="text-gray-700 leading-relaxed mb-6">
                     Prem Pradeep helps product teams scale their practice through structured tools and strategic clarity. 
-                    As a former Product Head, coach, and practice enabler, Prem has dedicated his career to building 
+                    As a Product Practice Head, coach, and practice enabler, Prem has dedicated his career to building 
                     frameworks that accelerate product excellence and team outcomes.
                   </p>
                   <p className="text-gray-600 leading-relaxed">

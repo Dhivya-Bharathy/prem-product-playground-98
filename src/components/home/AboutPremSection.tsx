@@ -36,7 +36,7 @@ export const AboutPremSection = () => {
             <div className="space-y-6">
               <div className="bg-gradient-to-br from-gray-50 to-white rounded-3xl p-8 border border-gray-100">
                 <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                  Prem Pradeep helps product teams scale their practice through structured tools and strategic clarity. Former Product Head, coach, and practice enabler.
+                  Prem Pradeep helps product teams scale their practice through structured tools and strategic clarity. As a Product Practice Head, coach, and practice enabler, Prem has dedicated his career to building frameworks that accelerate product excellence and team outcomes.
                 </p>
                 <p className="text-gray-600 leading-relaxed mb-8">
                   Through years of building and scaling products, Prem has developed a comprehensive toolkit designed to accelerate product excellence and team outcomes.
