@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +10,8 @@ import { UserStoryGuide } from "@/components/user-story/UserStoryGuide";
 import { UserStoryBuilder } from "@/components/user-story/UserStoryBuilder";
 import { UserStoryTemplates } from "@/components/user-story/UserStoryTemplates";
 import { useToast } from "@/hooks/use-toast";
+import { userStoryTabIcons } from "@/components/user-story/UserStoryTabsIconMap";
+import { Tooltip } from "@/components/ui/tooltip";
 
 const UserStoryGenerator = () => {
   const { toast } = useToast();
@@ -120,11 +121,11 @@ const UserStoryGenerator = () => {
       <header className="bg-white/70 backdrop-blur-sm shadow-sm border-b border-white/20">
         <div className="container mx-auto px-2 sm:px-4 py-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link to="/">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Tools
+            <div className="flex items-center gap-2 sm:gap-4">
+              <Button variant="ghost" size="sm" asChild className="px-2">
+                <Link to="/" className="flex items-center">
+                  <ArrowLeft className="w-5 h-5" />
+                  <span className="hidden sm:inline ml-2">Back to Tools</span>
                 </Link>
               </Button>
               <div>
@@ -145,11 +146,11 @@ const UserStoryGenerator = () => {
                   </Badge>
                   <Button size="sm" variant="outline" onClick={handleExportAll} className="bg-white/80 hover:bg-white w-full sm:w-auto">
                     <Download className="w-4 h-4 mr-2" />
-                    Export All
+                    <span className="hidden xs:inline">Export All</span>
                   </Button>
                   <Button size="sm" variant="outline" onClick={handleClearAll} className="bg-white/80 hover:bg-white w-full sm:w-auto">
                     <Trash2 className="w-4 h-4 mr-2" />
-                    Clear All
+                    <span className="hidden xs:inline">Clear All</span>
                   </Button>
                 </>
               )}
@@ -159,38 +160,47 @@ const UserStoryGenerator = () => {
       </header>
 
       {/* Main Content */}
-      <div className="container mx-auto px-2 sm:px-4 py-6">
+      <div className="container mx-auto px-1 sm:px-4 py-4 sm:py-6">
         <div className="max-w-7xl mx-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            {/* Responsive TabsList */}
-            <div className="overflow-x-auto hide-scrollbar mb-4 -mx-2 px-2">
+            {/* Responsive TabsList with scrollable horizontal icons on mobile */}
+            <div className="overflow-x-auto hide-scrollbar mb-4 -mx-2 px-1 sm:px-2">
               <TabsList
-                className="flex w-full min-w-[350px] md:min-w-0 sm:grid sm:grid-cols-4 gap-2 sm:gap-0 border rounded-lg bg-slate-100"
-                style={{ minWidth: 330 }}
+                className="flex w-full min-w-[280px] sm:min-w-0 gap-1 sm:gap-0 border rounded-lg bg-slate-100"
+                style={{ minWidth: 220 }}
               >
-                <TabsTrigger value="guide" className="flex-1 min-w-[120px] text-xs sm:text-sm">
-                  Framework Guide
-                </TabsTrigger>
-                <TabsTrigger value="builder" className="flex-1 min-w-[120px] text-xs sm:text-sm">
-                  Story Builder
-                </TabsTrigger>
-                <TabsTrigger value="templates" className="flex-1 min-w-[120px] text-xs sm:text-sm">
-                  Templates
-                </TabsTrigger>
-                <TabsTrigger value="stories" className="flex-1 min-w-[120px] text-xs sm:text-sm">
-                  My Stories
-                </TabsTrigger>
+                {Object.entries(userStoryTabIcons).map(([key, { Icon, label }]) => (
+                  <TabsTrigger
+                    key={key}
+                    value={key}
+                    className="flex-1 min-w-[68px] sm:min-w-[120px] text-xs sm:text-sm flex flex-col items-center justify-center py-2"
+                  >
+                    <div className="flex justify-center">
+                      <Tooltip>
+                        <Tooltip.Trigger asChild>
+                          <div>
+                            <Icon className="w-5 h-5 sm:mr-2 text-blue-600" />
+                          </div>
+                        </Tooltip.Trigger>
+                        <Tooltip.Content>
+                          {label}
+                        </Tooltip.Content>
+                      </Tooltip>
+                    </div>
+                    <span className="hidden sm:block mt-1">{label}</span>
+                  </TabsTrigger>
+                ))}
               </TabsList>
             </div>
 
+            {/* Each TabsContent - Make sure inner content is not overflowing */}
             <TabsContent value="guide">
-              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-4 sm:p-6">
+              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-3 sm:p-6">
                 <UserStoryGuide />
               </div>
             </TabsContent>
-
             <TabsContent value="builder">
-              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-4 sm:p-6">
+              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-3 sm:p-6">
                 <UserStoryBuilder 
                   onSaveStory={handleSaveStory} 
                   templateToUse={templateToUse}
@@ -198,15 +208,13 @@ const UserStoryGenerator = () => {
                 />
               </div>
             </TabsContent>
-
             <TabsContent value="templates">
-              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-4 sm:p-6">
+              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-3 sm:p-6">
                 <UserStoryTemplates onUseTemplate={handleUseTemplate} />
               </div>
             </TabsContent>
-
             <TabsContent value="stories">
-              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-4 sm:p-6">
+              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-3 sm:p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-2">
                   <div>
                     <h2 className="text-xl sm:text-2xl font-bold text-gray-900">My User Stories</h2>
@@ -219,21 +227,7 @@ const UserStoryGenerator = () => {
                   )}
                 </div>
                 {stories.length === 0 ? (
-                  <div className="text-center py-12">
-                    <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg sm:text-xl font-semibold text-gray-600 mb-2">No Stories Yet</h3>
-                    <p className="text-gray-500 mb-6">
-                      Create your first user story using the builder or templates.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                      <Button onClick={() => setActiveTab("builder")}>
-                        Start Building
-                      </Button>
-                      <Button variant="outline" onClick={() => setActiveTab("templates")}>
-                        Browse Templates
-                      </Button>
-                    </div>
-                  </div>
+                  null
                 ) : (
                   <div className="space-y-4">
                     {stories.map((story) => (
