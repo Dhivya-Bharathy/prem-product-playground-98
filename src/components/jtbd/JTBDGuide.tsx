@@ -1,14 +1,19 @@
-import { BookOpen, Users, Target, Lightbulb } from "lucide-react";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { JTBDTabsList } from "./JTBDTabsList";
+import React, { useState } from "react";
 
 export const JTBDGuide = () => {
+  // Manage tab state locally for accessibility/focus
+  const [tabValue, setTabValue] = useState("theory");
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-6">
         <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
-          <BookOpen className="w-6 h-6 text-white" />
+          {/* icon */}
+          <svg width="24" height="24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 17V4.5A2.5 2.5 0 0 1 9 2h6a2.5 2.5 0 0 1 2.5 2.5V17"/><path d="M9.5 17v2"/><path d="M14.5 17v2"/></svg>
         </div>
         <div>
           <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
@@ -17,108 +22,29 @@ export const JTBDGuide = () => {
           <p className="text-gray-600">Understanding customer needs through Clayton Christensen's methodology</p>
         </div>
       </div>
-
-      <Tabs defaultValue="theory" className="w-full">
-        <TooltipProvider>
-          <div
-            className={[
-              // Mobile: overflow scroll but hide scrollbar and with bottom padding for space
-              "sm:overflow-visible overflow-x-auto scrollbar-hide -mx-2 sm:mx-0 pb-2 sm:pb-0",
-            ].join(" ")}
-            style={{ WebkitOverflowScrolling: 'touch' }}
-          >
-            <TabsList
-              className={[
-                // On mobile: flex row
-                "flex flex-row gap-2 min-w-0 sm:grid sm:grid-cols-4 sm:gap-0",
-                // Hide scrollbars on mobile, make tabs easy to tap
-                "bg-muted rounded-lg border px-2 sm:px-0",
-                "w-full",
-              ].join(" ")}
-              style={{ minWidth: "402px", WebkitOverflowScrolling: 'touch' }}
-            >
-              {/* Theory */}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <TabsTrigger
-                    value="theory"
-                    className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[80px] sm:min-w-[120px] px-2 py-2 gap-1"
-                  >
-                    <BookOpen className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-yellow-700" />
-                    <span className="text-[11px] font-medium text-gray-600 sm:inline hidden">Theory</span>
-                  </TabsTrigger>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">
-                  Theory
-                </TooltipContent>
-              </Tooltip>
-              {/* Framework */}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <TabsTrigger
-                    value="framework"
-                    className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[80px] sm:min-w-[120px] px-2 py-2 gap-1"
-                  >
-                    <Target className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-blue-700" />
-                    <span className="text-[11px] font-medium text-gray-600 sm:inline hidden">Framework</span>
-                  </TabsTrigger>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">
-                  Framework
-                </TooltipContent>
-              </Tooltip>
-              {/* Examples */}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <TabsTrigger
-                    value="examples"
-                    className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[80px] sm:min-w-[120px] px-2 py-2 gap-1"
-                  >
-                    <Users className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-purple-700" />
-                    <span className="text-[11px] font-medium text-gray-600 sm:inline hidden">Examples</span>
-                  </TabsTrigger>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">
-                  Examples
-                </TooltipContent>
-              </Tooltip>
-              {/* Best Practices */}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <TabsTrigger
-                    value="best-practices"
-                    className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[80px] sm:min-w-[120px] px-2 py-2 gap-1"
-                  >
-                    <Lightbulb className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-green-700" />
-                    <span className="text-[11px] font-medium text-gray-600 sm:inline hidden">Best Practices</span>
-                  </TabsTrigger>
-                </TooltipTrigger>
-                <TooltipContent side="bottom">
-                  Best Practices
-                </TooltipContent>
-              </Tooltip>
-            </TabsList>
-          </div>
-        </TooltipProvider>
+      <Tabs value={tabValue} onValueChange={setTabValue}>
+        {/* Refactored mobile-friendly, a11y tabs */}
+        <JTBDTabsList value={tabValue} />
 
         <TabsContent value="theory" className="space-y-4">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Lightbulb className="w-5 h-5 text-yellow-500" />
+                {/* Lightbulb icon for "The Milkshake Story" */}
+                <svg width="20" height="20" fill="none" className="text-yellow-500" stroke="currentColor" strokeWidth="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 1 3.47 13.18A3.5 3.5 0 0 0 15.07 17h-2.14a3.5 3.5 0 0 0-0.4-1.82A7 7 0 0 1 12 2z"/></svg>
                 The Milkshake Story
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-gray-700">
-                Clayton Christensen's famous milkshake study revealed that customers weren't just buying milkshakes - 
-                they were "hiring" them to do specific jobs. Morning commuters hired milkshakes to make their boring 
+                Clayton Christensen's famous milkshake study revealed that customers weren't just buying milkshakes -
+                they were "hiring" them to do specific jobs. Morning commuters hired milkshakes to make their boring
                 commute more interesting and to keep them full until lunch.
               </p>
               <div className="bg-blue-50 p-4 rounded-lg">
                 <h4 className="font-semibold text-blue-900 mb-2">Key Insight</h4>
                 <p className="text-blue-800">
-                  People don't buy products - they hire them to get a job done. Understanding the job helps you 
+                  People don't buy products - they hire them to get a job done. Understanding the job helps you
                   build better products and marketing messages.
                 </p>
               </div>
@@ -131,7 +57,8 @@ export const JTBDGuide = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Users className="w-5 h-5 text-green-500" />
+                  {/* Users Icon for Job Statement Structure */}
+                  <svg width="20" height="20" fill="none" className="text-green-500" stroke="currentColor" strokeWidth="2"><circle cx="7" cy="8" r="4"/><circle cx="17" cy="10" r="4"/><path d="M7 17v-5M17 17v-7"/></svg>
                   Job Statement Structure
                 </CardTitle>
               </CardHeader>
@@ -139,8 +66,8 @@ export const JTBDGuide = () => {
                 <div className="space-y-3">
                   <div className="p-3 bg-gray-50 rounded-lg">
                     <p className="font-mono text-sm">
-                      When I <span className="text-blue-600">[situation]</span>, 
-                      I want to <span className="text-green-600">[motivation]</span>, 
+                      When I <span className="text-blue-600">[situation]</span>,
+                      I want to <span className="text-green-600">[motivation]</span>,
                       so I can <span className="text-purple-600">[outcome]</span>
                     </p>
                   </div>
@@ -156,7 +83,8 @@ export const JTBDGuide = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Target className="w-5 h-5 text-red-500" />
+                  {/* Target icon for Three Types of Jobs */}
+                  <svg width="20" height="20" fill="none" className="text-red-500" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
                   Three Types of Jobs
                 </CardTitle>
               </CardHeader>
@@ -191,21 +119,21 @@ export const JTBDGuide = () => {
                   <div className="p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg">
                     <h4 className="font-semibold text-blue-900 mb-2">Netflix (Entertainment)</h4>
                     <p className="text-blue-800 italic">
-                      "When I'm bored at home in the evening, I want to be entertained without the hassle of 
+                      "When I'm bored at home in the evening, I want to be entertained without the hassle of
                       choosing from too many options, so I can relax and unwind."
                     </p>
                   </div>
                   <div className="p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-lg">
                     <h4 className="font-semibold text-green-900 mb-2">Uber (Transportation)</h4>
                     <p className="text-green-800 italic">
-                      "When I need to get somewhere quickly and don't have a car, I want reliable transportation 
+                      "When I need to get somewhere quickly and don't have a car, I want reliable transportation
                       that I can summon instantly, so I can arrive on time without stress."
                     </p>
                   </div>
                   <div className="p-4 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg">
                     <h4 className="font-semibold text-purple-900 mb-2">Slack (Communication)</h4>
                     <p className="text-purple-800 italic">
-                      "When I'm working with my team remotely, I want to communicate quickly and keep 
+                      "When I'm working with my team remotely, I want to communicate quickly and keep
                       conversations organized, so I can stay productive and connected."
                     </p>
                   </div>
@@ -254,3 +182,4 @@ export const JTBDGuide = () => {
     </div>
   );
 };
+
