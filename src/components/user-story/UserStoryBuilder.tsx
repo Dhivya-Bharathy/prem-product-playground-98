@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -20,8 +19,8 @@ export const UserStoryBuilder = ({ onSaveStory }: UserStoryBuilderProps) => {
   const [userType, setUserType] = useState("");
   const [goal, setGoal] = useState("");
   const [benefit, setBenefit] = useState("");
-  const [priority, setPriority] = useState("");
-  const [complexity, setComplexity] = useState("");
+  const [priority, setPriority] = useState<"high" | "medium" | "low" | "">("");
+  const [complexity, setComplexity] = useState<"simple" | "moderate" | "complex" | "">("");
   const [acceptanceCriteria, setAcceptanceCriteria] = useState<string[]>([""]);
   const [notes, setNotes] = useState("");
 
@@ -200,7 +199,7 @@ export const UserStoryBuilder = ({ onSaveStory }: UserStoryBuilderProps) => {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="priority">Priority</Label>
-                <Select onValueChange={setPriority}>
+                <Select onValueChange={(value: "high" | "medium" | "low") => setPriority(value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select priority" />
                   </SelectTrigger>
@@ -214,7 +213,7 @@ export const UserStoryBuilder = ({ onSaveStory }: UserStoryBuilderProps) => {
 
               <div className="space-y-2">
                 <Label htmlFor="complexity">Complexity</Label>
-                <Select onValueChange={setComplexity}>
+                <Select onValueChange={(value: "simple" | "moderate" | "complex") => setComplexity(value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select complexity" />
                   </SelectTrigger>
