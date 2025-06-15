@@ -88,25 +88,25 @@ export const ToolsGrid = () => {
     const IconComponent = tool.icon;
     
     return (
-      <Card className="group relative overflow-hidden border-gray-200 bg-white transition-all duration-300 hover:border-gray-300 hover:shadow-lg hover:-translate-y-1">
+      <Card className="group relative overflow-hidden border-gray-200 bg-white transition-all duration-300 hover:border-gray-300 hover:shadow-lg hover:-translate-y-1 h-full">
         <div className={`absolute inset-0 bg-gradient-to-br ${tool.gradient} opacity-0 transition-opacity duration-300 group-hover:opacity-5`} />
-        <CardHeader className="relative">
-          <div className="mb-4 flex items-center justify-between">
-            <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${tool.gradient} shadow-md`}>
-              <IconComponent className="h-6 w-6 text-white" />
+        <CardHeader className="relative pb-4">
+          <div className="mb-4 flex items-start justify-between gap-3">
+            <div className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-br ${tool.gradient} shadow-md flex-shrink-0`}>
+              <IconComponent className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
             </div>
-            <Badge variant="secondary" className="text-xs font-medium">
+            <Badge variant="secondary" className="text-xs font-medium flex-shrink-0">
               {tool.category}
             </Badge>
           </div>
-          <CardTitle className="text-xl font-bold text-gray-900 group-hover:text-gray-800">
+          <CardTitle className="text-lg sm:text-xl font-bold text-gray-900 group-hover:text-gray-800 leading-tight">
             {tool.title}
           </CardTitle>
-          <CardDescription className="text-gray-600 leading-relaxed">
+          <CardDescription className="text-sm sm:text-base text-gray-600 leading-relaxed">
             {tool.description}
           </CardDescription>
         </CardHeader>
-        <CardContent className="relative pt-0">
+        <CardContent className="relative pt-0 mt-auto">
           <Button 
             asChild 
             variant="ghost" 
@@ -117,8 +117,8 @@ export const ToolsGrid = () => {
               className="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
               aria-label={`Open ${tool.title} tool`}
             >
-              <span>Explore Tool</span>
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/button:translate-x-1" />
+              <span className="text-sm sm:text-base">Explore Tool</span>
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/button:translate-x-1 flex-shrink-0" />
             </Link>
           </Button>
         </CardContent>
@@ -127,24 +127,24 @@ export const ToolsGrid = () => {
   };
 
   return (
-    <section className="py-24 bg-gray-50 relative overflow-hidden" aria-labelledby="tools-heading">
+    <section className="py-16 sm:py-20 md:py-24 bg-gray-50 relative overflow-hidden" aria-labelledby="tools-heading">
       <div className="container mx-auto px-4 relative">
         {/* Tools Section */}
-        <div id="tools" className="mb-20">
-          <div className="text-center mb-16">
-            <Badge className="bg-blue-100 text-blue-700 text-sm font-medium px-4 py-2 mb-6 border-0">
+        <div id="tools" className="mb-16 sm:mb-20">
+          <div className="text-center mb-12 sm:mb-16">
+            <Badge className="bg-blue-100 text-blue-700 text-sm font-medium px-4 py-2 mb-4 sm:mb-6 border-0">
               <Zap className="w-4 h-4 mr-2" />
               Product Tools
             </Badge>
-            <h2 id="tools-heading" className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 id="tools-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
               Essential Product Tools
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-2">
               Streamline your product development process with these practical, easy-to-use tools designed for modern product teams.
             </p>
           </div>
           
-          <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto">
             {toolsSection.map((tool) => (
               <ToolCard key={tool.id} tool={tool} />
             ))}
@@ -153,20 +153,20 @@ export const ToolsGrid = () => {
 
         {/* Assessments Section */}
         <div id="assessments">
-          <div className="text-center mb-16">
-            <Badge className="bg-purple-100 text-purple-700 text-sm font-medium px-4 py-2 mb-6 border-0">
+          <div className="text-center mb-12 sm:mb-16">
+            <Badge className="bg-purple-100 text-purple-700 text-sm font-medium px-4 py-2 mb-4 sm:mb-6 border-0">
               <Brain className="w-4 h-4 mr-2" />
               Strategic Assessments
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
               Strategic Assessments
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-2">
               Evaluate your product strategy and team capabilities with comprehensive assessment frameworks.
             </p>
           </div>
           
-          <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto">
             {assessmentsSection.map((assessment) => (
               <ToolCard key={assessment.id} tool={assessment} />
             ))}

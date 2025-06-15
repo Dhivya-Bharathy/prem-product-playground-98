@@ -21,10 +21,10 @@ export const Footer = () => {
 
   return (
     <footer className="bg-white border-t border-gray-200" role="contentinfo">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid lg:grid-cols-12 md:grid-cols-2 gap-8">
+      <div className="container mx-auto px-4 py-12 sm:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8">
           {/* Brand Section */}
-          <div className="lg:col-span-4">
+          <div className="sm:col-span-2 lg:col-span-4">
             <div className="flex items-center gap-3 mb-4">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500">
                 <Sparkles className="h-4 w-4 text-white" />
@@ -106,9 +106,9 @@ export const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-200 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-sm text-gray-500">&copy; 2025 Prem Pradeep. All rights reserved.</p>
-          <div className="flex gap-4 mt-4 sm:mt-0" role="group" aria-label="Social media links">
+        <div className="border-t border-gray-200 mt-8 sm:mt-12 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-gray-500 text-center sm:text-left">&copy; 2025 Prem Pradeep. All rights reserved.</p>
+          <div className="flex gap-4" role="group" aria-label="Social media links">
             <a 
               href="https://www.linkedin.com/in/prempradeep/" 
               target="_blank" 

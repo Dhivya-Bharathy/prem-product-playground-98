@@ -19,7 +19,7 @@ export const HeroSection = () => {
   };
 
   return (
-    <section className="relative overflow-hidden bg-white pt-24 pb-20 sm:pt-32 sm:pb-24">
+    <section className="relative overflow-hidden bg-white pt-20 pb-16 sm:pt-24 sm:pb-20 md:pt-32 md:pb-24">
       {/* Background decoration */}
       <div className="absolute inset-x-0 top-0 -z-10 transform-gpu overflow-hidden blur-3xl" aria-hidden="true">
         <div 
@@ -32,28 +32,37 @@ export const HeroSection = () => {
       </div>
       
       <div className="container mx-auto px-4 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl leading-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 leading-tight">
           Accelerate Product Practice
-          <span className="block bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+          <span className="block bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent mt-2">
             Excellence with Prem Pradeep
           </span>
         </h1>
         
-        <p className="mt-6 text-lg leading-8 text-gray-600 max-w-2xl mx-auto">
+        <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-7 sm:leading-8 text-gray-600 max-w-2xl mx-auto px-2">
           Tools and frameworks to elevate your product teams and outcomes.
         </p>
 
-        <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-4">
-            <span className="flex items-center gap-2 text-sm text-gray-500"><CheckCircle className="w-4 h-4 text-green-500" /> 6 Featured Tools</span>
-            <span className="flex items-center gap-2 text-sm text-gray-500"><CheckCircle className="w-4 h-4 text-green-500" /> 2 Strategic Assessments</span>
-            <span className="flex items-center gap-2 text-sm text-gray-500"><CheckCircle className="w-4 h-4 text-green-500" /> Practice Excellence Focus</span>
+        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-x-6 sm:gap-y-4 px-4">
+          <span className="flex items-center justify-center gap-2 text-sm text-gray-500">
+            <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" /> 
+            6 Featured Tools
+          </span>
+          <span className="flex items-center justify-center gap-2 text-sm text-gray-500">
+            <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" /> 
+            2 Strategic Assessments
+          </span>
+          <span className="flex items-center justify-center gap-2 text-sm text-gray-500">
+            <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" /> 
+            Practice Excellence Focus
+          </span>
         </div>
         
-        <div className="mt-10 flex items-center justify-center gap-x-6">
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6 px-4">
           <Button 
             size="lg" 
             onClick={scrollToTools} 
-            className="group rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 px-8 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:from-indigo-600 hover:to-purple-600"
+            className="group w-full sm:w-auto rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 px-6 sm:px-8 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:from-indigo-600 hover:to-purple-600"
           >
             Explore Tools
             <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -62,21 +71,22 @@ export const HeroSection = () => {
             variant="ghost" 
             size="lg" 
             onClick={scrollToAssessments}
-            className="group font-semibold text-gray-700"
+            className="group w-full sm:w-auto font-semibold text-gray-700"
           >
-            Take an Assessment <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            Take an Assessment 
+            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Button>
         </div>
         
-        <div className="mt-20">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={scrollToTools}
-              className="text-gray-400 hover:text-gray-600 animate-bounce"
-            >
-              <ChevronDown className="h-6 w-6" />
-            </Button>
+        <div className="mt-16 sm:mt-20">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={scrollToTools}
+            className="text-gray-400 hover:text-gray-600 animate-bounce"
+          >
+            <ChevronDown className="h-6 w-6" />
+          </Button>
         </div>
       </div>
     </section>
