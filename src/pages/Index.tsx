@@ -1,7 +1,7 @@
 
-
 import { Header } from "@/components/home/Header";
 import { HeroSection } from "@/components/home/HeroSection";
+import { AboutSection } from "@/components/home/AboutSection";
 import { ToolsGrid } from "@/components/home/ToolsGrid";
 import { Footer } from "@/components/home/Footer";
 import { SEOHead } from "@/components/SEOHead";
@@ -36,9 +36,10 @@ const Index = () => {
         canonical="https://www.prempradeep.com/"
         structuredData={structuredData}
       />
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
         <Header />
         <HeroSection />
+        <AboutSection />
         <ToolsGrid />
         <Footer />
       </div>
@@ -47,4 +48,3 @@ const Index = () => {
 };
 
 export default Index;
-
