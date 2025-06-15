@@ -25,7 +25,7 @@ export const AboutPremSection = () => {
             <div className="text-center">
               <div className="w-64 h-64 mx-auto rounded-full overflow-hidden mb-6 shadow-lg">
                 <img
-                  src="https://media.licdn.com/dms/image/v2/D5603AQHVg6Cdm2EaWQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1723381410713"
+                  src="/lovable-uploads/4cc61976-ba63-4fee-8c99-1ad76011fb54.png"
                   alt="Prem Pradeep"
                   className="w-full h-full object-cover"
                 />
