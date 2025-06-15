@@ -5,18 +5,23 @@ import { Linkedin, Mail, Sparkles } from "lucide-react";
 
 export const Header = () => {
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200/50 shadow-sm">
+    <header className="sticky top-0 z-50 bg-black/40 backdrop-blur-xl border-b border-white/10">
       <div className="container mx-auto px-4 py-6">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-              <Sparkles className="w-6 h-6 text-white" />
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-400 rounded-2xl flex items-center justify-center transform rotate-3 hover:rotate-6 transition-transform duration-300">
+                <Sparkles className="w-7 h-7 text-white" />
+              </div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-400 rounded-2xl blur opacity-30 animate-pulse"></div>
             </div>
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+              <h1 className="text-3xl md:text-4xl font-black bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent">
                 Prem Pradeep
               </h1>
-              <p className="text-xs text-gray-500 hidden md:block">Product Practice Excellence</p>
+              <p className="text-xs text-purple-300 hidden md:block font-medium tracking-wide">
+                PRODUCT PRACTICE EXCELLENCE
+              </p>
             </div>
           </div>
           <div className="flex gap-3">
@@ -24,17 +29,17 @@ export const Header = () => {
               variant="outline" 
               size="sm" 
               asChild 
-              className="bg-white/80 backdrop-blur-sm border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300 shadow-sm hover:shadow-md"
+              className="bg-white/5 backdrop-blur-sm border-white/20 hover:border-purple-400 hover:bg-purple-500/20 transition-all duration-300 text-white hover:text-white"
             >
               <a href="https://www.linkedin.com/in/prempradeep/" target="_blank" rel="noopener noreferrer">
-                <Linkedin className="w-4 h-4 mr-2 text-blue-600" />
+                <Linkedin className="w-4 h-4 mr-2 text-cyan-400" />
                 <span className="hidden sm:inline">LinkedIn</span>
               </a>
             </Button>
             <Button 
               size="sm" 
               asChild 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+              className="bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-500 hover:from-purple-700 hover:via-pink-700 hover:to-cyan-600 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-0"
             >
               <Link to="/contact">
                 <Mail className="w-4 h-4 mr-2" />

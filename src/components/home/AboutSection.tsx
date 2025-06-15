@@ -7,65 +7,77 @@ export const AboutSection = () => {
       icon: Target,
       title: "Root Cause Analysis",
       description: "Identify and solve the right problems, not just symptoms",
-      color: "blue"
+      color: "purple"
     },
     {
       icon: Users,
       title: "User-Centric Growth",
       description: "Sustainable user acquisition and retention strategies",
-      color: "green"
+      color: "cyan"
     },
     {
       icon: TrendingUp,
       title: "Data-Driven Decisions",
       description: "Analytics tools to guide strategic growth initiatives",
-      color: "purple"
+      color: "pink"
     },
     {
       icon: CheckSquare,
       title: "Ethical Frameworks",
       description: "Responsible product development methodologies",
-      color: "orange"
+      color: "blue"
     },
     {
       icon: Lightbulb,
       title: "Innovation Tools",
       description: "Creative frameworks for sustainable product ideas",
-      color: "indigo"
+      color: "yellow"
     },
     {
       icon: Award,
       title: "Best Practices",
       description: "Industry-proven approaches from real experience",
-      color: "pink"
+      color: "green"
     }
   ];
 
   const getColorClasses = (color: string) => {
-    const colorMap: { [key: string]: { bg: string; text: string; icon: string } } = {
-      blue: { bg: "bg-blue-50", text: "text-blue-600", icon: "bg-blue-100" },
-      green: { bg: "bg-green-50", text: "text-green-600", icon: "bg-green-100" },
-      purple: { bg: "bg-purple-50", text: "text-purple-600", icon: "bg-purple-100" },
-      orange: { bg: "bg-orange-50", text: "text-orange-600", icon: "bg-orange-100" },
-      indigo: { bg: "bg-indigo-50", text: "text-indigo-600", icon: "bg-indigo-100" },
-      pink: { bg: "bg-pink-50", text: "text-pink-600", icon: "bg-pink-100" }
+    const colorMap: { [key: string]: { bg: string; text: string; glow: string } } = {
+      purple: { bg: "bg-purple-500/10", text: "text-purple-300", glow: "shadow-purple-500/20" },
+      cyan: { bg: "bg-cyan-500/10", text: "text-cyan-300", glow: "shadow-cyan-500/20" },
+      pink: { bg: "bg-pink-500/10", text: "text-pink-300", glow: "shadow-pink-500/20" },
+      blue: { bg: "bg-blue-500/10", text: "text-blue-300", glow: "shadow-blue-500/20" },
+      yellow: { bg: "bg-yellow-500/10", text: "text-yellow-300", glow: "shadow-yellow-500/20" },
+      green: { bg: "bg-green-500/10", text: "text-green-300", glow: "shadow-green-500/20" }
     };
-    return colorMap[color] || colorMap.blue;
+    return colorMap[color] || colorMap.purple;
   };
 
   return (
-    <section className="py-24 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+    <section className="py-32 relative overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-purple-600/10 to-pink-600/10 rounded-full mix-blend-screen filter blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-cyan-600/10 to-blue-600/10 rounded-full mix-blend-screen filter blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+      </div>
+
       <div className="container mx-auto px-4 relative">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-20">
-            <h3 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Philosophy Behind the
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Tools</span>
+          <div className="text-center mb-24">
+            <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-8 py-4 mb-8">
+              <div className="w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-pulse"></div>
+              <span className="text-white font-black text-lg tracking-wide">PHILOSOPHY</span>
+            </div>
+            <h3 className="text-5xl md:text-6xl font-black text-white mb-8 leading-tight">
+              The Science Behind the
+              <span className="block bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+                Magic
+              </span>
             </h3>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Each tool reflects my core belief in <strong>ethical problem-solving</strong> and 
-              <strong> sustainable value creation</strong> — practical instruments born from real-world challenges.
+            <p className="text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed font-light">
+              Each tool reflects my core belief in <span className="text-white font-bold">ethical problem-solving</span> and 
+              <span className="text-purple-300 font-bold"> sustainable value creation</span> — practical instruments forged from real-world battles.
             </p>
           </div>
 
@@ -78,18 +90,23 @@ export const AboutSection = () => {
               return (
                 <div 
                   key={feature.title}
-                  className={`group ${colors.bg} rounded-3xl p-8 hover:shadow-xl hover:scale-105 transition-all duration-300 border-0`}
+                  className={`group ${colors.bg} backdrop-blur-md rounded-3xl p-8 hover:shadow-2xl ${colors.glow} hover:scale-105 transition-all duration-500 border border-white/10 hover:border-white/20 relative overflow-hidden`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className={`p-4 ${colors.icon} rounded-2xl w-16 h-16 mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                    <IconComponent className={`w-8 h-8 ${colors.text}`} />
+                  {/* Animated background gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  <div className="relative z-10">
+                    <div className={`p-5 bg-white/10 backdrop-blur-sm rounded-2xl w-20 h-20 mb-6 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 border border-white/20`}>
+                      <IconComponent className={`w-10 h-10 ${colors.text}`} />
+                    </div>
+                    <h4 className="text-2xl font-bold text-white group-hover:text-gray-100 transition-colors duration-300 mb-4">
+                      {feature.title}
+                    </h4>
+                    <p className="text-gray-300 leading-relaxed text-lg">
+                      {feature.description}
+                    </p>
                   </div>
-                  <h4 className="text-xl font-semibold text-gray-900 group-hover:text-gray-700 transition-colors duration-300 mb-3">
-                    {feature.title}
-                  </h4>
-                  <p className="text-gray-600 leading-relaxed">
-                    {feature.description}
-                  </p>
                 </div>
               );
             })}
