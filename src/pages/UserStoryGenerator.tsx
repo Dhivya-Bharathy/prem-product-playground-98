@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -117,9 +118,9 @@ const UserStoryGenerator = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       {/* Header */}
       <header className="bg-white/70 backdrop-blur-sm shadow-sm border-b border-white/20">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+        <div className="container mx-auto px-2 sm:px-4 py-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
               <Button variant="ghost" size="sm" asChild>
                 <Link to="/">
                   <ArrowLeft className="w-4 h-4 mr-2" />
@@ -127,26 +128,26 @@ const UserStoryGenerator = () => {
                 </Link>
               </Button>
               <div>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
                   User Story Generator
                 </h1>
-                <p className="text-gray-600 mt-1">
+                <p className="text-gray-600 mt-1 text-sm sm:text-base">
                   Create well-structured user stories using industry standards
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               {stories.length > 0 && (
                 <>
-                  <Badge variant="secondary" className="px-3 py-1">
+                  <Badge variant="secondary" className="px-2 sm:px-3 py-1">
                     <Users className="w-4 h-4 mr-1" />
                     {stories.length} Stories
                   </Badge>
-                  <Button size="sm" variant="outline" onClick={handleExportAll} className="bg-white/80 hover:bg-white">
+                  <Button size="sm" variant="outline" onClick={handleExportAll} className="bg-white/80 hover:bg-white w-full sm:w-auto">
                     <Download className="w-4 h-4 mr-2" />
                     Export All
                   </Button>
-                  <Button size="sm" variant="outline" onClick={handleClearAll} className="bg-white/80 hover:bg-white">
+                  <Button size="sm" variant="outline" onClick={handleClearAll} className="bg-white/80 hover:bg-white w-full sm:w-auto">
                     <Trash2 className="w-4 h-4 mr-2" />
                     Clear All
                   </Button>
@@ -158,24 +159,38 @@ const UserStoryGenerator = () => {
       </header>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 sm:px-4 py-6">
         <div className="max-w-7xl mx-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-4 mb-8">
-              <TabsTrigger value="guide">Framework Guide</TabsTrigger>
-              <TabsTrigger value="builder">Story Builder</TabsTrigger>
-              <TabsTrigger value="templates">Templates</TabsTrigger>
-              <TabsTrigger value="stories">My Stories</TabsTrigger>
-            </TabsList>
+            {/* Responsive TabsList */}
+            <div className="overflow-x-auto hide-scrollbar mb-4 -mx-2 px-2">
+              <TabsList
+                className="flex w-full min-w-[350px] md:min-w-0 sm:grid sm:grid-cols-4 gap-2 sm:gap-0 border rounded-lg bg-slate-100"
+                style={{ minWidth: 330 }}
+              >
+                <TabsTrigger value="guide" className="flex-1 min-w-[120px] text-xs sm:text-sm">
+                  Framework Guide
+                </TabsTrigger>
+                <TabsTrigger value="builder" className="flex-1 min-w-[120px] text-xs sm:text-sm">
+                  Story Builder
+                </TabsTrigger>
+                <TabsTrigger value="templates" className="flex-1 min-w-[120px] text-xs sm:text-sm">
+                  Templates
+                </TabsTrigger>
+                <TabsTrigger value="stories" className="flex-1 min-w-[120px] text-xs sm:text-sm">
+                  My Stories
+                </TabsTrigger>
+              </TabsList>
+            </div>
 
             <TabsContent value="guide">
-              <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
+              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-4 sm:p-6">
                 <UserStoryGuide />
               </div>
             </TabsContent>
 
             <TabsContent value="builder">
-              <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
+              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-4 sm:p-6">
                 <UserStoryBuilder 
                   onSaveStory={handleSaveStory} 
                   templateToUse={templateToUse}
@@ -185,17 +200,17 @@ const UserStoryGenerator = () => {
             </TabsContent>
 
             <TabsContent value="templates">
-              <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
+              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-4 sm:p-6">
                 <UserStoryTemplates onUseTemplate={handleUseTemplate} />
               </div>
             </TabsContent>
 
             <TabsContent value="stories">
-              <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
-                <div className="flex items-center justify-between mb-6">
+              <div className="bg-white/90 rounded-xl shadow-lg border border-white/20 p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-2">
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900">My User Stories</h2>
-                    <p className="text-gray-600">Your saved user stories and specifications</p>
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-900">My User Stories</h2>
+                    <p className="text-gray-600 text-sm">Your saved user stories and specifications</p>
                   </div>
                   {stories.length > 0 && (
                     <Badge className="bg-blue-100 text-blue-800">
@@ -203,15 +218,14 @@ const UserStoryGenerator = () => {
                     </Badge>
                   )}
                 </div>
-
                 {stories.length === 0 ? (
                   <div className="text-center py-12">
                     <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-xl font-semibold text-gray-600 mb-2">No Stories Yet</h3>
+                    <h3 className="text-lg sm:text-xl font-semibold text-gray-600 mb-2">No Stories Yet</h3>
                     <p className="text-gray-500 mb-6">
                       Create your first user story using the builder or templates.
                     </p>
-                    <div className="flex gap-3 justify-center">
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
                       <Button onClick={() => setActiveTab("builder")}>
                         Start Building
                       </Button>
@@ -225,12 +239,12 @@ const UserStoryGenerator = () => {
                     {stories.map((story) => (
                       <Card key={story.id} className="hover:shadow-md transition-shadow">
                         <CardHeader>
-                          <div className="flex items-start justify-between">
+                          <div className="flex flex-col md:flex-row items-start justify-between gap-2">
                             <div className="flex-1">
-                              <CardTitle className="text-lg text-gray-900 mb-2">
+                              <CardTitle className="text-base sm:text-lg text-gray-900 mb-2">
                                 "{story.fullStory}"
                               </CardTitle>
-                              <div className="flex gap-2 mb-2">
+                              <div className="flex flex-wrap gap-2 mb-2">
                                 <Badge className={getPriorityColor(story.priority)}>
                                   {story.priority}
                                 </Badge>
@@ -250,21 +264,20 @@ const UserStoryGenerator = () => {
                           </div>
                         </CardHeader>
                         <CardContent>
-                          <div className="grid md:grid-cols-3 gap-3 text-sm mb-4">
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm mb-4">
                             <div className="p-2 bg-blue-50 rounded">
                               <strong className="text-blue-700">User:</strong>
-                              <p className="text-blue-800">{story.userType}</p>
+                              <p className="text-blue-800 break-words">{story.userType}</p>
                             </div>
                             <div className="p-2 bg-green-50 rounded">
                               <strong className="text-green-700">Goal:</strong>
-                              <p className="text-green-800">{story.goal}</p>
+                              <p className="text-green-800 break-words">{story.goal}</p>
                             </div>
                             <div className="p-2 bg-purple-50 rounded">
                               <strong className="text-purple-700">Benefit:</strong>
-                              <p className="text-purple-800">{story.benefit}</p>
+                              <p className="text-purple-800 break-words">{story.benefit}</p>
                             </div>
                           </div>
-
                           {story.acceptanceCriteria.length > 0 && (
                             <div className="mb-4">
                               <strong className="text-sm text-gray-700">Acceptance Criteria:</strong>
@@ -272,20 +285,18 @@ const UserStoryGenerator = () => {
                                 {story.acceptanceCriteria.map((criteria, index) => (
                                   <li key={index} className="flex items-start">
                                     <span className="text-green-600 mr-2">•</span>
-                                    {criteria}
+                                    <span className="break-words">{criteria}</span>
                                   </li>
                                 ))}
                               </ul>
                             </div>
                           )}
-
                           {story.notes && (
                             <div className="mb-4 p-2 bg-yellow-50 rounded">
                               <strong className="text-sm text-yellow-700">Notes:</strong>
-                              <p className="text-sm text-yellow-600 mt-1">{story.notes}</p>
+                              <p className="text-sm text-yellow-600 mt-1 break-words">{story.notes}</p>
                             </div>
                           )}
-
                           <div className="flex justify-between items-center text-xs text-gray-500">
                             <span>Created: {story.createdAt.toLocaleDateString()}</span>
                           </div>
