@@ -8,8 +8,12 @@ export const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b border-gray-200/80 bg-white/95 backdrop-blur-md">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-md">
+          <Link 
+            to="/" 
+            className="flex items-center gap-3 hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-lg p-1"
+            aria-label="Prem Pradeep - Product Practice Excellence, go to homepage"
+          >
+            <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-md" aria-hidden="true">
               <Sparkles className="h-5 w-5 text-white" />
             </div>
             <div>
@@ -19,6 +23,7 @@ export const Header = () => {
               <p className="text-xs font-medium text-gray-500">Product Excellence</p>
             </div>
           </Link>
+          
           <nav className="flex items-center gap-2" role="navigation" aria-label="Main navigation">
             <Button 
               variant="ghost" 
@@ -29,16 +34,18 @@ export const Header = () => {
                 href="https://www.linkedin.com/in/prempradeep/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                aria-label="Connect with Prem Pradeep on LinkedIn"
+                aria-label="Connect with Prem Pradeep on LinkedIn (opens in new tab)"
+                className="focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
                 <Linkedin className="h-4 w-4 text-gray-500" />
                 <span className="hidden sm:inline ml-2 text-gray-700 font-medium">LinkedIn</span>
               </a>
             </Button>
+            
             <Button 
               size="sm" 
               asChild 
-              className="group relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500 font-medium text-white transition-all duration-300 hover:from-indigo-600 hover:to-purple-600 hover:shadow-lg"
+              className="group relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500 font-medium text-white transition-all duration-300 hover:from-indigo-600 hover:to-purple-600 hover:shadow-lg focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               <Link to="/contact" aria-label="Contact Prem Pradeep">
                 <Mail className="mr-2 h-4 w-4" />

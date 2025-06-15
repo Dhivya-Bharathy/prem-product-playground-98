@@ -1,142 +1,175 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Zap, Target } from "lucide-react";
-import { productTools, assessmentTools } from "@/data/tools";
+import { ArrowRight, Zap, Users, Target, BarChart3, Brain, Shield } from "lucide-react";
 
 export const ToolsGrid = () => {
-  const renderToolCard = (tool: any, index: number) => {
+  const tools = [
+    {
+      id: "user-story-generator",
+      title: "User Story Generator",
+      description: "Create well-structured user stories with acceptance criteria",
+      href: "/tools/user-story-generator",
+      icon: Zap,
+      category: "Tools",
+      gradient: "from-blue-500 to-cyan-500"
+    },
+    {
+      id: "feature-prioritization",
+      title: "Feature Prioritization Matrix",
+      description: "Prioritize features using RICE, MoSCoW, and other frameworks",
+      href: "/tools/feature-prioritization",
+      icon: Target,
+      category: "Tools",
+      gradient: "from-green-500 to-emerald-500"
+    },
+    {
+      id: "product-roadmap",
+      title: "Product Roadmap Planner",
+      description: "Plan and visualize your product roadmap with priorities",
+      href: "/tools/product-roadmap",
+      icon: BarChart3,
+      category: "Tools",
+      gradient: "from-purple-500 to-pink-500"
+    },
+    {
+      id: "metrics-dashboard",
+      title: "Product Metrics Dashboard",
+      description: "Track and analyze key product metrics and KPIs",
+      href: "/tools/metrics-dashboard",
+      icon: BarChart3,
+      category: "Tools",
+      gradient: "from-orange-500 to-red-500"
+    },
+    {
+      id: "pm-competency",
+      title: "PM Competency Assessment",
+      description: "Evaluate PM skills across key competency areas",
+      href: "/tools/pm-competency",
+      icon: Users,
+      category: "Assessments",
+      gradient: "from-indigo-500 to-blue-500"
+    },
+    {
+      id: "dark-patterns-assessment",
+      title: "Dark Patterns Assessment",
+      description: "Analyze and identify dark patterns in digital products",
+      href: "/tools/dark-patterns-assessment",
+      icon: Shield,
+      category: "Assessments",
+      gradient: "from-red-500 to-pink-500"
+    },
+    {
+      id: "dvf-exercise",
+      title: "DVF Exercise",
+      description: "Evaluate ideas using Desirability, Viability, Feasibility framework",
+      href: "/tools/dvf-exercise",
+      icon: Brain,
+      category: "Assessments",
+      gradient: "from-teal-500 to-green-500"
+    },
+    {
+      id: "jobs-to-be-done",
+      title: "Jobs to be Done Framework",
+      description: "Understand customer needs using Clayton Christensen's JTBD methodology",
+      href: "/tools/jobs-to-be-done",
+      icon: Target,
+      category: "Assessments",
+      gradient: "from-yellow-500 to-orange-500"
+    }
+  ];
+
+  const toolsSection = tools.filter(tool => tool.category === "Tools");
+  const assessmentsSection = tools.filter(tool => tool.category === "Assessments");
+
+  const ToolCard = ({ tool }) => {
     const IconComponent = tool.icon;
     
-    const getDifficultyColor = (difficulty: string) => {
-      switch (difficulty) {
-        case 'Beginner':
-          return 'bg-green-100 text-green-700 border-green-200';
-        case 'Intermediate':
-          return 'bg-yellow-100 text-yellow-700 border-yellow-200';
-        case 'Advanced':
-          return 'bg-red-100 text-red-700 border-red-200';
-        default:
-          return 'bg-blue-100 text-blue-700 border-blue-200';
-      }
-    };
-
     return (
-      <Link to={tool.path} className="block group">
-        <Card 
-          key={tool.id} 
-          className="h-full transform transition-all duration-300 ease-in-out group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-purple-100 border border-gray-200/80 bg-white/50"
-          style={{ animationDelay: `${index * 100}ms` }}
-        >
-          <CardHeader className="pb-4">
-            <div className="flex items-start justify-between">
-              <div className="p-3 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-lg">
-                <IconComponent className="h-6 w-6 text-indigo-600" />
-              </div>
-              <Badge 
-                variant="outline" 
-                className={`${getDifficultyColor(tool.difficulty)} text-xs`}
-              >
-                {tool.difficulty}
-              </Badge>
+      <Card className="group relative overflow-hidden border-gray-200 bg-white transition-all duration-300 hover:border-gray-300 hover:shadow-lg hover:-translate-y-1">
+        <div className={`absolute inset-0 bg-gradient-to-br ${tool.gradient} opacity-0 transition-opacity duration-300 group-hover:opacity-5`} />
+        <CardHeader className="relative">
+          <div className="mb-4 flex items-center justify-between">
+            <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${tool.gradient} shadow-md`}>
+              <IconComponent className="h-6 w-6 text-white" />
             </div>
-          </CardHeader>
-          <CardContent>
-            <CardTitle className="text-lg font-semibold text-gray-800 mb-2 group-hover:text-indigo-600">
-              {tool.title}
-            </CardTitle>
-            <p className="text-sm text-gray-600 leading-relaxed mb-4">
-              {tool.description}
-            </p>
-            <div className="flex items-center text-sm font-medium text-indigo-600">
-              Use Now
-              <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-            </div>
-          </CardContent>
-        </Card>
-      </Link>
+            <Badge variant="secondary" className="text-xs font-medium">
+              {tool.category}
+            </Badge>
+          </div>
+          <CardTitle className="text-xl font-bold text-gray-900 group-hover:text-gray-800">
+            {tool.title}
+          </CardTitle>
+          <CardDescription className="text-gray-600 leading-relaxed">
+            {tool.description}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="relative pt-0">
+          <Button 
+            asChild 
+            variant="ghost" 
+            className="group/button w-full justify-between p-0 h-auto font-medium text-gray-700 hover:text-gray-900 transition-colors"
+          >
+            <Link 
+              to={tool.href}
+              className="flex items-center justify-between w-full py-3 px-4 rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
+              aria-label={`Open ${tool.title} tool`}
+            >
+              <span>Explore Tool</span>
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/button:translate-x-1" />
+            </Link>
+          </Button>
+        </CardContent>
+      </Card>
     );
   };
-
-  const renderAssessmentCard = (tool: any, index: number) => {
-    const IconComponent = tool.icon;
-    
-    return (
-      <Link to={tool.path} className="block group">
-        <Card 
-          key={tool.id} 
-          className="h-full transform transition-all duration-300 ease-in-out group-hover:scale-[1.02] group-hover:shadow-2xl group-hover:shadow-teal-100 border border-teal-200/80 bg-gradient-to-br from-teal-50/50 to-cyan-50/50"
-          style={{ animationDelay: `${index * 100}ms` }}
-        >
-          <CardHeader className="pb-4">
-            <div className="flex items-start justify-between">
-              <div className="p-3 bg-gradient-to-br from-teal-100 to-cyan-100 rounded-lg">
-                <IconComponent className="h-6 w-6 text-teal-600" />
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-16 bg-gray-200 rounded-full h-2">
-                  <div className="bg-teal-500 h-2 rounded-full w-0 group-hover:w-full transition-all duration-1000"></div>
-                </div>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <CardTitle className="text-lg font-semibold text-gray-800 mb-2 group-hover:text-teal-600">
-              {tool.title}
-            </CardTitle>
-            <p className="text-sm text-gray-600 leading-relaxed mb-4">
-              {tool.description}
-            </p>
-            <div className="flex items-center text-sm font-medium text-teal-600">
-              Start Assessment
-              <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-            </div>
-          </CardContent>
-        </Card>
-      </Link>
-    );
-  };
-
-  // Get exactly 6 featured tools
-  const featuredTools = productTools.slice(0, 6);
 
   return (
-    <section id="tools" className="py-24 bg-gray-50">
-      <div className="container mx-auto px-4">
-        {/* Featured Tools Section */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
-            <Badge variant="outline" className="text-sm font-semibold border-purple-300 bg-purple-50 text-purple-700 py-1 px-4 mb-4">
-              FEATURED TOOLS
+    <section className="py-24 bg-gray-50 relative overflow-hidden" aria-labelledby="tools-heading">
+      <div className="container mx-auto px-4 relative">
+        {/* Tools Section */}
+        <div id="tools" className="mb-20">
+          <div className="text-center mb-16">
+            <Badge className="bg-blue-100 text-blue-700 text-sm font-medium px-4 py-2 mb-6 border-0">
+              <Zap className="w-4 h-4 mr-2" />
+              Product Tools
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Essential Product Excellence Tools
+            <h2 id="tools-heading" className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Essential Product Tools
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Carefully crafted tools to accelerate your product practice and team outcomes.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Streamline your product development process with these practical, easy-to-use tools designed for modern product teams.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredTools.map((tool, index) => renderToolCard(tool, index))}
+          
+          <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {toolsSection.map((tool) => (
+              <ToolCard key={tool.id} tool={tool} />
+            ))}
           </div>
         </div>
 
         {/* Assessments Section */}
         <div id="assessments">
-          <div className="text-center mb-12">
-            <Badge variant="outline" className="text-sm font-semibold border-teal-300 bg-teal-50 text-teal-700 py-1 px-4 mb-4">
-              STRATEGIC ASSESSMENTS
+          <div className="text-center mb-16">
+            <Badge className="bg-purple-100 text-purple-700 text-sm font-medium px-4 py-2 mb-6 border-0">
+              <Brain className="w-4 h-4 mr-2" />
+              Strategic Assessments
             </Badge>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Discover Your Product Shape
+              Strategic Assessments
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Comprehensive assessments to understand your strengths and accelerate your growth.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Evaluate your product strategy and team capabilities with comprehensive assessment frameworks.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {assessmentTools.map((tool, index) => renderAssessmentCard(tool, index))}
+          
+          <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {assessmentsSection.map((assessment) => (
+              <ToolCard key={assessment.id} tool={assessment} />
+            ))}
           </div>
         </div>
       </div>

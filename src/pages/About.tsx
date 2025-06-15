@@ -2,6 +2,7 @@
 import { Header } from "@/components/home/Header";
 import { Footer } from "@/components/home/Footer";
 import { SEOHead } from "@/components/SEOHead";
+import { LazyImage } from "@/components/ui/LazyImage";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -34,11 +35,13 @@ const About = () => {
               {/* Header */}
               <header className="text-center mb-16">
                 <div className="w-32 h-32 mx-auto rounded-full overflow-hidden mb-8 shadow-lg">
-                  <img
+                  <LazyImage
                     src="/lovable-uploads/4cc61976-ba63-4fee-8c99-1ad76011fb54.png"
                     alt="Professional headshot of Prem Pradeep, Product Practice Excellence Expert"
                     className="w-full h-full object-cover"
                     loading="eager"
+                    width={128}
+                    height={128}
                   />
                 </div>
                 <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -74,29 +77,29 @@ const About = () => {
                 <section aria-labelledby="values-heading">
                   <h2 id="values-heading" className="sr-only">Core Values</h2>
                   <div className="grid md:grid-cols-2 gap-8">
-                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 bg-blue-100 rounded-xl">
+                    <article className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+                      <header className="flex items-center gap-4 mb-4">
+                        <div className="p-3 bg-blue-100 rounded-xl" aria-hidden="true">
                           <Target className="w-6 h-6 text-blue-600" />
                         </div>
                         <h3 className="text-xl font-semibold text-gray-900">Strategic Focus</h3>
-                      </div>
+                      </header>
                       <p className="text-gray-600">
                         Building tools that help teams identify and solve underlying issues, not just symptoms.
                       </p>
-                    </div>
+                    </article>
 
-                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 bg-green-100 rounded-xl">
+                    <article className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100">
+                      <header className="flex items-center gap-4 mb-4">
+                        <div className="p-3 bg-green-100 rounded-xl" aria-hidden="true">
                           <Heart className="w-6 h-6 text-green-600" />
                         </div>
                         <h3 className="text-xl font-semibold text-gray-900">Ethical Approach</h3>
-                      </div>
+                      </header>
                       <p className="text-gray-600">
                         Every framework promotes sustainable value creation and responsible product development.
                       </p>
-                    </div>
+                    </article>
                   </div>
                 </section>
 
