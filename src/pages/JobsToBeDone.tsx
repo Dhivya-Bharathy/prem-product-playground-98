@@ -3,13 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Download, Trash2, Users } from "lucide-react";
+import { ArrowLeft, Download, Trash2, Users, BookOpen, Edit, Template } from "lucide-react";
 import { Link } from "react-router-dom";
 import { JTBDStatement, JTBDTemplate } from "@/types/jtbd";
 import { JTBDGuide } from "@/components/jtbd/JTBDGuide";
 import { JTBDBuilder } from "@/components/jtbd/JTBDBuilder";
 import { JTBDTemplates } from "@/components/jtbd/JTBDTemplates";
 import { useToast } from "@/hooks/use-toast";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 
 const JobsToBeDone = () => {
   const { toast } = useToast();
@@ -162,13 +163,83 @@ const JobsToBeDone = () => {
       <div className="container mx-auto px-2 py-6 sm:px-4 sm:py-8">
         <div className="max-w-7xl mx-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            {/* Make tabs horizontally scrollable on mobile */}
-            <TabsList className="grid w-full grid-cols-4 mb-4 sm:mb-8 overflow-x-auto scrollbar-hide min-w-0" style={{ WebkitOverflowScrolling: 'touch' }}>
-              <TabsTrigger value="guide" className="min-w-[110px]">Framework Guide</TabsTrigger>
-              <TabsTrigger value="builder" className="min-w-[110px]">Statement Builder</TabsTrigger>
-              <TabsTrigger value="templates" className="min-w-[110px]">Templates</TabsTrigger>
-              <TabsTrigger value="statements" className="min-w-[110px]">My Statements</TabsTrigger>
-            </TabsList>
+            {/* Mobile-optimized TabsList: horizontal scroll flex row on mobile, grid on desktop, with icons and tooltips */}
+            <TooltipProvider>
+              <TabsList
+                className={[
+                  "w-full mb-4 sm:mb-8",
+                  "flex flex-row gap-2 overflow-x-auto scrollbar-hide min-w-0", // mobile/tablet
+                  "sm:grid sm:grid-cols-4 sm:gap-0", // desktop grid
+                  "sm:overflow-x-auto", // optional: keep scroll for edge cases
+                ].join(" ")}
+                style={{ WebkitOverflowScrolling: 'touch' }}
+              >
+                {/* --- GUIDE TAB --- */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <TabsTrigger
+                      value="guide"
+                      className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[68px] sm:min-w-[110px] px-2 py-1 sm:px-3 sm:py-2 gap-1"
+                    >
+                      <BookOpen className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-blue-700" />
+                      {/* Hide label on mobile, show on sm+ screens */}
+                      <span className="text-xs sm:text-sm font-medium text-gray-600 sm:inline hidden">Framework Guide</span>
+                    </TabsTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    Framework Guide
+                  </TooltipContent>
+                </Tooltip>
+
+                {/* --- BUILDER TAB --- */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <TabsTrigger
+                      value="builder"
+                      className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[68px] sm:min-w-[110px] px-2 py-1 sm:px-3 sm:py-2 gap-1"
+                    >
+                      <Edit className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-green-700" />
+                      <span className="text-xs sm:text-sm font-medium text-gray-600 sm:inline hidden">Statement Builder</span>
+                    </TabsTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    Statement Builder
+                  </TooltipContent>
+                </Tooltip>
+
+                {/* --- TEMPLATES TAB --- */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <TabsTrigger
+                      value="templates"
+                      className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[68px] sm:min-w-[110px] px-2 py-1 sm:px-3 sm:py-2 gap-1"
+                    >
+                      <Template className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-purple-700" />
+                      <span className="text-xs sm:text-sm font-medium text-gray-600 sm:inline hidden">Templates</span>
+                    </TabsTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    Templates
+                  </TooltipContent>
+                </Tooltip>
+
+                {/* --- STATEMENTS TAB --- */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <TabsTrigger
+                      value="statements"
+                      className="flex flex-col items-center sm:flex-row sm:justify-center min-w-[68px] sm:min-w-[110px] px-2 py-1 sm:px-3 sm:py-2 gap-1"
+                    >
+                      <Users className="w-5 h-5 mb-0.5 sm:mr-2 sm:mb-0 text-indigo-700" />
+                      <span className="text-xs sm:text-sm font-medium text-gray-600 sm:inline hidden">My Statements</span>
+                    </TabsTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    My Statements
+                  </TooltipContent>
+                </Tooltip>
+              </TabsList>
+            </TooltipProvider>
 
             <TabsContent value="guide">
               <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
