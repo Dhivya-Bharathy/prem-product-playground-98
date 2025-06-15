@@ -15,6 +15,16 @@ import FeatureForm from "@/components/feature-prioritization/FeatureForm";
 import RiceFrameworkExplanation from "@/components/feature-prioritization/RiceFrameworkExplanation";
 import { RiceFrameworkGuide } from "@/components/feature-prioritization/RiceFrameworkGuide";
 import { FeatureTemplates, FeatureTemplate } from "@/components/feature-prioritization/FeatureTemplates";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+
+const featureTabIcons = [
+  { key: "guide", label: "Framework Guide", Icon: BarChart3 },
+  { key: "builder", label: "Feature Builder", Icon: Users },
+  { key: "templates", label: "Templates", Icon: Star },
+  { key: "prioritization", label: "My Features", Icon: Download },
+  { key: "storage", label: "Saved Sets", Icon: Trash2 }
+];
 
 const FeaturePrioritization = () => {
   const { toast } = useToast();
@@ -63,10 +73,8 @@ const FeaturePrioritization = () => {
       };
     });
 
-    // Add template features to existing features
     features.push(...templateFeatures);
     features.sort((a, b) => b.riceScore - a.riceScore);
-    
     setActiveTab("builder");
 
     toast({
@@ -104,7 +112,6 @@ const FeaturePrioritization = () => {
   };
 
   const handleLoadFeatureSet = (featureSet: typeof savedFeatureSets[0]) => {
-    // Replace current features with saved set
     features.length = 0;
     features.push(...featureSet.features);
     setActiveTab("prioritization");
@@ -142,46 +149,81 @@ const FeaturePrioritization = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       {/* Header */}
       <header className="bg-white/70 backdrop-blur-sm shadow-sm border-b border-white/20">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link to="/">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Tools
+        <div className="container mx-auto px-2 sm:px-4 py-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
+              <Button variant="ghost" size="sm" asChild className="px-2">
+                <Link to="/" className="flex items-center">
+                  <ArrowLeft className="w-5 h-5" />
+                  <span className="hidden sm:inline ml-2">Back to Tools</span>
                 </Link>
               </Button>
               <div>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
                   Feature Prioritization Matrix
                 </h1>
-                <p className="text-gray-600 mt-1">
+                <p className="text-gray-600 mt-1 text-sm sm:text-base">
                   Prioritize features using the RICE framework
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              {features.length > 0 && (
-                <>
-                  <Badge variant="secondary" className="px-3 py-1">
+            {features.length > 0 && (
+              <>
+                {/* Mobile: actions row */}
+                <div className="flex flex-row gap-2 sm:hidden w-full mt-2">
+                  <Badge variant="secondary" className="px-2 py-1">
+                    <BarChart3 className="w-4 h-4 mr-1" />
+                    {features.length}
+                  </Badge>
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    onClick={handleSaveFeatureSet}
+                    className="bg-white/80 hover:bg-white"
+                    aria-label="Save"
+                  >
+                    <Star className="w-5 h-5" />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    onClick={handleDownloadExcel}
+                    className="bg-white/80 hover:bg-white"
+                    aria-label="Export"
+                  >
+                    <Download className="w-5 h-5" />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    onClick={handleClearAll}
+                    className="bg-white/80 hover:bg-white"
+                    aria-label="Clear All"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </Button>
+                </div>
+                {/* Desktop: actions */}
+                <div className="hidden sm:flex flex-wrap items-center gap-2 sm:gap-3">
+                  <Badge variant="secondary" className="px-2 sm:px-3 py-1">
                     <BarChart3 className="w-4 h-4 mr-1" />
                     {features.length} Features
                   </Badge>
-                  <Button size="sm" variant="outline" onClick={handleSaveFeatureSet} className="bg-white/80 hover:bg-white">
+                  <Button size="sm" variant="outline" onClick={handleSaveFeatureSet} className="bg-white/80 hover:bg-white w-full sm:w-auto">
                     <Star className="w-4 h-4 mr-2" />
-                    Save Set
+                    <span className="hidden xs:inline">Save Set</span>
                   </Button>
-                  <Button size="sm" variant="outline" onClick={handleDownloadExcel} className="bg-white/80 hover:bg-white">
+                  <Button size="sm" variant="outline" onClick={handleDownloadExcel} className="bg-white/80 hover:bg-white w-full sm:w-auto">
                     <Download className="w-4 h-4 mr-2" />
-                    Export
+                    <span className="hidden xs:inline">Export</span>
                   </Button>
-                  <Button size="sm" variant="outline" onClick={handleClearAll} className="bg-white/80 hover:bg-white">
+                  <Button size="sm" variant="outline" onClick={handleClearAll} className="bg-white/80 hover:bg-white w-full sm:w-auto">
                     <Trash2 className="w-4 h-4 mr-2" />
-                    Clear All
+                    <span className="hidden xs:inline">Clear All</span>
                   </Button>
-                </>
-              )}
-            </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -189,7 +231,7 @@ const FeaturePrioritization = () => {
       {/* Quick Stats Bar */}
       {features.length > 0 && (
         <div className="bg-white/50 backdrop-blur-sm border-b border-white/20">
-          <div className="container mx-auto px-4 py-4">
+          <div className="container mx-auto px-2 sm:px-4 py-4">
             <div className="max-w-7xl mx-auto">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div className="flex items-center gap-3 p-3 bg-white/60 rounded-lg">
@@ -226,16 +268,38 @@ const FeaturePrioritization = () => {
       )}
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-1 sm:px-4 py-8">
         <div className="max-w-7xl mx-auto">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-5 mb-8">
-              <TabsTrigger value="guide">Framework Guide</TabsTrigger>
-              <TabsTrigger value="builder">Feature Builder</TabsTrigger>
-              <TabsTrigger value="templates">Templates</TabsTrigger>
-              <TabsTrigger value="prioritization">My Features</TabsTrigger>
-              <TabsTrigger value="storage">Saved Sets</TabsTrigger>
-            </TabsList>
+            {/* Mobile optimized tab bar */}
+            <div className="overflow-x-auto hide-scrollbar mb-4 -mx-2 px-1 sm:px-2">
+              <TabsList
+                className="flex w-full min-w-[320px] sm:min-w-0 gap-1 sm:gap-0 border rounded-lg bg-slate-100"
+                style={{ minWidth: 260 }}
+              >
+                {featureTabIcons.map(({ key, label, Icon }) => (
+                  <TabsTrigger
+                    key={key}
+                    value={key}
+                    className="flex-1 min-w-[60px] sm:min-w-[120px] text-xs sm:text-sm flex flex-col items-center justify-center py-2"
+                  >
+                    <div className="flex justify-center">
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div>
+                            <Icon className="w-5 h-5 sm:mr-2 text-blue-600" />
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          {label}
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
+                    <span className="hidden sm:block mt-1">{label}</span>
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </div>
 
             <TabsContent value="guide">
               <div className="bg-white/70 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-6">
