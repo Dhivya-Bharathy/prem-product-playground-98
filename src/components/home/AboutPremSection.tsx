@@ -21,10 +21,14 @@ export const AboutPremSection = () => {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Side - Portrait Placeholder */}
+            {/* Left Side - Portrait */}
             <div className="text-center">
-              <div className="w-64 h-64 mx-auto bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center mb-6">
-                <User className="w-24 h-24 text-indigo-600" />
+              <div className="w-64 h-64 mx-auto rounded-full overflow-hidden mb-6 shadow-lg">
+                <img
+                  src="https://media.licdn.com/dms/image/v2/D5603AQHVg6Cdm2EaWQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1723381410713"
+                  alt="Prem Pradeep"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
 

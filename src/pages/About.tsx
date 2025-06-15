@@ -33,8 +33,12 @@ const About = () => {
 
               {/* Header */}
               <div className="text-center mb-16">
-                <div className="w-32 h-32 mx-auto bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center mb-8">
-                  <User className="w-16 h-16 text-indigo-600" />
+                <div className="w-32 h-32 mx-auto rounded-full overflow-hidden mb-8 shadow-lg">
+                  <img
+                    src="https://media.licdn.com/dms/image/v2/D5603AQHVg6Cdm2EaWQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1723381410713"
+                    alt="Prem Pradeep"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                   About Prem Pradeep
