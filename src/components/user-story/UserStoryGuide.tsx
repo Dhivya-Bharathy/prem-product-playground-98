@@ -1,7 +1,14 @@
-
-import { BookOpen, Users, Target, Lightbulb, CheckSquare } from "lucide-react";
+import { BookOpen, Users, Target, Lightbulb, CheckSquare, FileText, BookMarked, Sparkles } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+
+const guideTabIcons = [
+  { key: "theory", label: "Theory", Icon: Lightbulb },
+  { key: "framework", label: "Framework", Icon: Target },
+  { key: "examples", label: "Examples", Icon: FileText },
+  { key: "best-practices", label: "Best Practices", Icon: Sparkles },
+];
 
 export const UserStoryGuide = () => {
   return (
@@ -18,14 +25,44 @@ export const UserStoryGuide = () => {
         </div>
       </div>
 
+      {/* Scrollable icon-only tab bar for mobile, text label tabs for desktop */}
       <Tabs defaultValue="theory" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="theory">Theory</TabsTrigger>
-          <TabsTrigger value="framework">Framework</TabsTrigger>
-          <TabsTrigger value="examples">Examples</TabsTrigger>
-          <TabsTrigger value="best-practices">Best Practices</TabsTrigger>
-        </TabsList>
+        {/* Mobile: horizontal scroll icons, desktop: classic bar with text */}
+        <div className="md:hidden overflow-x-auto hide-scrollbar mb-4 -mx-2 px-1">
+          <TabsList className="flex w-full min-w-[260px] gap-1 border rounded-lg bg-slate-100">
+            {guideTabIcons.map(({ key, label, Icon }) => (
+              <TabsTrigger
+                key={key}
+                value={key}
+                className="flex-1 min-w-[64px] flex flex-col items-center justify-center py-2 px-0"
+                aria-label={label}
+              >
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div>
+                      <Icon className="w-5 h-5 text-blue-600" />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    {label}
+                  </TooltipContent>
+                </Tooltip>
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
+        <div className="hidden md:block mb-4">
+          <TabsList className="grid w-full grid-cols-4">
+            {guideTabIcons.map(({ key, label }) => (
+              <TabsTrigger key={key} value={key}>
+                {label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </div>
 
+        {/* All TAB CONTENT stays the same */}
+        {/* Each TabsContent below */}
         <TabsContent value="theory" className="space-y-4">
           <Card>
             <CardHeader>
