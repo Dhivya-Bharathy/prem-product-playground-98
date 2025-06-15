@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -343,7 +344,7 @@ const DarkPatternsAssessment = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex gap-4">
+              <div className="flex flex-col gap-3 md:flex-row md:gap-4">
                 <Input
                   placeholder="https://example.com"
                   value={url}
@@ -354,7 +355,7 @@ const DarkPatternsAssessment = () => {
                 <Button 
                   onClick={handleAnalyze} 
                   disabled={isAnalyzing}
-                  className="px-8"
+                  className="md:px-8 w-full md:w-auto"
                 >
                   {isAnalyzing ? 'Analyzing...' : 'Analyze Website'}
                 </Button>
