@@ -5,7 +5,6 @@ import { ProdZTerm, prodzSlangTerms } from '@/data/prodzSlang';
 export const useProdZSlang = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedDifficulty, setSelectedDifficulty] = useState('all');
 
   const filteredTerms = useMemo(() => {
     return prodzSlangTerms.filter(term => {
@@ -14,12 +13,10 @@ export const useProdZSlang = () => {
                            term.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
       
       const matchesCategory = selectedCategory === 'all' || term.category === selectedCategory;
-      
-      const matchesDifficulty = selectedDifficulty === 'all' || term.difficulty === selectedDifficulty;
 
-      return matchesSearch && matchesCategory && matchesDifficulty;
+      return matchesSearch && matchesCategory;
     });
-  }, [searchQuery, selectedCategory, selectedDifficulty]);
+  }, [searchQuery, selectedCategory]);
 
   const getRandomTerm = (): ProdZTerm => {
     const randomIndex = Math.floor(Math.random() * prodzSlangTerms.length);
@@ -31,8 +28,6 @@ export const useProdZSlang = () => {
     setSearchQuery,
     selectedCategory,
     setSelectedCategory,
-    selectedDifficulty,
-    setSelectedDifficulty,
     filteredTerms,
     allTerms: prodzSlangTerms,
     getRandomTerm

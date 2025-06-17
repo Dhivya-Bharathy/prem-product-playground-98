@@ -3,13 +3,12 @@ export interface ProdZTerm {
   id: string;
   name: string;
   pronunciation: string;
-  category: 'deceptive' | 'design' | 'behavioral';
   definition: string;
   examples: string[];
+  category: 'deceptive' | 'design' | 'behavioral';
+  tags: string[];
   howToSpot?: string;
   whenToUse?: string;
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
-  tags: string[];
 }
 
 export const prodzSlangTerms: ProdZTerm[] = [
@@ -17,289 +16,270 @@ export const prodzSlangTerms: ProdZTerm[] = [
   {
     id: 'enshittification',
     name: 'Enshittification',
-    pronunciation: 'en-SHIT-uh-fuh-KAY-shuhn',
-    category: 'deceptive',
-    definition: 'The gradual degradation of a platform\'s quality as it prioritizes profit over user experience.',
+    pronunciation: 'en-SHIT-ih-fi-KAY-shun',
+    definition: 'The gradual degradation of a platform or service as it prioritizes profits over user experience, typically following a pattern of being good to users, then abusing users to benefit business customers, then abusing business customers to benefit shareholders.',
     examples: [
-      'Social media platforms reducing organic reach to push paid content',
-      'Streaming services removing content while raising subscription prices',
-      'Free apps adding intrusive ads and premium features behind paywalls'
+      'Social media platforms reducing organic reach to push paid promotion',
+      'Streaming services removing content while increasing subscription prices',
+      'Free apps becoming unusable without premium subscriptions'
     ],
-    howToSpot: 'Look for platforms that were once great but now feel bloated, ad-heavy, or feature-limited unless you pay.',
-    difficulty: 'intermediate',
-    tags: ['platform', 'monetization', 'user-experience']
+    category: 'deceptive',
+    tags: ['platform decay', 'profit maximization', 'user exploitation'],
+    howToSpot: 'Look for platforms that were once user-friendly becoming increasingly restrictive, expensive, or ad-heavy over time.'
   },
   {
     id: 'confirmshaming',
     name: 'Confirmshaming',
     pronunciation: 'kuhn-FURM-shay-ming',
-    category: 'deceptive',
-    definition: 'Using guilt or shame to manipulate users into taking a desired action through emotionally loaded language.',
+    definition: 'A dark pattern that uses guilt, shame, or fear to manipulate users into taking a desired action by making the alternative option sound negative or embarrassing.',
     examples: [
-      '"No thanks, I don\'t want to save money" button',
-      '"Skip this step and miss out on exclusive deals"',
-      '"No, I prefer to stay uninformed" for newsletter signups'
+      '"No thanks, I don\'t want to save money" vs "Yes, show me deals"',
+      '"Skip this step, I don\'t care about security" on 2FA setup',
+      '"No, I prefer paying full price" on discount popups'
     ],
-    howToSpot: 'Decline buttons that make you feel bad about saying no or imply you\'re missing out.',
-    difficulty: 'beginner',
-    tags: ['manipulation', 'psychology', 'cta']
+    category: 'deceptive',
+    tags: ['emotional manipulation', 'guilt tripping', 'conversion optimization'],
+    howToSpot: 'The decline option is written in a way that makes you feel bad, stupid, or irresponsible for choosing it.'
   },
   {
     id: 'dark-patterns',
     name: 'Dark Patterns',
-    pronunciation: 'dahrk PAT-ernz',
-    category: 'deceptive',
-    definition: 'Deceptive UX design tricks that manipulate users into doing things they didn\'t intend to do.',
+    pronunciation: 'dahrk PAT-urnz',
+    definition: 'User interfaces designed to trick users into doing things they didn\'t intend to do, often for the benefit of the company at the user\'s expense.',
     examples: [
-      'Hidden subscription fees',
-      'Making it hard to cancel subscriptions',
-      'Pre-checked boxes for unwanted services'
+      'Hidden subscription fees in checkout flows',
+      'Making unsubscribe buttons hard to find or non-functional',
+      'Pre-checked boxes for additional purchases'
     ],
-    howToSpot: 'Any design that feels deliberately confusing or makes you do something you didn\'t want to do.',
-    difficulty: 'beginner',
-    tags: ['manipulation', 'ethics', 'design']
+    category: 'deceptive',
+    tags: ['UX manipulation', 'user deception', 'conversion tricks'],
+    howToSpot: 'If you feel confused, frustrated, or tricked while using an interface, it might be employing dark patterns.'
   },
   {
     id: 'zombie-features',
     name: 'Zombie Features',
-    pronunciation: 'ZOM-bee FEE-cherz',
-    category: 'deceptive',
-    definition: 'Product features that are technically alive but essentially dead - unused by most users but still maintained.',
+    pronunciation: 'ZOM-bee FEE-churz',
+    definition: 'Features that should be dead (removed) but continue to exist in a product, consuming resources and cluttering the user experience without providing real value.',
     examples: [
-      'Google+ integration that nobody used',
-      'Facebook\'s Poke feature',
-      'Complex enterprise software modules gathering dust'
+      'Outdated social sharing buttons that nobody uses',
+      'Legacy integrations maintained for a handful of users',
+      'Complex settings that 99% of users never touch'
     ],
-    howToSpot: 'Features that exist in the product but feel outdated, confusing, or completely ignored by users.',
-    difficulty: 'intermediate',
-    tags: ['product-management', 'feature-bloat', 'maintenance']
+    category: 'design',
+    tags: ['feature bloat', 'technical debt', 'product maintenance'],
+    howToSpot: 'Features with extremely low usage metrics that still require maintenance and confuse new users.'
   },
   {
     id: 'consent-theater',
     name: 'Consent Theater',
     pronunciation: 'kuhn-SENT THEE-uh-ter',
-    category: 'deceptive',
-    definition: 'Cookie banners and privacy notices designed to look compliant but actually manipulate users into accepting all tracking.',
+    definition: 'The practice of creating an illusion of user choice and control over data privacy while actually making it difficult or impossible to meaningfully opt out.',
     examples: [
-      'Cookie banners with huge "Accept All" buttons and tiny "Manage Preferences"',
-      'Privacy settings buried deep in menus',
-      'Pre-selected consent checkboxes'
+      'Cookie banners with 200+ vendor toggles buried in submenus',
+      'Privacy settings that reset after updates',
+      'Reject all buttons that don\'t actually reject all cookies'
     ],
-    howToSpot: 'Privacy controls that make it way easier to accept everything than to customize your preferences.',
-    difficulty: 'intermediate',
-    tags: ['privacy', 'compliance', 'manipulation']
+    category: 'deceptive',
+    tags: ['privacy washing', 'fake consent', 'compliance theater'],
+    howToSpot: 'When privacy controls are overly complex, reset frequently, or don\'t actually prevent data collection.'
   },
   {
     id: 'ux-washing',
     name: 'UX Washing',
     pronunciation: 'YOO-eks WASH-ing',
-    category: 'deceptive',
-    definition: 'Superficial design improvements that mask underlying problems without actually fixing user experience issues.',
+    definition: 'Superficial design changes that make a product appear more user-friendly without addressing underlying usability issues or user needs.',
     examples: [
-      'Beautiful UI redesigns that don\'t improve functionality',
-      'Adding animations to distract from slow loading times',
-      'Trendy design elements that make navigation harder'
+      'Adding trendy animations to a fundamentally broken workflow',
+      'Redesigning the interface while ignoring core functionality problems',
+      'Using design thinking buzzwords without actual user research'
     ],
-    howToSpot: 'Products that look modern and sleek but still feel frustrating or confusing to use.',
-    difficulty: 'advanced',
-    tags: ['design', 'superficial', 'user-experience']
+    category: 'deceptive',
+    tags: ['surface-level design', 'fake UX', 'design theater'],
+    howToSpot: 'When visual improvements mask rather than solve actual user problems.'
   },
   {
     id: 'roach-motel',
     name: 'Roach Motel',
     pronunciation: 'rohch moh-TEL',
-    category: 'deceptive',
-    definition: 'Easy to get into, hard to get out of - making sign-up simple but cancellation nearly impossible.',
+    definition: 'A design pattern that makes it easy to get into a situation but difficult or impossible to get out of it.',
     examples: [
-      'Gym memberships requiring in-person cancellation',
-      'Subscription services with no online cancellation option',
-      'Software trials that auto-renew with hidden cancellation processes'
+      'Easy one-click subscription signup but complex cancellation process',
+      'Hotel booking sites that save your payment info automatically',
+      'Free trials that require credit card and are hard to cancel'
     ],
-    howToSpot: 'Services where signing up takes one click but canceling requires calling customer service.',
-    difficulty: 'beginner',
-    tags: ['subscription', 'cancellation', 'friction']
+    category: 'deceptive',
+    tags: ['user trapping', 'cancellation friction', 'subscription traps'],
+    howToSpot: 'When the entry process is smooth but the exit process is deliberately complicated.'
   },
   {
     id: 'bait-and-switch',
     name: 'Bait and Switch',
     pronunciation: 'bayt and swich',
-    category: 'deceptive',
-    definition: 'Advertising one thing to attract users, then presenting them with something different or less valuable.',
+    definition: 'Advertising one thing but delivering another, often used in digital interfaces to mislead users about what they\'re clicking or buying.',
     examples: [
-      'Free trial that requires credit card and immediately starts charging',
-      'Job postings for remote work that turn out to be office-based',
-      'Sale prices that require purchasing multiple items'
+      'Download buttons that lead to ads instead of actual downloads',
+      'Free trial buttons that immediately charge without clear warning',
+      'Product images that don\'t match the actual item description'
     ],
-    howToSpot: 'When the actual offering doesn\'t match what was initially advertised or promised.',
-    difficulty: 'beginner',
-    tags: ['advertising', 'deception', 'marketing']
+    category: 'deceptive',
+    tags: ['false advertising', 'misleading CTAs', 'user deception'],
+    howToSpot: 'When what you expected to happen differs significantly from what actually happens.'
   },
   {
     id: 'sneak-into-basket',
     name: 'Sneak into Basket',
-    pronunciation: 'sneek IN-too BAS-kit',
-    category: 'deceptive',
-    definition: 'Adding unwanted items, insurance, or services to a user\'s cart without clear consent.',
+    pronunciation: 'sneek IN-too BAS-ket',
+    definition: 'Adding additional items or services to a user\'s cart without their explicit consent, often during checkout.',
     examples: [
-      'Travel insurance automatically added to flight bookings',
-      'Extended warranties pre-selected during checkout',
-      'Donation amounts added to online purchases'
+      'Insurance automatically added to travel bookings',
+      'Extended warranties pre-selected on electronics purchases',
+      'Service fees added at the last step of checkout'
     ],
-    howToSpot: 'Extra charges in your cart that you didn\'t explicitly add yourself.',
-    difficulty: 'beginner',
-    tags: ['ecommerce', 'checkout', 'manipulation']
+    category: 'deceptive',
+    tags: ['hidden costs', 'unwanted additions', 'checkout manipulation'],
+    howToSpot: 'Extra charges or items appearing in your cart that you didn\'t deliberately add.'
   },
   {
     id: 'dynamic-discrimination',
     name: 'Dynamic Discrimination',
     pronunciation: 'dahy-NAM-ik dih-skrim-uh-NAY-shuhn',
-    category: 'deceptive',
-    definition: 'Showing different prices or content to different users based on their data profile or perceived value.',
+    definition: 'Using algorithms to show different prices, content, or experiences to different users based on their perceived ability to pay or other characteristics.',
     examples: [
-      'Higher prices shown to users with expensive devices',
-      'Different mortgage rates based on browsing history',
-      'Targeted ads for predatory financial products'
+      'Higher prices shown to users on expensive devices',
+      'Different loan rates based on zip code or browsing history',
+      'Premium content access varying by user demographics'
     ],
-    howToSpot: 'When you and your friends see different prices for the same product or service.',
-    difficulty: 'advanced',
-    tags: ['pricing', 'discrimination', 'personalization']
+    category: 'deceptive',
+    tags: ['algorithmic bias', 'price discrimination', 'personalized exploitation'],
+    howToSpot: 'When prices or options change based on your location, device, or browsing behavior.'
   },
 
   // UX & Product Design Concepts
   {
     id: 'bright-patterns',
     name: 'Bright Patterns',
-    pronunciation: 'brahyt PAT-ernz',
-    category: 'design',
-    definition: 'Ethical design patterns that genuinely help users achieve their goals without manipulation.',
+    pronunciation: 'brahyt PAT-urnz',
+    definition: 'User interface design patterns that are transparent, honest, and genuinely helpful to users, prioritizing user needs over business metrics.',
     examples: [
-      'Clear unsubscribe links in emails',
-      'Honest progress indicators',
-      'Transparent pricing with no hidden fees'
+      'Clear, honest pricing with no hidden fees',
+      'Easy unsubscribe options prominently displayed',
+      'Transparent data usage and privacy controls'
     ],
-    whenToUse: 'Always! These should be the default approach to UX design.',
-    difficulty: 'beginner',
-    tags: ['ethics', 'design', 'user-friendly']
+    category: 'design',
+    tags: ['ethical design', 'user advocacy', 'transparent UX'],
+    whenToUse: 'When building trust and long-term user relationships is more important than short-term conversions.'
   },
   {
     id: 'friction-as-feature',
     name: 'Friction as a Feature',
-    pronunciation: 'FRIK-shuhn az uh FEE-cher',
-    category: 'design',
-    definition: 'Intentionally adding steps or delays to prevent impulsive actions and encourage thoughtful decisions.',
+    pronunciation: 'FRIK-shuhn az uh FEE-chur',
+    definition: 'Intentionally adding steps or resistance to prevent users from making hasty decisions they might regret, especially for irreversible actions.',
     examples: [
-      'Confirmation dialogs before deleting important data',
+      'Confirmation dialogs for deleting important data',
       'Cooling-off periods for large purchases',
-      'Two-factor authentication for security'
+      'Multi-step verification for account deletion'
     ],
-    whenToUse: 'For high-stakes actions where users benefit from taking a moment to think.',
-    difficulty: 'intermediate',
-    tags: ['intentional', 'safety', 'user-protection']
+    category: 'design',
+    tags: ['intentional friction', 'user protection', 'decision architecture'],
+    whenToUse: 'For high-stakes actions where user protection outweighs convenience.'
   },
   {
     id: 'ux-friction',
     name: 'UX Friction',
     pronunciation: 'YOO-eks FRIK-shuhn',
-    category: 'design',
-    definition: 'Any element in the user experience that slows down or complicates the user\'s journey.',
+    definition: 'Any point in the user experience that slows down or impedes the user from completing their intended task.',
     examples: [
-      'Too many form fields',
-      'Confusing navigation menus',
-      'Slow loading times'
+      'Loading screens that take too long',
+      'Complex multi-step forms for simple tasks',
+      'Too many confirmation prompts for routine actions'
     ],
-    howToSpot: 'Moments where you feel stuck, confused, or frustrated while using a product.',
-    difficulty: 'beginner',
-    tags: ['usability', 'obstacles', 'user-journey']
+    category: 'design',
+    tags: ['usability barriers', 'user flow', 'conversion killers'],
+    howToSpot: 'Points where users commonly drop off, hesitate, or express frustration.'
   },
   {
     id: 'banner-blindness',
     name: 'Banner Blindness',
     pronunciation: 'BAN-er BLAHYND-nis',
-    category: 'design',
-    definition: 'Users\' tendency to ignore banner-like information, whether it\'s ads or important site content.',
+    definition: 'The tendency for users to ignore banner-like information or advertisements, often extending to important interface elements that look like ads.',
     examples: [
-      'Users ignoring website headers',
-      'Missing important notifications that look like ads',
-      'Overlooking promotional content'
+      'Users missing important notifications styled like ads',
+      'Call-to-action buttons ignored because they look promotional',
+      'Help text formatted like banner ads being overlooked'
     ],
-    howToSpot: 'When users consistently miss important information placed in banner-like locations.',
-    difficulty: 'intermediate',
-    tags: ['attention', 'visual-hierarchy', 'ads']
+    category: 'behavioral',
+    tags: ['attention patterns', 'ad avoidance', 'visual hierarchy'],
+    howToSpot: 'When important interface elements are consistently ignored by users.'
   },
   {
     id: 'decoy-option',
     name: 'Decoy Option',
     pronunciation: 'DEE-koi OP-shuhn',
-    category: 'design',
-    definition: 'A pricing option designed to make another option look more attractive by comparison.',
+    definition: 'A pricing or feature option deliberately made less attractive to make another option seem like better value by comparison.',
     examples: [
       'Movie theater pricing: Small $6, Medium $6.50, Large $7',
-      'Software plans where the middle tier is barely cheaper than premium',
+      'Software plans where the middle tier makes premium look cheap',
       'Subscription tiers designed to push users toward the most expensive option'
     ],
-    whenToUse: 'In pricing strategies to guide user choice toward preferred options.',
-    difficulty: 'intermediate',
-    tags: ['pricing', 'psychology', 'choice-architecture']
+    category: 'behavioral',
+    tags: ['pricing psychology', 'choice architecture', 'anchoring effect'],
+    whenToUse: 'In pricing strategies to guide users toward preferred options.'
   },
   {
     id: 'skeuomorphism',
     name: 'Skeuomorphism',
-    pronunciation: 'skyoo-uh-MAWR-fiz-uhm',
-    category: 'design',
-    definition: 'Design that mimics real-world objects to help users understand digital interfaces.',
+    pronunciation: 'skyoo-uh-MAWR-fizm',
+    definition: 'Design approach that makes digital interfaces resemble their real-world counterparts to help users understand functionality.',
     examples: [
       'Trash can icons for delete functions',
-      'Folder icons for file organization',
-      'Leather textures in early iOS apps'
+      'Calendar apps that look like physical calendars',
+      'Note-taking apps with paper and pen aesthetics'
     ],
-    whenToUse: 'When introducing completely new digital concepts that benefit from real-world metaphors.',
-    difficulty: 'intermediate',
-    tags: ['visual-design', 'metaphor', 'familiarity']
+    category: 'design',
+    tags: ['visual metaphors', 'familiarity', 'interface design'],
+    whenToUse: 'When introducing users to new digital concepts that have physical analogs.'
   },
   {
     id: 'recognition-over-recall',
     name: 'Recognition Over Recall',
     pronunciation: 'rek-uhg-NISH-uhn OH-ver ri-KAWL',
-    category: 'design',
-    definition: 'Making it easier for users to recognize options rather than remember them from scratch.',
+    definition: 'Design principle that suggests showing users options to recognize rather than making them remember information from memory.',
     examples: [
-      'Dropdown menus instead of requiring typed input',
-      'Recently used files lists',
-      'Auto-complete search suggestions'
+      'Dropdown menus instead of text input fields',
+      'Visual icons with labels rather than text-only menus',
+      'Recently used items lists instead of search-only interfaces'
     ],
-    whenToUse: 'Whenever you can show users their options instead of making them remember.',
-    difficulty: 'beginner',
-    tags: ['usability', 'memory', 'interface-design']
+    category: 'design',
+    tags: ['cognitive load', 'usability principles', 'memory aids'],
+    whenToUse: 'For improving usability in interfaces with many options or complex workflows.'
   },
   {
     id: 'ikea-effect',
     name: 'IKEA Effect',
     pronunciation: 'eye-KEE-uh ih-FEKT',
-    category: 'design',
-    definition: 'Users value products more when they\'ve participated in creating or customizing them.',
+    definition: 'The tendency for people to value things more highly when they\'ve contributed effort to creating or customizing them.',
     examples: [
-      'Profile setup wizards',
-      'Customizable dashboards',
-      'Build-your-own pricing plans'
+      'User onboarding that involves setup choices',
+      'Customizable dashboards and interfaces',
+      'Profile creation and personalization features'
     ],
-    whenToUse: 'In onboarding flows or product customization to increase user investment.',
-    difficulty: 'intermediate',
-    tags: ['psychology', 'engagement', 'customization']
+    category: 'behavioral',
+    tags: ['user investment', 'customization', 'ownership psychology'],
+    whenToUse: 'To increase user engagement and product attachment through customization.'
   },
   {
     id: 'microinteractions',
     name: 'Microinteractions',
     pronunciation: 'MAHY-kroh-in-ter-AK-shuhnz',
-    category: 'design',
-    definition: 'Small, functional animations that provide feedback and enhance the user experience.',
+    definition: 'Small, functional animations or design elements that provide feedback, guide tasks, or enhance the overall user experience.',
     examples: [
-      'Button hover effects',
-      'Pull-to-refresh animations',
-      'Like button animations on social media'
+      'Button hover states and click animations',
+      'Form field validation feedback',
+      'Loading animations and progress indicators'
     ],
-    whenToUse: 'To provide feedback, guide attention, or add delight to routine interactions.',
-    difficulty: 'beginner',
-    tags: ['animation', 'feedback', 'delight']
+    category: 'design',
+    tags: ['interaction design', 'user feedback', 'interface polish'],
+    whenToUse: 'To provide immediate feedback and make interfaces feel more responsive and engaging.'
   },
 
   // Psychological & Behavioral Principles
@@ -307,61 +287,57 @@ export const prodzSlangTerms: ProdZTerm[] = [
     id: 'survivorship-bias',
     name: 'Survivorship Bias',
     pronunciation: 'ser-VAHY-ver-ship BAHY-uhs',
-    category: 'behavioral',
-    definition: 'Focusing on successful examples while ignoring failures, leading to false conclusions.',
+    definition: 'The logical error of concentrating on entities that survived a selection process while overlooking those that didn\'t, leading to false conclusions.',
     examples: [
-      'Only showcasing successful user testimonials',
-      'Startup advice based only on unicorn companies',
-      'Product decisions based on power users only'
+      'Only featuring successful user testimonials on landing pages',
+      'Startup advice based only on successful companies',
+      'Product decisions based only on active user feedback'
     ],
-    howToSpot: 'When data or examples seem too good to be true or only show positive outcomes.',
-    difficulty: 'advanced',
-    tags: ['bias', 'data', 'decision-making']
+    category: 'behavioral',
+    tags: ['cognitive bias', 'data interpretation', 'selection bias'],
+    howToSpot: 'When conclusions are drawn from incomplete data that excludes failures or dropouts.'
   },
   {
     id: 'juxtaposition',
     name: 'Juxtaposition',
     pronunciation: 'juhk-stuh-puh-ZISH-uhn',
-    category: 'behavioral',
-    definition: 'Placing contrasting elements side by side to highlight differences and influence perception.',
+    definition: 'Placing two contrasting elements side by side to highlight their differences and influence user perception or decision-making.',
     examples: [
-      'Before/after product comparisons',
-      'Free vs. premium feature lists',
-      'Competitor comparison charts'
+      'Before/after images in product demos',
+      'Free vs. premium feature comparisons',
+      'Competitor pricing tables highlighting advantages'
     ],
-    whenToUse: 'To highlight value propositions or demonstrate product benefits clearly.',
-    difficulty: 'beginner',
-    tags: ['comparison', 'contrast', 'messaging']
+    category: 'behavioral',
+    tags: ['contrast effect', 'comparison', 'visual rhetoric'],
+    whenToUse: 'To highlight benefits, differences, or improvements through strategic contrast.'
   },
   {
     id: 'occams-razor',
     name: 'Occam\'s Razor',
     pronunciation: 'OK-uhmz RAY-zer',
-    category: 'behavioral',
-    definition: 'The simplest solution is usually the best one - prefer simple explanations over complex ones.',
+    definition: 'The principle that the simplest explanation or solution is usually the correct one, applied in design to favor simplicity over complexity.',
     examples: [
-      'Choosing simple user flows over complex ones',
-      'Minimal feature sets for MVP launches',
-      'Clear, straightforward copy over clever messaging'
+      'Choosing simple navigation over complex mega-menus',
+      'Single-step checkout instead of multi-page flows',
+      'Clear error messages instead of technical jargon'
     ],
-    whenToUse: 'When deciding between multiple solutions or trying to simplify complex problems.',
-    difficulty: 'beginner',
-    tags: ['simplicity', 'problem-solving', 'design-philosophy']
+    category: 'design',
+    tags: ['simplicity principle', 'design philosophy', 'problem-solving'],
+    whenToUse: 'When deciding between multiple design solutions, favor the simplest effective option.'
   },
   {
     id: 'streisand-effect',
     name: 'Streisand Effect',
-    pronunciation: 'STRAHY-sand ih-FEKT',
-    category: 'behavioral',
-    definition: 'Attempts to hide or remove information backfire and instead draw more attention to it.',
+    pronunciation: 'STRAHY-zand ih-FEKT',
+    definition: 'The phenomenon where attempting to hide, remove, or censor information causes it to become more widely known than it would have been otherwise.',
     examples: [
-      'Trying to delete viral negative reviews',
-      'Removing user-generated content that then gets reposted everywhere',
-      'Legal threats that create more publicity'
+      'Trying to remove negative reviews leading to more attention',
+      'Blocking content that then goes viral because of the blocking',
+      'Over-aggressive content moderation backfiring publicly'
     ],
-    howToSpot: 'When efforts to suppress information make it spread even more widely.',
-    difficulty: 'intermediate',
-    tags: ['viral', 'publicity', 'crisis-management']
+    category: 'behavioral',
+    tags: ['unintended consequences', 'viral mechanics', 'reverse psychology'],
+    howToSpot: 'When attempts to suppress information result in increased attention and spread.'
   }
 ];
 
@@ -369,5 +345,5 @@ export const categories = [
   { id: 'all', name: 'All Terms', count: prodzSlangTerms.length },
   { id: 'deceptive', name: 'Dark Patterns', count: prodzSlangTerms.filter(t => t.category === 'deceptive').length },
   { id: 'design', name: 'Design Concepts', count: prodzSlangTerms.filter(t => t.category === 'design').length },
-  { id: 'behavioral', name: 'Behavioral Principles', count: prodzSlangTerms.filter(t => t.category === 'behavioral').length }
+  { id: 'behavioral', name: 'Psychology', count: prodzSlangTerms.filter(t => t.category === 'behavioral').length }
 ];

@@ -16,15 +16,9 @@ export const TermCard = ({ term }: TermCardProps) => {
   const { toast } = useToast();
 
   const categoryColors = {
-    deceptive: 'bg-red-100 text-red-800',
-    design: 'bg-blue-100 text-blue-800',
-    behavioral: 'bg-purple-100 text-purple-800'
-  };
-
-  const difficultyColors = {
-    beginner: 'bg-green-100 text-green-800',
-    intermediate: 'bg-yellow-100 text-yellow-800',
-    advanced: 'bg-red-100 text-red-800'
+    deceptive: 'bg-red-100 text-red-800 border-red-200',
+    design: 'bg-blue-100 text-blue-800 border-blue-200',
+    behavioral: 'bg-purple-100 text-purple-800 border-purple-200'
   };
 
   const handleShare = async () => {
@@ -85,7 +79,7 @@ export const TermCard = ({ term }: TermCardProps) => {
   };
 
   return (
-    <Card className="h-full hover:shadow-lg transition-all duration-300 group border-0 bg-gradient-to-br from-white to-gray-50/50">
+    <Card className="h-full hover:shadow-lg transition-all duration-300 group border-0 bg-gradient-to-br from-white to-gray-50/50 hover:scale-[1.02]">
       <CardContent className="p-6 h-full flex flex-col">
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
@@ -98,12 +92,12 @@ export const TermCard = ({ term }: TermCardProps) => {
                 variant="ghost"
                 size="sm"
                 onClick={handlePronunciation}
-                className="h-6 w-6 p-0 opacity-60 hover:opacity-100"
+                className="h-6 w-6 p-0 opacity-60 hover:opacity-100 transition-opacity"
               >
                 <Volume2 className="h-3 w-3" />
               </Button>
             </div>
-            <p className="text-sm text-gray-500 italic mb-3">
+            <p className="text-sm text-gray-500 italic mb-3 font-mono">
               /{term.pronunciation}/
             </p>
           </div>
@@ -111,20 +105,17 @@ export const TermCard = ({ term }: TermCardProps) => {
             variant="ghost"
             size="sm"
             onClick={toggleFavorite}
-            className="h-8 w-8 p-0"
+            className="h-8 w-8 p-0 hover:bg-red-50 transition-colors"
           >
-            <Heart className={`h-4 w-4 ${isFavorited ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
+            <Heart className={`h-4 w-4 transition-colors ${isFavorited ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
           </Button>
         </div>
 
-        {/* Badges */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          <Badge className={categoryColors[term.category]}>
-            {term.category === 'deceptive' ? 'Dark Pattern' : 
-             term.category === 'design' ? 'Design' : 'Behavioral'}
-          </Badge>
-          <Badge className={difficultyColors[term.difficulty]}>
-            {term.difficulty}
+        {/* Category Badge */}
+        <div className="mb-4">
+          <Badge className={`${categoryColors[term.category]} font-medium`}>
+            {term.category === 'deceptive' ? '🚨 Dark Pattern' : 
+             term.category === 'design' ? '🎨 Design Concept' : '🧠 Psychology'}
           </Badge>
         </div>
 
@@ -135,12 +126,12 @@ export const TermCard = ({ term }: TermCardProps) => {
 
         {/* Examples */}
         <div className="mb-4">
-          <h4 className="font-semibold text-gray-900 mb-2">Examples:</h4>
+          <h4 className="font-semibold text-gray-900 mb-2 text-sm">Examples:</h4>
           <ul className="space-y-1">
             {term.examples.slice(0, 2).map((example, index) => (
               <li key={index} className="text-sm text-gray-600 flex items-start">
-                <span className="text-indigo-500 mr-2">•</span>
-                {example}
+                <span className="text-indigo-500 mr-2 flex-shrink-0">•</span>
+                <span>{example}</span>
               </li>
             ))}
           </ul>
@@ -148,8 +139,8 @@ export const TermCard = ({ term }: TermCardProps) => {
 
         {/* How to spot / When to use */}
         {(term.howToSpot || term.whenToUse) && (
-          <div className="mb-4 p-3 bg-indigo-50 rounded-lg">
-            <h4 className="font-semibold text-indigo-900 mb-1">
+          <div className="mb-4 p-3 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100">
+            <h4 className="font-semibold text-indigo-900 mb-1 text-sm flex items-center gap-1">
               {term.howToSpot ? '🔍 How to spot it:' : '💡 When to use it:'}
             </h4>
             <p className="text-sm text-indigo-800">
@@ -164,7 +155,7 @@ export const TermCard = ({ term }: TermCardProps) => {
             variant="outline"
             size="sm"
             onClick={handleShare}
-            className="flex-1 text-xs"
+            className="flex-1 text-xs hover:bg-indigo-50 hover:border-indigo-300 transition-colors"
           >
             <Share2 className="h-3 w-3 mr-1" />
             Share
@@ -173,7 +164,7 @@ export const TermCard = ({ term }: TermCardProps) => {
             variant="outline"
             size="sm"
             onClick={handleCopy}
-            className="flex-1 text-xs"
+            className="flex-1 text-xs hover:bg-green-50 hover:border-green-300 transition-colors"
           >
             <Copy className="h-3 w-3 mr-1" />
             Copy
