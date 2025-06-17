@@ -42,6 +42,48 @@ export const prodzSlangTerms: ProdZTerm[] = [
     howToSpot: 'The decline option is written in a way that makes you feel bad, stupid, or irresponsible for choosing it.'
   },
   {
+    id: 'assumeshit',
+    name: 'Assumeshit',
+    pronunciation: 'uh-SOOM-shit',
+    definition: 'Making assumptions about user behavior, preferences, or needs without proper research or validation, often leading to poor product decisions and user experience failures.',
+    examples: [
+      'Designing features based on what the team thinks users want without user research',
+      'Assuming all users have fast internet connections when building heavy interfaces',
+      'Building complex workflows because "power users will love the control"'
+    ],
+    category: 'behavioral',
+    tags: ['user research', 'assumptions', 'validation failure'],
+    howToSpot: 'When product decisions are made based on internal opinions rather than user data or research.'
+  },
+  {
+    id: 'confirmload',
+    name: 'Confirmload',
+    pronunciation: 'kuhn-FURM-lohd',
+    definition: 'Overwhelming users with excessive confirmation dialogs, pop-ups, and decision points that create cognitive overload and decision fatigue.',
+    examples: [
+      'Multiple confirmation steps for simple actions like deleting a photo',
+      'Pop-ups asking to confirm every small preference change',
+      'Endless cookie consent banners with dozens of toggle options'
+    ],
+    category: 'deceptive',
+    tags: ['decision fatigue', 'cognitive overload', 'confirmation dialogs'],
+    howToSpot: 'When users face multiple confirmation steps for routine actions, causing frustration and abandonment.'
+  },
+  {
+    id: 'nagging',
+    name: 'Nagging',
+    pronunciation: 'NAG-ing',
+    definition: 'Persistently bothering users with repetitive notifications, prompts, or requests to perform actions they\'ve already declined or ignored.',
+    examples: [
+      'Daily push notifications asking to rate the app after dismissing multiple times',
+      'Constant pop-ups to upgrade to premium after saying "not now"',
+      'Repeated email requests to complete profile setup'
+    ],
+    category: 'deceptive',
+    tags: ['user harassment', 'persistent prompts', 'notification spam'],
+    howToSpot: 'When the same request or notification keeps appearing despite user dismissal or rejection.'
+  },
+  {
     id: 'dark-patterns',
     name: 'Dark Patterns',
     pronunciation: 'dahrk PAT-urnz',
