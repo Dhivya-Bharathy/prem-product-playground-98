@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -21,6 +20,7 @@ import NotFound from "./pages/NotFound";
 import JobsToBeDone from "./pages/JobsToBeDone";
 import PMCompetency from "./pages/PMCompetency";
 import DarkPatternsAssessment from "./pages/DarkPatternsAssessment";
+import ProdZSlang from "./pages/ProdZSlang";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,6 +53,7 @@ const App = () => (
               <Route path="/tools/pm-competency" element={<PMCompetency />} />
               <Route path="/tools/dark-patterns-assessment" element={<DarkPatternsAssessment />} />
               <Route path="/tools/idea-validator" element={<IdeaValidator />} />
+              <Route path="/prodz-slang" element={<ProdZSlang />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/about" element={<About />} />
               <Route path="*" element={<NotFound />} />
