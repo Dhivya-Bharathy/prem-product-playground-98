@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Linkedin, Mail, Sparkles } from "lucide-react";
+import { Linkedin, Mail } from "lucide-react";
 
 export const Header = () => {
   return (
@@ -14,13 +14,13 @@ export const Header = () => {
             aria-label="Prem Pradeep - Product Practice Excellence, go to homepage"
           >
             <div className="relative flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-md" aria-hidden="true">
-              <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+              <span className="text-white font-bold text-xs sm:text-sm">PP</span>
             </div>
-            <div className="min-w-0">
-              <h1 className="text-lg sm:text-xl font-bold text-gray-800 truncate max-w-[100px] xs:max-w-[140px] sm:max-w-none">
+            <div className="min-w-0 hidden xs:block">
+              <h1 className="text-base sm:text-lg lg:text-xl font-bold text-gray-800 truncate">
                 Prem Pradeep
               </h1>
-              <p className="text-xs font-medium text-gray-500 hidden xs:block">Product Excellence</p>
+              <p className="text-xs font-medium text-gray-500 hidden sm:block">Product Excellence</p>
             </div>
           </Link>
           <nav className="flex items-center gap-1 sm:gap-2" role="navigation" aria-label="Main navigation">

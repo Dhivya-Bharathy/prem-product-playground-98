@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Search, Shuffle, Filter, Sparkles, Zap, TrendingUp } from "lucide-react";
+import { Search, Shuffle, Filter, Sparkles, Zap, TrendingUp, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 import { TermCard } from "@/components/prodz-slang/TermCard";
 import { useProdZSlang } from "@/hooks/useProdZSlang";
 import { categories } from "@/data/prodzSlang";
@@ -55,15 +56,37 @@ const ProdZSlang = () => {
         <div className="bg-white border-b border-gray-200 sticky top-0 z-40 backdrop-blur-sm bg-white/95">
           <div className="container mx-auto px-4 py-4">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500 shadow-lg">
-                  <Sparkles className="h-5 w-5 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-2xl font-bold text-gray-900">ProdZ Slang</h1>
-                  <p className="text-sm text-gray-600">The Ultimate Gen Z Product Dictionary</p>
+              <div className="flex items-center gap-3 w-full sm:w-auto">
+                <Link 
+                  to="/" 
+                  className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+                  aria-label="Go back to homepage"
+                >
+                  <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500 shadow-lg">
+                    <span className="text-white font-bold text-xs sm:text-sm">PP</span>
+                  </div>
+                  <div className="hidden sm:block">
+                    <div className="text-sm font-bold text-gray-900">Prem Pradeep</div>
+                    <div className="text-xs text-gray-600">Product Excellence</div>
+                  </div>
+                </Link>
+                <div className="flex items-center gap-2 ml-4">
+                  <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500 shadow-lg">
+                    <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                  </div>
+                  <div>
+                    <h1 className="text-xl sm:text-2xl font-bold text-gray-900">ProdZ Slang</h1>
+                    <p className="text-xs sm:text-sm text-gray-600">The Ultimate Gen Z Product Dictionary</p>
+                  </div>
                 </div>
               </div>
+              <Link to="/">
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <ArrowLeft className="h-4 w-4" />
+                  <span className="hidden sm:inline">Back to Home</span>
+                  <span className="sm:hidden">Home</span>
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
