@@ -1,4 +1,3 @@
-
 import { Header } from "@/components/home/Header";
 import { Footer } from "@/components/home/Footer";
 import { SEOHead } from "@/components/SEOHead";
@@ -104,9 +103,9 @@ const About = () => {
                 </section>
 
                 {/* CTA */}
-                <div className="text-center bg-gradient-to-r from-indigo-500 to-purple-500 rounded-3xl p-12 text-white">
-                  <h3 className="text-2xl font-bold mb-4">Ready to Accelerate Your Practice?</h3>
-                  <p className="text-lg opacity-90 mb-8">
+                <div className="text-center bg-[#22325F] rounded-3xl p-12 text-white">
+                  <h3 className="text-2xl font-bold mb-4 text-teal-400">Ready to Accelerate Your Practice?</h3>
+                  <p className="text-lg opacity-90 mb-8 text-white">
                     Explore the comprehensive toolkit designed to elevate your product excellence.
                   </p>
                   <Button size="lg" variant="secondary" asChild>

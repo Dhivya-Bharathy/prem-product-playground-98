@@ -1,4 +1,3 @@
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LazyImage } from "@/components/ui/LazyImage";
@@ -47,7 +46,7 @@ export const AboutPremSection = () => {
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                  <Button size="lg" asChild className="w-full sm:w-auto bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:from-indigo-600 hover:to-purple-600 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                  <Button size="lg" asChild className="w-full sm:w-auto bg-[#22325F] text-white hover:bg-[#1a2547] focus:ring-2 focus:ring-[#22325F] focus:ring-offset-2">
                     <Link to="/about">
                       More About Prem
                       <Award className="w-4 h-4 ml-2" />

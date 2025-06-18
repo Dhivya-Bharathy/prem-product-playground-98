@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -93,8 +92,8 @@ export const ToolsGrid = () => {
 
         <CardHeader className="relative pb-3 sm:pb-4">
           <div className="mb-3 sm:mb-4 flex items-start justify-between gap-2 sm:gap-3 flex-wrap sm:flex-nowrap">
-            <div className={`flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-br ${tool.gradient} shadow-md flex-shrink-0`}>
-              <IconComponent className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+            <div className="flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-[#22325F] shadow-md flex-shrink-0">
+              <IconComponent className="h-5 w-5 sm:h-6 sm:w-6 text-teal-400" />
             </div>
             <Badge variant="secondary" className="text-xs font-medium flex-shrink-0 mt-2 sm:mt-0">
               {tool.category}

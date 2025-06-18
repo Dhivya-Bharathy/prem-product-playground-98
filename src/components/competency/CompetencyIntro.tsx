@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -25,7 +24,7 @@ export const CompetencyIntro = ({ onStart }: CompetencyIntroProps) => {
           <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
             ✨ Discover Your PM Archetype
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent leading-tight">
+          <h1 className="text-5xl md:text-6xl font-bold text-[#22325F] leading-tight">
             PM Competency Assessment
           </h1>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
@@ -47,7 +46,7 @@ export const CompetencyIntro = ({ onStart }: CompetencyIntroProps) => {
               <Card key={area.id} className="group hover:shadow-xl transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm hover:bg-white">
                 <CardHeader className="pb-4">
                   <div className="flex items-center gap-4 mb-3">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 text-white group-hover:scale-110 transition-transform duration-300">
+                    <div className="p-3 rounded-xl bg-[#22325F] text-teal-400 group-hover:scale-110 transition-transform duration-300">
                       <IconComponent className="w-6 h-6" />
                     </div>
                     <div>
@@ -77,10 +76,10 @@ export const CompetencyIntro = ({ onStart }: CompetencyIntroProps) => {
         </div>
 
         {/* Benefits Section */}
-        <Card className="border-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white mb-12">
+        <Card className="border-0 bg-[#22325F] text-white mb-12">
           <CardContent className="py-12 px-8">
             <div className="text-center space-y-8">
-              <h3 className="text-3xl font-bold">
+              <h3 className="text-3xl font-bold text-teal-400">
                 What You'll Discover
               </h3>
               <div className="grid md:grid-cols-3 gap-8 mt-8">

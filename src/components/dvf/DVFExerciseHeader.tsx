@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Download, RefreshCw } from "lucide-react";
@@ -20,9 +19,9 @@ export const DVFExerciseHeader = ({ onReset, onExport, evaluation }: DVFExercise
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
             <div className="flex items-center gap-2">
               {/* Make back button shrink on small screens */}
-              <Button variant="outline" size="sm" asChild className="px-2 sm:px-3">
+              <Button variant="outline" size="sm" asChild className="px-2 sm:px-3 bg-[#22325F]">
                 <Link to="/">
-                  <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
+                  <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2 text-teal-400" />
                   <span className="hidden xs:inline">Back to Home</span>
                 </Link>
               </Button>
@@ -40,10 +39,10 @@ export const DVFExerciseHeader = ({ onReset, onExport, evaluation }: DVFExercise
               variant="outline"
               onClick={onReset}
               size="sm"
-              className="min-w-[40px] px-2 sm:px-3"
+              className="min-w-[40px] px-2 sm:px-3 bg-[#22325F]"
               aria-label="Reset"
             >
-              <RefreshCw className="w-4 h-4 mr-1 sm:mr-2" />
+              <RefreshCw className="w-4 h-4 mr-1 sm:mr-2 text-teal-400" />
               <span className="hidden xs:inline">Reset</span>
             </Button>
             {evaluation && (
@@ -51,10 +50,10 @@ export const DVFExerciseHeader = ({ onReset, onExport, evaluation }: DVFExercise
                 variant="outline"
                 onClick={onExport}
                 size="sm"
-                className="min-w-[40px] px-2 sm:px-3"
+                className="min-w-[40px] px-2 sm:px-3 bg-[#22325F]"
                 aria-label="Export"
               >
-                <Download className="w-4 h-4 mr-1 sm:mr-2" />
+                <Download className="w-4 h-4 mr-1 sm:mr-2 text-teal-400" />
                 <span className="hidden xs:inline">Export</span>
               </Button>
             )}

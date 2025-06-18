@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -54,8 +53,8 @@ export const ProductWordOfTheDay = () => {
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-12">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500 shadow-lg">
-              <Sparkles className="h-5 w-5 text-white" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#22325F] shadow-lg">
+              <Sparkles className="h-5 w-5 text-teal-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
               Product Word of the Day
@@ -68,9 +67,9 @@ export const ProductWordOfTheDay = () => {
 
         {/* Word Card */}
         <div className="max-w-4xl mx-auto">
-          <Card className="border-0 bg-gradient-to-br from-white to-gray-50/50 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden relative group">
+          <Card className="border-0 bg-[#22325F] shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden relative group">
             {/* Decorative Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-purple-500/5 to-pink-500/5 opacity-50"></div>
+            {/* Removed gradient overlay for a clean, solid navy look */}
             
             <CardContent className="p-6 sm:p-8 lg:p-10 relative z-10">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -80,17 +79,17 @@ export const ProductWordOfTheDay = () => {
                   <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-3">
-                        <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">
+                        <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
                           {wordOfTheDay.name}
                         </h3>
-                        <TrendingUp className="h-6 w-6 text-yellow-500 animate-pulse" />
+                        <TrendingUp className="h-6 w-6 text-yellow-400 animate-pulse" />
                       </div>
-                      <p className="text-sm sm:text-base text-gray-500 italic font-mono mb-4">
+                      <p className="text-sm sm:text-base text-teal-200 italic font-mono mb-4">
                         /{wordOfTheDay.pronunciation}/
                       </p>
                     </div>
                     
-                    <Badge className={`${categoryColors[wordOfTheDay.category]} font-medium text-xs sm:text-sm whitespace-nowrap`}>
+                    <Badge className="bg-white text-[#22325F] font-medium text-xs sm:text-sm whitespace-nowrap shadow">
                       {categoryEmojis[wordOfTheDay.category]} {
                         wordOfTheDay.category === 'deceptive' ? 'Dark Pattern' : 
                         wordOfTheDay.category === 'design' ? 'Design Concept' : 'Psychology'
@@ -100,16 +99,16 @@ export const ProductWordOfTheDay = () => {
 
                   {/* Definition */}
                   <div className="space-y-4">
-                    <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
+                    <p className="text-base sm:text-lg text-gray-100 leading-relaxed">
                       {wordOfTheDay.definition}
                     </p>
 
                     {/* Quick Example */}
-                    <div className="p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100">
-                      <h4 className="font-semibold text-indigo-900 mb-2 text-sm flex items-center gap-1">
+                    <div className="p-4 bg-white/10 rounded-lg border border-teal-400/30">
+                      <h4 className="font-semibold text-teal-200 mb-2 text-sm flex items-center gap-1">
                         💡 Quick Example:
                       </h4>
-                      <p className="text-sm text-indigo-800 italic">
+                      <p className="text-sm text-gray-100 italic">
                         "{wordOfTheDay.examples[0]}"
                       </p>
                     </div>
@@ -120,16 +119,15 @@ export const ProductWordOfTheDay = () => {
                 <div className="lg:col-span-1 space-y-4">
                   <div className="flex flex-col gap-3">
                     <Link to="/prodz-slang" className="w-full">
-                      <Button className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-300 group">
+                      <Button className="w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-300 group">
                         Explore Dictionary
                         <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                       </Button>
                     </Link>
                     
                     <Button
-                      variant="outline"
+                      className="w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-300 group"
                       onClick={handleShare}
-                      className="w-full border-indigo-200 text-indigo-600 hover:bg-indigo-50 py-3 rounded-lg transition-all duration-300"
                     >
                       <Share2 className="mr-2 h-4 w-4" />
                       Share Word
@@ -137,9 +135,9 @@ export const ProductWordOfTheDay = () => {
                   </div>
 
                   {/* Fun Stats */}
-                  <div className="bg-white/60 backdrop-blur-sm rounded-lg p-4 border border-gray-200">
-                    <h4 className="font-semibold text-gray-900 mb-3 text-sm">Why This Matters:</h4>
-                    <div className="space-y-2 text-xs text-gray-600">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                    <h4 className="font-semibold text-white mb-3 text-sm">Why This Matters:</h4>
+                    <div className="space-y-2 text-xs text-gray-200">
                       {wordOfTheDay.category === 'deceptive' && (
                         <p>🛡️ Protect users from manipulative design patterns</p>
                       )}

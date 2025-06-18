@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Linkedin, Mail, Sparkles, Instagram } from "lucide-react";
 
@@ -26,8 +25,8 @@ export const Footer = () => {
           {/* Brand Section */}
           <div className="sm:col-span-2 lg:col-span-4">
             <div className="flex items-center gap-3 mb-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500">
-                <Sparkles className="h-4 w-4 text-white" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#22325F]">
+                <Sparkles className="h-4 w-4 text-teal-400" />
               </div>
               <h3 className="text-xl font-bold text-gray-900">
                 Product Practice

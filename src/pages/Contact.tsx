@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Mail, Linkedin, MessageCircle, Users, TrendingUp, Target, Lightbulb } from "lucide-react";
+import { ContactForm } from "@/components/ContactForm";
 
 const Contact = () => {
   const expertiseAreas = [
@@ -64,6 +65,11 @@ const Contact = () => {
                 })}
               </div>
             </div>
+          </div>
+
+          {/* Contact Form */}
+          <div className="mb-8">
+            <ContactForm />
           </div>
 
           {/* Engagement Types */}
@@ -150,7 +156,7 @@ const Contact = () => {
                 <p className="text-gray-600 mb-4">
                   For detailed project discussions, consulting inquiries, or professional collaboration opportunities.
                 </p>
-                <Button asChild className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+                <Button asChild className="w-full bg-[#22325F] text-white hover:bg-[#1a2547]">
                   <a href="mailto:prempradeep@live.com">
                     <Mail className="w-4 h-4 mr-2" />
                     Email prempradeep@live.com
@@ -175,7 +181,7 @@ const Contact = () => {
                 <p className="text-gray-600 mb-4">
                   Connect for industry discussions, networking, and to stay updated on product management insights and best practices.
                 </p>
-                <Button asChild variant="outline" className="w-full border-blue-200 hover:bg-blue-50">
+                <Button asChild className="w-full bg-[#22325F] text-white hover:bg-[#1a2547]">
                   <a href="https://www.linkedin.com/in/prempradeep/" target="_blank" rel="noopener noreferrer">
                     <Linkedin className="w-4 h-4 mr-2" />
                     Connect on LinkedIn
@@ -187,10 +193,10 @@ const Contact = () => {
 
           {/* Mission Statement */}
           <div className="mt-12 text-center">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
+            <div className="bg-[#22325F] rounded-2xl p-8 text-white">
               <MessageCircle className="w-12 h-12 mx-auto mb-4 opacity-90" />
-              <h3 className="text-2xl font-semibold mb-4">Let's Create Sustainable Value Together</h3>
-              <p className="text-lg opacity-90 max-w-3xl mx-auto leading-relaxed">
+              <h3 className="text-2xl font-semibold mb-4 text-teal-400">Let's Create Sustainable Value Together</h3>
+              <p className="text-lg opacity-90 max-w-3xl mx-auto leading-relaxed text-white">
                 Whether you're looking to optimize your product strategy, need guidance on ethical growth approaches, 
                 or want to explore how to solve the <em>right</em> problems in your organization — I'm here to help. 
                 Let's discuss how we can create meaningful impact together.

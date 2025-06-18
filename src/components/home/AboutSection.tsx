@@ -1,4 +1,3 @@
-
 import { Target, CheckSquare, Lightbulb, Users, TrendingUp, Award } from "lucide-react";
 
 export const AboutSection = () => {
@@ -42,15 +41,7 @@ export const AboutSection = () => {
   ];
 
   const getColorClasses = (color: string) => {
-    const colorMap: { [key: string]: { bg: string; text: string; glow: string } } = {
-      purple: { bg: "bg-purple-500/10", text: "text-purple-300", glow: "shadow-purple-500/20" },
-      cyan: { bg: "bg-cyan-500/10", text: "text-cyan-300", glow: "shadow-cyan-500/20" },
-      pink: { bg: "bg-pink-500/10", text: "text-pink-300", glow: "shadow-pink-500/20" },
-      blue: { bg: "bg-blue-500/10", text: "text-blue-300", glow: "shadow-blue-500/20" },
-      yellow: { bg: "bg-yellow-500/10", text: "text-yellow-300", glow: "shadow-yellow-500/20" },
-      green: { bg: "bg-green-500/10", text: "text-green-300", glow: "shadow-green-500/20" }
-    };
-    return colorMap[color] || colorMap.purple;
+    return { bg: "bg-[#22325F]", text: "text-teal-400", glow: "" };
   };
 
   return (

@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Linkedin, Mail } from "lucide-react";
@@ -13,8 +12,12 @@ export const Header = () => {
             className="flex items-center gap-2 min-w-0 flex-shrink-0 hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 rounded-lg p-1"
             aria-label="Prem Pradeep - Product Practice Excellence, go to homepage"
           >
-            <div className="relative flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-md" aria-hidden="true">
-              <span className="text-white font-bold text-xs sm:text-sm">PP</span>
+            <div className="relative flex flex-col items-start justify-center h-10 w-20 sm:h-12 sm:w-28 p-0.5" aria-hidden="true">
+              <div className="flex items-end">
+                <span className="text-4xl sm:text-5xl font-extrabold text-[#22325F] leading-none">P</span>
+                <span className="text-lg sm:text-xl font-bold text-[#22325F] ml-1">rem</span>
+              </div>
+              <span className="text-xs sm:text-sm font-semibold text-[#22325F] tracking-widest ml-8 mt-[-2px]">r a d e e p</span>
             </div>
             <div className="min-w-0 hidden xs:block">
               <h1 className="text-base sm:text-lg lg:text-xl font-bold text-gray-800 truncate">
@@ -44,10 +47,10 @@ export const Header = () => {
             <Button 
               size="sm" 
               asChild 
-              className="group relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500 font-medium text-white transition-all duration-300 hover:from-indigo-600 hover:to-purple-600 hover:shadow-lg focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 px-2 sm:px-4"
+              className="group relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-[#22325F] font-medium text-white transition-all duration-300 hover:bg-[#1a2547] hover:shadow-lg focus:ring-2 focus:ring-[#22325F] focus:ring-offset-2 px-2 sm:px-4"
             >
               <Link to="/contact" aria-label="Contact Prem Pradeep">
-                <Mail className="mr-1 sm:mr-2 h-4 w-4" />
+                <Mail className="mr-1 sm:mr-2 h-4 w-4 text-teal-400" />
                 <span className="hidden sm:inline">Contact</span>
                 <span className="sm:hidden text-xs">Chat</span>
               </Link>
