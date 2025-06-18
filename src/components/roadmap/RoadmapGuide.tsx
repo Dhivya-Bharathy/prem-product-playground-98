@@ -1,4 +1,3 @@
-
 import { BookOpen, Users, Target, Lightbulb, Calendar, GitBranch, LayoutList, FileBarChart, ClipboardCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -32,8 +31,8 @@ export const RoadmapGuide = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
-          <BookOpen className="w-6 h-6 text-white" />
+        <div className="p-2 bg-[#22325F] rounded-lg">
+          <BookOpen className="w-6 h-6 text-teal-400" />
         </div>
         <div>
           <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">

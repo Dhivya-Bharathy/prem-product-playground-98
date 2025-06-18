@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -281,13 +280,14 @@ const FeaturePrioritization = () => {
                   <TabsTrigger
                     key={key}
                     value={key}
-                    className="flex-1 min-w-[60px] sm:min-w-[120px] text-xs sm:text-sm flex flex-col items-center justify-center py-2"
+                    className="flex-1 min-w-[60px] sm:min-w-[120px] text-xs sm:text-sm flex flex-row items-center justify-center gap-2 py-2"
                   >
-                    <div className="flex justify-center">
+                    <div className="flex items-center justify-center">
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <div>
-                            <Icon className="w-5 h-5 sm:mr-2 text-blue-600" />
+                          <div className="flex flex-row items-center gap-1">
+                            <Icon className="w-5 h-5 sm:mr-1 text-blue-600" />
+                            <span>{label}</span>
                           </div>
                         </TooltipTrigger>
                         <TooltipContent>
@@ -295,7 +295,6 @@ const FeaturePrioritization = () => {
                         </TooltipContent>
                       </Tooltip>
                     </div>
-                    <span className="hidden sm:block mt-1">{label}</span>
                   </TabsTrigger>
                 ))}
               </TabsList>

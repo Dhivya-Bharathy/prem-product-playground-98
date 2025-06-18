@@ -87,42 +87,34 @@ export const ToolsGrid = () => {
     const IconComponent = tool.icon;
     
     return (
-      <Card className="group relative overflow-hidden border-gray-200 bg-white transition-all duration-300 hover:border-gray-300 hover:shadow-lg hover:-translate-y-1 h-full">
-        <div className={`absolute inset-0 bg-gradient-to-br ${tool.gradient} opacity-0 transition-opacity duration-300 group-hover:opacity-5`} />
+      <Link to={tool.href} className="block group h-full focus:outline-none focus:ring-2 focus:ring-[#22325F] rounded-2xl">
+        <Card className="relative overflow-hidden border-gray-200 bg-white transition-all duration-300 hover:border-gray-300 hover:shadow-lg hover:-translate-y-1 h-full cursor-pointer">
+          <div className={`absolute inset-0 bg-gradient-to-br ${tool.gradient} opacity-0 transition-opacity duration-300 group-hover:opacity-5`} />
 
-        <CardHeader className="relative pb-3 sm:pb-4">
-          <div className="mb-3 sm:mb-4 flex items-start justify-between gap-2 sm:gap-3 flex-wrap sm:flex-nowrap">
-            <div className="flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-[#22325F] shadow-md flex-shrink-0">
-              <IconComponent className="h-5 w-5 sm:h-6 sm:w-6 text-teal-400" />
+          <CardHeader className="relative pb-3 sm:pb-4">
+            <div className="mb-3 sm:mb-4 flex items-start justify-between gap-2 sm:gap-3 flex-wrap sm:flex-nowrap">
+              <div className="flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-[#22325F] shadow-md flex-shrink-0">
+                <IconComponent className="h-5 w-5 sm:h-6 sm:w-6 text-teal-400" />
+              </div>
+              <Badge variant="secondary" className="text-xs font-medium flex-shrink-0 mt-2 sm:mt-0">
+                {tool.category}
+              </Badge>
             </div>
-            <Badge variant="secondary" className="text-xs font-medium flex-shrink-0 mt-2 sm:mt-0">
-              {tool.category}
-            </Badge>
-          </div>
-          <CardTitle className="text-base xs:text-lg sm:text-xl font-bold text-gray-900 group-hover:text-gray-800 leading-tight">
-            {tool.title}
-          </CardTitle>
-          <CardDescription className="text-xs xs:text-sm sm:text-base text-gray-600 leading-relaxed">
-            {tool.description}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="relative pt-0 mt-auto">
-          <Button
-            asChild
-            variant="ghost"
-            className="group/button w-full justify-between p-0 h-auto font-medium text-gray-700 hover:text-gray-900 transition-colors"
-          >
-            <Link
-              to={tool.href}
-              className="flex items-center justify-between w-full py-2 xs:py-3 px-2 xs:px-4 rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 text-xs xs:text-sm sm:text-base"
-              aria-label={`Open ${tool.title} tool`}
-            >
+            <CardTitle className="text-base xs:text-lg sm:text-xl font-bold text-gray-900 group-hover:text-gray-800 leading-tight">
+              {tool.title}
+            </CardTitle>
+            <CardDescription className="text-xs xs:text-sm sm:text-base text-gray-600 leading-relaxed">
+              {tool.description}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="relative pt-0 mt-auto">
+            <div className="flex items-center justify-between w-full py-2 xs:py-3 px-2 xs:px-4 rounded-lg text-xs xs:text-sm sm:text-base font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
               <span>Explore Tool</span>
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/button:translate-x-1 flex-shrink-0" />
-            </Link>
-          </Button>
-        </CardContent>
-      </Card>
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 flex-shrink-0" />
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
     );
   };
 

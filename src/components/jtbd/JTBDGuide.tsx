@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { JTBDTabsList } from "./JTBDTabsList";
@@ -11,9 +10,9 @@ export const JTBDGuide = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
+        <div className="p-2 bg-[#22325F] rounded-lg">
           {/* icon */}
-          <svg width="24" height="24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 17V4.5A2.5 2.5 0 0 1 9 2h6a2.5 2.5 0 0 1 2.5 2.5V17"/><path d="M9.5 17v2"/><path d="M14.5 17v2"/></svg>
+          <svg width="24" height="24" fill="none" stroke="#2dd4bf" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 17V4.5A2.5 2.5 0 0 1 9 2h6a2.5 2.5 0 0 1 2.5 2.5V17"/><path d="M9.5 17v2"/><path d="M14.5 17v2"/></svg>
         </div>
         <div>
           <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">

@@ -1,4 +1,3 @@
-
 import { BookOpen, Calculator, Users, Target, Lightbulb, TrendingUp, LayoutList, BadgePercent, FileBarChart, ClipboardCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -32,8 +31,8 @@ export const RiceFrameworkGuide = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
-          <BookOpen className="w-6 h-6 text-white" />
+        <div className="p-2 bg-[#22325F] rounded-lg">
+          <BookOpen className="w-6 h-6 text-teal-400" />
         </div>
         <div>
           <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
@@ -53,19 +52,19 @@ export const RiceFrameworkGuide = () => {
               <TabsTrigger
                 key={value}
                 value={value}
-                className="flex-1 min-w-[64px] sm:min-w-[120px] flex flex-col items-center justify-center py-2 px-1 text-xs sm:text-sm focus-visible:outline-none"
+                className="flex-1 min-w-[64px] sm:min-w-[120px] flex flex-row items-center justify-center gap-2 py-2 px-1 text-xs sm:text-sm focus-visible:outline-none"
               >
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="flex justify-center">
-                      <Icon className="w-5 h-5 sm:mr-2 text-blue-600" />
+                    <div className="flex flex-row items-center gap-1">
+                      <Icon className="w-5 h-5 sm:mr-1 text-blue-600" />
+                      <span>{label}</span>
                     </div>
                   </TooltipTrigger>
                   <TooltipContent side="bottom">
                     {label}
                   </TooltipContent>
                 </Tooltip>
-                <span className="hidden sm:block mt-1">{label}</span>
               </TabsTrigger>
             ))}
           </TabsList>

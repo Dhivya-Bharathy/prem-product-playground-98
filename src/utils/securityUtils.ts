@@ -1,4 +1,3 @@
-
 /**
  * Security utilities for input validation and sanitization
  */
@@ -59,8 +58,6 @@ export const sanitizeTextInput = (input: string, maxLength: number = 1000): stri
   if (!input || typeof input !== 'string') return '';
   
   return input
-    .trim()
-    .slice(0, maxLength)
     .replace(/[<>'"&]/g, (char) => {
       const entityMap: { [key: string]: string } = {
         '<': '&lt;',
@@ -70,7 +67,8 @@ export const sanitizeTextInput = (input: string, maxLength: number = 1000): stri
         '&': '&amp;'
       };
       return entityMap[char] || char;
-    });
+    })
+    .slice(0, maxLength);
 };
 
 // Rate limiting for client-side form submissions

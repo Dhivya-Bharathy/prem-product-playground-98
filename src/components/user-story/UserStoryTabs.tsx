@@ -1,4 +1,3 @@
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { userStoryTabIcons } from "./UserStoryTabsIconMap";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
@@ -35,28 +34,28 @@ export const UserStoryTabs = ({
     {/* Responsive TabsList with scrollable horizontal icons on mobile */}
     <div className="overflow-x-auto hide-scrollbar mb-4 -mx-2 px-1 sm:px-2">
       <TabsList
-        className="flex w-full min-w-[280px] sm:min-w-0 gap-1 sm:gap-0 border rounded-lg bg-slate-100"
+        className="flex w-full min-w-[280px] sm:min-w-0 gap-1 sm:gap-0 border-0 rounded-2xl bg-slate-100 p-1"
         style={{ minWidth: 220 }}
       >
         {Object.entries(userStoryTabIcons).map(([key, { Icon, label }]) => (
           <TabsTrigger
             key={key}
             value={key}
-            className="flex-1 min-w-[68px] sm:min-w-[120px] text-xs sm:text-sm flex flex-col items-center justify-center py-2"
+            className="flex-1 min-w-[68px] sm:min-w-[120px] text-xs sm:text-sm flex flex-row items-center justify-center gap-2 py-2 rounded-xl transition-all duration-200 cursor-pointer border-0
+              data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-teal-500 data-[state=active]:font-bold
+              hover:bg-white/70 hover:shadow-sm"
           >
-            <div className="flex justify-center">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div>
-                    <Icon className="w-5 h-5 sm:mr-2 text-blue-600" />
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  {label}
-                </TooltipContent>
-              </Tooltip>
-            </div>
-            <span className="hidden sm:block mt-1">{label}</span>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div>
+                  <Icon className="w-5 h-5 sm:mr-1 text-[#22325F] data-[state=active]:text-teal-500" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                {label}
+              </TooltipContent>
+            </Tooltip>
+            <span className="mt-0">{label}</span>
           </TabsTrigger>
         ))}
       </TabsList>
