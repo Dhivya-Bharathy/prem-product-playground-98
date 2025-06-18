@@ -162,11 +162,11 @@ export const ProductWordOfTheDay = () => {
         {/* Call to Action */}
         <div className="text-center mt-8 sm:mt-12">
           <p className="text-sm text-gray-500 mb-4">
-            Discover 25+ more terms in our complete dictionary
+            Discover more words in our complete dictionary
           </p>
           <Link to="/prodz-slang">
             <Button variant="ghost" className="text-indigo-600 hover:text-indigo-700 font-medium">
-              View All Terms →
+              View All Words →
             </Button>
           </Link>
         </div>

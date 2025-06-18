@@ -1,4 +1,3 @@
-
 export interface ProdZTerm {
   id: string;
   name: string;
@@ -384,7 +383,7 @@ export const prodzSlangTerms: ProdZTerm[] = [
 ];
 
 export const categories = [
-  { id: 'all', name: 'All Terms', count: prodzSlangTerms.length },
+  { id: 'all', name: 'All Words', count: prodzSlangTerms.length },
   { id: 'deceptive', name: 'Dark Patterns', count: prodzSlangTerms.filter(t => t.category === 'deceptive').length },
   { id: 'design', name: 'Design Concepts', count: prodzSlangTerms.filter(t => t.category === 'design').length },
   { id: 'behavioral', name: 'Psychology', count: prodzSlangTerms.filter(t => t.category === 'behavioral').length }

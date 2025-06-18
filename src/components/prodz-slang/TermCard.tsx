@@ -36,7 +36,7 @@ export const TermCard = ({ term }: TermCardProps) => {
         await navigator.clipboard.writeText(`${shareText}\n\n${shareUrl}`);
         toast({
           title: "Copied to clipboard! 📋",
-          description: "Share this term with your team!"
+          description: "Share this word with your team!"
         });
       }
     } catch (error) {
@@ -74,7 +74,7 @@ export const TermCard = ({ term }: TermCardProps) => {
     setIsFavorited(!isFavorited);
     toast({
       title: isFavorited ? "Removed from favorites" : "Added to favorites! ⭐",
-      description: isFavorited ? "Term unfavorited" : "Building your ProdZ vocabulary!"
+      description: isFavorited ? "Word unfavorited" : "Building your ProdZ vocabulary!"
     });
   };
 

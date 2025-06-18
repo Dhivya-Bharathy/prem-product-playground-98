@@ -64,9 +64,6 @@ const ProdZSlang = () => {
                   <p className="text-sm text-gray-600">The Ultimate Gen Z Product Dictionary</p>
                 </div>
               </div>
-              <Badge variant="outline" className="text-xs">
-                {filteredTerms.length} terms
-              </Badge>
             </div>
           </div>
         </div>
@@ -83,7 +80,7 @@ const ProdZSlang = () => {
             </p>
           </div>
 
-          {/* Enhanced Term of the Day */}
+          {/* Enhanced Word of the Day */}
           <div className="mb-8 sm:mb-12">
             <Card className="border-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white shadow-2xl overflow-hidden relative">
               <div className="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent"></div>
@@ -95,7 +92,7 @@ const ProdZSlang = () => {
                     </div>
                     <div>
                       <h3 className="text-xl font-bold flex items-center gap-2">
-                        Term of the Day
+                        Word of the Day
                         <Zap className="h-5 w-5 text-yellow-300" />
                       </h3>
                       <p className="text-white/80 text-sm">Fresh knowledge, daily served</p>
@@ -136,7 +133,7 @@ const ProdZSlang = () => {
             <div className="relative max-w-2xl mx-auto">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input
-                placeholder="Search terms, definitions, or tags..."
+                placeholder="Search words, definitions, or tags..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 pr-4 py-3 text-base rounded-xl border-gray-200 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
@@ -153,7 +150,7 @@ const ProdZSlang = () => {
                   className="rounded-full text-sm px-4 py-2 h-auto"
                   size="sm"
                 >
-                  {category.name} ({category.count})
+                  {category.name}
                 </Button>
               ))}
             </div>
@@ -162,7 +159,7 @@ const ProdZSlang = () => {
           {/* Results Header */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-3">
             <p className="text-gray-600 text-sm sm:text-base">
-              {filteredTerms.length} term{filteredTerms.length !== 1 ? 's' : ''} found
+              {filteredTerms.length} word{filteredTerms.length !== 1 ? 's' : ''} found
             </p>
             <Button
               variant="outline"
@@ -177,11 +174,11 @@ const ProdZSlang = () => {
               size="sm"
             >
               <Shuffle className="h-4 w-4 mr-2" />
-              Random Term
+              Random Word
             </Button>
           </div>
 
-          {/* Terms Grid */}
+          {/* Words Grid */}
           {filteredTerms.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
               {filteredTerms.map(term => (
@@ -193,7 +190,7 @@ const ProdZSlang = () => {
           ) : (
             <div className="text-center py-12">
               <Filter className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No terms found</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">No words found</h3>
               <p className="text-gray-600 mb-4">Try adjusting your search or filters</p>
               <Button onClick={() => {
                 setSearchQuery('');
@@ -209,7 +206,7 @@ const ProdZSlang = () => {
             <CardContent className="p-6 sm:p-8 text-center">
               <h3 className="text-xl sm:text-2xl font-bold mb-4">Level Up Your Product Vocabulary! 🚀</h3>
               <p className="text-purple-100 text-base sm:text-lg mb-6 max-w-2xl mx-auto">
-                Share these terms with your team, drop them in meetings, and watch everyone think you're the coolest PM in the room.
+                Share these words with your team, drop them in meetings, and watch everyone think you're the coolest PM in the room.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center max-w-md mx-auto">
                 <Button 
@@ -222,7 +219,7 @@ const ProdZSlang = () => {
                 <Button 
                   className="bg-white text-purple-600 hover:bg-purple-50 flex-1"
                   onClick={() => {
-                    const shareText = `🎯 Just discovered ProdZ Slang - the ultimate Gen Z product dictionary! ${filteredTerms.length} terms to level up your product vocabulary.`;
+                    const shareText = `🎯 Just discovered ProdZ Slang - the ultimate Gen Z product dictionary! ${filteredTerms.length} words to level up your product vocabulary.`;
                     if (navigator.share) {
                       navigator.share({
                         title: 'ProdZ Slang - Gen Z Product Dictionary',
