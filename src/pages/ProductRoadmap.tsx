@@ -275,17 +275,17 @@ const ProductRoadmap = () => {
                   <TabsTrigger
                     key={value}
                     value={value}
-                    className="flex-1 min-w-[62px] sm:min-w-[150px] flex flex-col items-center justify-center py-2 px-1 text-xs sm:text-sm focus-visible:outline-none"
+                    className="flex-1 min-w-[62px] sm:min-w-[150px] flex items-center justify-center gap-2 py-2 px-1 text-xs sm:text-sm focus-visible:outline-none"
                   >
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <div className="flex items-center justify-center">
-                          <Icon className="w-5 h-5 sm:mr-2 text-blue-600" />
+                          <Icon className="w-5 h-5 text-blue-600" />
+                          <span className="hidden sm:inline ml-2">{label}</span>
                         </div>
                       </TooltipTrigger>
                       <TooltipContent side="bottom">{label}</TooltipContent>
                     </Tooltip>
-                    <span className="hidden sm:block mt-1">{label}</span>
                   </TabsTrigger>
                 ))}
               </TabsList>
