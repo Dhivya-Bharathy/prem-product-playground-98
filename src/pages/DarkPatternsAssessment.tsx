@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,6 +11,8 @@ import { generateDarkPatternsPDF } from "@/utils/darkPatternsPdfGenerator";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
 import { SEOHead } from "@/components/SEOHead";
+import { SecurityHeaders } from "@/components/SecurityHeaders";
+import { validateAndSanitizeURL, formRateLimit } from "@/utils/securityUtils";
 
 const getPatternTypeColor = (patternType: string) => {
   switch (patternType) {
@@ -34,6 +35,7 @@ const DarkPatternsAssessment = () => {
   const { toast } = useToast();
 
   const handleAnalyze = async () => {
+    // Enhanced security validation
     if (!url) {
       toast({
         title: "Error",
@@ -43,13 +45,24 @@ const DarkPatternsAssessment = () => {
       return;
     }
 
-    // Basic URL validation
-    try {
-      new URL(url);
-    } catch {
+    // Check rate limiting
+    const rateLimitKey = 'dark-patterns-analysis';
+    if (!formRateLimit.isAllowed(rateLimitKey)) {
+      const cooldown = formRateLimit.getRemainingCooldown(rateLimitKey);
+      toast({
+        title: "Rate Limit Exceeded",
+        description: `Please wait ${cooldown} seconds before analyzing another URL`,
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Enhanced URL validation
+    const validation = validateAndSanitizeURL(url);
+    if (!validation.isValid) {
       toast({
         title: "Invalid URL",
-        description: "Please enter a valid URL (e.g., https://example.com)",
+        description: validation.error || "Please enter a valid URL (e.g., https://example.com)",
         variant: "destructive"
       });
       return;
@@ -59,7 +72,7 @@ const DarkPatternsAssessment = () => {
     setResults(null);
 
     try {
-      const analysisResults = await analyzeWebsite(url, setProgress);
+      const analysisResults = await analyzeWebsite(validation.sanitizedUrl!, setProgress);
       setResults(analysisResults);
       
       if (analysisResults.patterns_detected.length === 0) {
@@ -111,6 +124,7 @@ const DarkPatternsAssessment = () => {
 
   return (
     <>
+      <SecurityHeaders />
       <SEOHead
         title="Dark Patterns Assessment Tool - Analyze UX Design Ethics"
         description="Comprehensive dark patterns analysis tool. Identify deceptive design patterns, evaluate UX ethics, and ensure compliance with EU regulations and industry standards."
