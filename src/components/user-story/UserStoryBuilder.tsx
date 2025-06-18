@@ -1,418 +1,186 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import React, { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { PlusCircle, User, Target, Heart } from "lucide-react";
-import { UserStory, UserStoryTemplate } from "@/types/user-story";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Copy, CheckCircle, AlertCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useSecureForm } from "@/hooks/useSecureForm";
+import { useSecureForm } from '@/hooks/useSecureForm';
 
-interface UserStoryBuilderProps {
-  onSaveStory: (story: UserStory) => void;
-  templateToUse: UserStoryTemplate | null;
-  onTemplateUsed: () => void;
-}
-
-export const UserStoryBuilder = ({ onSaveStory, templateToUse, onTemplateUsed }: UserStoryBuilderProps) => {
-  const [title, setTitle] = useState("");
-  const [userType, setUserType] = useState("");
-  const [goal, setGoal] = useState("");
-  const [reason, setReason] = useState("");
-  const [acceptanceCriteria, setAcceptanceCriteria] = useState<string[]>([""]);
-  const [priority, setPriority] = useState<string>("medium");
-  const [storyPoints, setStoryPoints] = useState<string>("3");
-  const [category, setCategory] = useState("");
-  const [tags, setTags] = useState<string[]>([""]);
-  const [notes, setNotes] = useState("");
-  
+export const UserStoryBuilder = () => {
+  const [userType, setUserType] = useState('');
+  const [action, setAction] = useState('');
+  const [benefit, setBenefit] = useState('');
+  const [priority, setPriority] = useState('');
+  const [generatedStory, setGeneratedStory] = useState('');
+  const [isCopied, setIsCopied] = useState(false);
   const { toast } = useToast();
-  const { validateField, sanitizeField, checkRateLimit, errors, hasErrors, clearErrors } = useSecureForm({
-    rateLimitKey: 'user-story-creation',
-    maxLength: 2000
+  
+  const { validateField, sanitizeField, errors: securityErrors } = useSecureForm({
+    rateLimitKey: 'user-story-form',
+    maxLength: 500
   });
 
-  useEffect(() => {
-    if (templateToUse) {
-      setTitle(templateToUse.name);
-      setUserType(templateToUse.template.split("As ")[1]?.split(",")[0] || "");
-      setGoal(
-        templateToUse.template.split("I want ")[1]?.split(",")[0] ||
-          templateToUse.template.split("I want ")[1]?.split(".")[0] ||
-          ""
-      );
-      setReason(
-        templateToUse.template.split("so that ")[1]?.split(".")[0] || ""
-      );
-      setAcceptanceCriteria(templateToUse.acceptanceCriteria || [""]);
-      setPriority(templateToUse.priority);
-      setCategory(templateToUse.category);
-      onTemplateUsed();
-    }
-  }, [templateToUse, onTemplateUsed]);
+  const handleUserTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserType(sanitizeField(e.target.value));
+  };
 
-  const handleSave = () => {
-    // Clear previous errors
-    clearErrors();
+  const handleActionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAction(sanitizeField(e.target.value));
+  };
 
-    // Check rate limiting
-    if (!checkRateLimit()) {
+  const handleBenefitChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBenefit(sanitizeField(e.target.value));
+  };
+
+  const handlePriorityChange = (value: string) => {
+    setPriority(value);
+  };
+
+  const generateUserStory = () => {
+    if (!userType || !action || !benefit) {
       toast({
-        title: "Rate Limit Exceeded",
-        description: errors.rateLimit,
-        variant: "destructive"
+        title: "Error",
+        description: "Please fill in all fields.",
+        variant: "destructive",
       });
       return;
     }
 
-    // Validate required fields
-    const titleValid = validateField('title', title, 'text');
-    const userTypeValid = validateField('userType', userType, 'text');
-    const goalValid = validateField('goal', goal, 'text');
-    const reasonValid = validateField('reason', reason, 'text');
+    const story = `As a ${userType}, I want ${action} so that ${benefit}.`;
+    setGeneratedStory(story);
+  };
 
-    if (!titleValid || !userTypeValid || !goalValid || !reasonValid || hasErrors) {
+  const handleCopyClick = () => {
+    if (generatedStory) {
+      navigator.clipboard.writeText(generatedStory);
+      setIsCopied(true);
       toast({
-        title: "Validation Error",
-        description: "Please fix all form errors before saving",
-        variant: "destructive"
+        title: "Copied!",
+        description: "User story copied to clipboard.",
       });
-      return;
+      setTimeout(() => setIsCopied(false), 2000);
+    } else {
+      toast({
+        title: "Error",
+        description: "No user story generated yet.",
+        variant: "destructive",
+      });
     }
+  };
 
-    // Sanitize inputs
-    const sanitizedStory: UserStory = {
-      id: Date.now().toString(),
-      title: sanitizeField(title),
-      userType: sanitizeField(userType),
-      goal: sanitizeField(goal),
-      reason: sanitizeField(reason),
-      acceptanceCriteria: acceptanceCriteria.map(criteria => sanitizeField(criteria)).filter(Boolean),
-      priority,
-      storyPoints: parseInt(storyPoints),
-      category: sanitizeField(category),
-      tags: tags.map(tag => sanitizeField(tag)).filter(Boolean),
-      notes: sanitizeField(notes)
-    };
-
-    onSaveStory(sanitizedStory);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     
-    // Reset form
-    setTitle('');
-    setUserType('');
-    setGoal('');
-    setReason('');
-    setAcceptanceCriteria(['']);
-    setPriority('medium');
-    setStoryPoints('3');
-    setCategory('');
-    setTags(['']);
-    setNotes('');
-    clearErrors();
-
-    toast({
-      title: "Story Saved",
-      description: "Your user story has been saved successfully"
-    });
-  };
-
-  const handleAddAcceptanceCriteria = () => {
-    setAcceptanceCriteria([...acceptanceCriteria, ""]);
-  };
-
-  const handleAcceptanceCriteriaChange = (index: number, value: string) => {
-    const newCriteria = [...acceptanceCriteria];
-    newCriteria[index] = value;
-    setAcceptanceCriteria(newCriteria);
-  };
-
-  const handleRemoveAcceptanceCriteria = (index: number) => {
-    if (acceptanceCriteria.length > 1) {
-      const newCriteria = [...acceptanceCriteria];
-      newCriteria.splice(index, 1);
-      setAcceptanceCriteria(newCriteria);
+    // Security validation
+    if (!validateField('userType', userType) || 
+        !validateField('action', action) || 
+        !validateField('benefit', benefit)) {
+      return;
     }
-  };
 
-  const handleAddTag = () => {
-    setTags([...tags, ""]);
-  };
-
-  const handleTagChange = (index: number, value: string) => {
-    const newTags = [...tags];
-    newTags[index] = value;
-    setTags(newTags);
-  };
-
-  const handleRemoveTag = (index: number) => {
-    if (tags.length > 1) {
-      const newTags = [...tags];
-      newTags.splice(index, 1);
-      setTags(newTags);
+    if (priority && !['low', 'medium', 'high'].includes(priority)) {
+      return;
     }
-  };
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case "high":
-        return "bg-red-100 text-red-800";
-      case "medium":
-        return "bg-yellow-100 text-yellow-800";
-      case "low":
-        return "bg-green-100 text-green-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
+    generateUserStory();
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg">
-          <PlusCircle className="w-6 h-6 text-white" />
-        </div>
-        <div>
-          <h3 className="text-xl font-bold text-gray-900">Create User Story</h3>
-          <p className="text-gray-600">Build a well-structured user story with all necessary details</p>
-        </div>
-      </div>
-      
-      {/* Error display */}
-      {hasErrors && (
-        <Card className="border-red-200 bg-red-50">
-          <CardContent className="py-4">
-            <div className="space-y-2">
-              {Object.entries(errors).map(([field, error]) => (
-                <p key={field} className="text-red-600 text-sm">
-                  <strong>{field}:</strong> {error}
-                </p>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Story Details</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
+    <Card className="w-full max-w-2xl mx-auto border-0 bg-gradient-to-br from-white to-gray-50/50 shadow-md">
+      <CardContent className="p-6">
+        <h2 className="text-2xl font-bold mb-4 text-gray-900">User Story Builder</h2>
+        <p className="text-gray-600 mb-6">
+          Create clear and concise user stories using the standard template.
+        </p>
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-              Story Title
-            </label>
+            <Label htmlFor="userType">User Type</Label>
             <Input
-              id="title"
-              placeholder="Enter a descriptive title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              type="text"
+              id="userType"
+              placeholder="e.g., a marketing manager"
+              value={userType}
+              onChange={handleUserTypeChange}
+              className={securityErrors.userType ? "border-red-500" : ""}
             />
+            {securityErrors.userType && <p className="text-red-500 text-sm mt-1">{securityErrors.userType}</p>}
           </div>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
-                Category
-              </label>
-              <Input
-                id="category"
-                placeholder="Feature area or module"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="priority" className="block text-sm font-medium text-gray-700 mb-1">
-                Priority
-              </label>
-              <Select value={priority} onValueChange={setPriority}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="high">
-                    <div className="flex items-center">
-                      <Badge className={getPriorityColor("high")}>High</Badge>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="medium">
-                    <div className="flex items-center">
-                      <Badge className={getPriorityColor("medium")}>Medium</Badge>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="low">
-                    <div className="flex items-center">
-                      <Badge className={getPriorityColor("low")}>Low</Badge>
-                    </div>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="md:col-span-2">
-              <label htmlFor="userType" className="block text-sm font-medium text-gray-700 mb-1">
-                <div className="flex items-center gap-1">
-                  <User className="w-4 h-4" />
-                  <span>As a...</span>
-                </div>
-              </label>
-              <Input
-                id="userType"
-                placeholder="Type of user"
-                value={userType}
-                onChange={(e) => setUserType(e.target.value)}
-              />
-            </div>
-
-            <div>
-              <label htmlFor="storyPoints" className="block text-sm font-medium text-gray-700 mb-1">
-                Story Points
-              </label>
-              <Select value={storyPoints} onValueChange={setStoryPoints}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {[1, 2, 3, 5, 8, 13].map((point) => (
-                    <SelectItem key={point} value={point.toString()}>
-                      {point}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
           <div>
-            <label htmlFor="goal" className="block text-sm font-medium text-gray-700 mb-1">
-              <div className="flex items-center gap-1">
-                <Target className="w-4 h-4" />
-                <span>I want to...</span>
-              </div>
-            </label>
+            <Label htmlFor="action">Action</Label>
             <Input
-              id="goal"
-              placeholder="What the user wants to accomplish"
-              value={goal}
-              onChange={(e) => setGoal(e.target.value)}
+              type="text"
+              id="action"
+              placeholder="e.g., view campaign statistics"
+              value={action}
+              onChange={handleActionChange}
+              className={securityErrors.action ? "border-red-500" : ""}
             />
+            {securityErrors.action && <p className="text-red-500 text-sm mt-1">{securityErrors.action}</p>}
           </div>
-
           <div>
-            <label htmlFor="reason" className="block text-sm font-medium text-gray-700 mb-1">
-              <div className="flex items-center gap-1">
-                <Heart className="w-4 h-4" />
-                <span>So that...</span>
-              </div>
-            </label>
+            <Label htmlFor="benefit">Benefit</Label>
             <Input
-              id="reason"
-              placeholder="Why the user wants this / value it provides"
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
+              type="text"
+              id="benefit"
+              placeholder="e.g., I can optimize our ad spend"
+              value={benefit}
+              onChange={handleBenefitChange}
+              className={securityErrors.benefit ? "border-red-500" : ""}
             />
+            {securityErrors.benefit && <p className="text-red-500 text-sm mt-1">{securityErrors.benefit}</p>}
           </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Acceptance Criteria</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {acceptanceCriteria.map((criteria, index) => (
-            <div key={index} className="flex gap-2">
-              <Input
-                placeholder={`Criteria ${index + 1}`}
-                value={criteria}
-                onChange={(e) => handleAcceptanceCriteriaChange(index, e.target.value)}
+          <div>
+            <Label htmlFor="priority">Priority (Optional)</Label>
+            <Select value={priority} onValueChange={handlePriorityChange}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select priority" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="low">Low</SelectItem>
+                <SelectItem value="medium">Medium</SelectItem>
+                <SelectItem value="high">High</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Button type="submit" className="w-full">
+              Generate User Story
+            </Button>
+          </div>
+        </form>
+        {generatedStory && (
+          <div className="mt-8">
+            <Label>Generated User Story</Label>
+            <div className="relative">
+              <Textarea
+                readOnly
+                value={generatedStory}
+                className="resize-none"
               />
               <Button
-                variant="outline"
-                size="icon"
-                type="button"
-                onClick={() => handleRemoveAcceptanceCriteria(index)}
-                disabled={acceptanceCriteria.length === 1}
+                variant="ghost"
+                onClick={handleCopyClick}
+                className="absolute right-2 top-2 h-8 w-8 rounded-full hover:bg-gray-100"
               >
-                &times;
-              </Button>
-            </div>
-          ))}
-          <Button
-            variant="outline"
-            type="button"
-            onClick={handleAddAcceptanceCriteria}
-            className="w-full"
-          >
-            Add Criteria
-          </Button>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Additional Information</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div>
-            <label htmlFor="tags" className="block text-sm font-medium text-gray-700 mb-1">
-              Tags
-            </label>
-            <div className="space-y-2">
-              {tags.map((tag, index) => (
-                <div key={index} className="flex gap-2">
-                  <Input
-                    placeholder={`Tag ${index + 1}`}
-                    value={tag}
-                    onChange={(e) => handleTagChange(index, e.target.value)}
-                  />
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    type="button"
-                    onClick={() => handleRemoveTag(index)}
-                    disabled={tags.length === 1}
-                  >
-                    &times;
-                  </Button>
-                </div>
-              ))}
-              <Button
-                variant="outline"
-                type="button"
-                onClick={handleAddTag}
-                className="w-full"
-              >
-                Add Tag
+                {isCopied ? (
+                  <CheckCircle className="h-4 w-4 text-green-500" />
+                ) : (
+                  <Copy className="h-4 w-4" />
+                )}
               </Button>
             </div>
           </div>
-
-          <div>
-            <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-1">
-              Notes
-            </label>
-            <Textarea
-              id="notes"
-              placeholder="Additional context, implementation details, or considerations"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              rows={4}
-            />
+        )}
+        {securityErrors.rateLimit && (
+          <div className="mt-4 p-3 rounded-md bg-red-50 text-red-500 flex items-center">
+            <AlertCircle className="h-4 w-4 mr-2" />
+            {securityErrors.rateLimit}
           </div>
-        </CardContent>
-      </Card>
-
-      <div className="flex justify-end">
-        <Button onClick={handleSave} size="lg">
-          Save User Story
-        </Button>
-      </div>
-    </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };
