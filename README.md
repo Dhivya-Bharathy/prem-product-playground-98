@@ -1,73 +1,81 @@
-# Welcome to your Lovable project
+# 🚀 Dark Patterns Assessment Tool
 
-## Project info
+A comprehensive tool for analyzing websites and detecting dark patterns using real-time web scraping and AI analysis.
 
-**URL**: https://lovable.dev/projects/3c75f378-b362-49fc-b017-edc7a4a110e3
+## ✨ Features
 
-## How can I edit this code?
+- **Real-time Analysis**: Uses Puppeteer to scrape and analyze websites
+- **Comprehensive Detection**: Identifies dark patterns, grey patterns, and positive design practices
+- **Professional Reports**: Generates detailed PDF reports with recommendations
+- **No Dummy Data**: Provides specific, actionable insights for each website
 
-There are several ways of editing your application.
+## 🌐 Live Demo
 
-**Use Lovable**
+**Frontend**: Deployed on Netlify  
+**Backend**: Deployed on Railway with Puppeteer support
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3c75f378-b362-49fc-b017-edc7a4a110e3) and start prompting.
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Dhivya-Bharathy/prem-product-playground-98)
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🚀 Quick Deploy
 
-**Use your preferred IDE**
+### Option 1: One-Click Deploy
+Click the "Deploy to Netlify" button above for instant deployment.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Option 2: Manual Deploy
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+#### Frontend (Netlify)
+1. Go to [netlify.com](https://netlify.com)
+2. Click "New site from Git"
+3. Select this repository
+4. Build settings (auto-configured):
+   - **Build command**: `npm run build`
+   - **Publish directory**: `dist`
+5. Add environment variable:
+   - `VITE_BACKEND_URL` = `https://prem-product-playground-98-production.up.railway.app`
 
-Follow these steps:
+#### Backend (Railway)
+1. Go to [railway.app](https://railway.app)
+2. Deploy from GitHub repo
+3. Select `backend` folder
+4. Add environment variables:
+   - `NODE_ENV` = `production`
+   - `FRONTEND_URL` = `https://your-netlify-url.netlify.app`
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 🛠️ Local Development
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```bash
+# Install dependencies
+npm install
+cd backend && npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start frontend (localhost:8081)
 npm run dev
+
+# Start backend (localhost:3001)
+cd backend && npm start
 ```
 
-**Edit a file directly in GitHub**
+## 📋 Environment Variables
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Frontend (.env)
+```
+VITE_BACKEND_URL=http://localhost:3001
+```
 
-**Use GitHub Codespaces**
+### Backend (.env)
+```
+PORT=3001
+NODE_ENV=development
+FRONTEND_URL=http://localhost:8081
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🔧 Tech Stack
 
-## What technologies are used for this project?
+- **Frontend**: React, TypeScript, Vite, Tailwind CSS
+- **Backend**: Node.js, Express, Puppeteer, Cheerio
+- **Deployment**: Netlify (Frontend) + Railway (Backend)
+- **Analysis**: Real-time web scraping with semantic pattern detection
 
-This project is built with:
+## 📄 License
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/3c75f378-b362-49fc-b017-edc7a4a110e3) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+MIT License - see LICENSE file for details.
