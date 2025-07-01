@@ -234,7 +234,7 @@ export class WebScrapingService {
       return {
         selector,
         count: elements.length,
-        visible: elements.filter(':visible').length
+        hasDisplayNone: elements.filter('[style*="display: none"]').length
       };
     }).filter(item => item.count > 0);
   }
@@ -273,7 +273,7 @@ export class WebScrapingService {
         notices.push({
           selector,
           text: $el.text().trim().substring(0, 500),
-          visible: $el.is(':visible')
+          hasStyle: $el.attr('style') || 'none'
         });
       });
     });

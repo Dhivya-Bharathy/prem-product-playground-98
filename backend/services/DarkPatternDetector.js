@@ -628,15 +628,37 @@ export class DarkPatternDetector {
     const whiteCount = score.white_patterns;
     const totalScore = score.total_score;
 
-    if (totalScore >= 80) {
-      return `Excellent ethical design! This website demonstrates strong user-focused design with ${whiteCount} positive patterns and minimal dark patterns. The site respects user autonomy and privacy.`;
-    } else if (totalScore >= 60) {
-      return `Good ethical design with room for improvement. Found ${darkCount} dark patterns and ${greyCount} grey patterns that could be optimized. The website generally respects users but has some concerning elements.`;
-    } else if (totalScore >= 40) {
-      return `Concerning design patterns detected. This website contains ${darkCount} dark patterns and ${greyCount} grey patterns that may manipulate user behavior. Significant improvements needed for ethical compliance.`;
-    } else {
-      return `Poor ethical design with multiple dark patterns. This website exhibits ${darkCount} dark patterns that deliberately deceive and manipulate users. Major redesign recommended to meet ethical standards and regulatory compliance.`;
+    // Get specific pattern names for detailed summary
+    const darkPatterns = patterns.filter(p => p.pattern_type === 'dark').map(p => p.name);
+    const greyPatterns = patterns.filter(p => p.pattern_type === 'grey').map(p => p.name);
+    const whitePatterns = patterns.filter(p => p.pattern_type === 'white').map(p => p.name);
+
+    let summary = `Analysis found ${darkCount} dark patterns, ${greyCount} grey patterns, and ${whiteCount} positive patterns. Score: ${totalScore}/100.\n\n`;
+
+    if (darkPatterns.length > 0) {
+      summary += `🚨 DARK PATTERNS DETECTED:\n${darkPatterns.map(p => `• ${p}`).join('\n')}\n\n`;
     }
+
+    if (greyPatterns.length > 0) {
+      summary += `⚠️ CONCERNING PATTERNS:\n${greyPatterns.map(p => `• ${p}`).join('\n')}\n\n`;
+    }
+
+    if (whitePatterns.length > 0) {
+      summary += `✅ POSITIVE PATTERNS:\n${whitePatterns.map(p => `• ${p}`).join('\n')}\n\n`;
+    }
+
+    // Overall assessment
+    if (totalScore >= 80) {
+      summary += `ASSESSMENT: Good ethical design with minor issues to address.`;
+    } else if (totalScore >= 60) {
+      summary += `ASSESSMENT: Moderate ethical concerns - improvements recommended.`;
+    } else if (totalScore >= 40) {
+      summary += `ASSESSMENT: Significant ethical issues - major changes needed.`;
+    } else {
+      summary += `ASSESSMENT: Poor ethical design - complete redesign recommended.`;
+    }
+
+    return summary;
   }
 
   initializeDarkPatterns() {
