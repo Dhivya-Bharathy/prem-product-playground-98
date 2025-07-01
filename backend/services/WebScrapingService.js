@@ -22,7 +22,8 @@ export class WebScrapingService {
           '--no-zygote',
           '--disable-gpu',
           '--single-process'
-        ]
+        ],
+        executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium'
       });
     }
     return this.browser;
