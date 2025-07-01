@@ -11,17 +11,20 @@ export class WebScrapingService {
   async initBrowser() {
     if (!this.browser) {
       console.log('🚀 Launching Puppeteer browser...');
-      // Dynamically detect Chromium path for Nixpacks compatibility
-      let chromiumPath = 'chromium';
-      try {
-        const { execSync } = await import('child_process');
-        chromiumPath = execSync('which chromium').toString().trim();
-      } catch {
+      // Prefer /usr/bin/chromium-browser for Render.com, fallback to dynamic detection
+      let chromiumPath = '/usr/bin/chromium-browser';
+      const fs = await import('fs');
+      if (!fs.existsSync(chromiumPath)) {
         try {
           const { execSync } = await import('child_process');
-          chromiumPath = execSync('which chromium-browser').toString().trim();
+          chromiumPath = execSync('which chromium').toString().trim();
         } catch {
-          chromiumPath = '/usr/bin/chromium'; // fallback
+          try {
+            const { execSync } = await import('child_process');
+            chromiumPath = execSync('which chromium-browser').toString().trim();
+          } catch {
+            chromiumPath = '/usr/bin/chromium'; // fallback
+          }
         }
       }
       this.browser = await puppeteer.launch({
