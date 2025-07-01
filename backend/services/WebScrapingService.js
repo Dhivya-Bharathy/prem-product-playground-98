@@ -11,6 +11,12 @@ export class WebScrapingService {
   async initBrowser() {
     if (!this.browser) {
       console.log('🚀 Launching Puppeteer browser...');
+      // Try both chromium and chromium-browser for maximum compatibility
+      let executablePath = process.env.CHROMIUM_PATH || '/usr/bin/chromium';
+      const fs = await import('fs');
+      if (!fs.existsSync(executablePath) && fs.existsSync('/usr/bin/chromium-browser')) {
+        executablePath = '/usr/bin/chromium-browser';
+      }
       this.browser = await puppeteer.launch({
         headless: 'new',
         args: [
@@ -23,7 +29,7 @@ export class WebScrapingService {
           '--disable-gpu',
           '--single-process'
         ],
-        executablePath: process.env.CHROMIUM_PATH || '/usr/bin/chromium'
+        executablePath
       });
     }
     return this.browser;
