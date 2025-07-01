@@ -12,9 +12,7 @@ nixPkgs = [
   "libx11",
   "xdg-utils",
   "libdrm",
-  "libxkbcommon",
   "cups",
-  "dbus",
   "glib"
 ]
 
