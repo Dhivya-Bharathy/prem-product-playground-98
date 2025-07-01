@@ -15,11 +15,7 @@ nixPkgs = [
   "libxkbcommon",
   "cups",
   "dbus",
-  "glib",
-  "pango",
-  "libxcb",
-  "libxext",
-  "freetype"
+  "glib"
 ]
 
 [phases.install]
