@@ -11,11 +11,18 @@ export class WebScrapingService {
   async initBrowser() {
     if (!this.browser) {
       console.log('🚀 Launching Puppeteer browser...');
-      // Try both chromium and chromium-browser for maximum compatibility
-      let executablePath = process.env.CHROMIUM_PATH || '/usr/bin/chromium';
-      const fs = await import('fs');
-      if (!fs.existsSync(executablePath) && fs.existsSync('/usr/bin/chromium-browser')) {
-        executablePath = '/usr/bin/chromium-browser';
+      // Dynamically detect Chromium path for Nixpacks compatibility
+      let chromiumPath = 'chromium';
+      try {
+        const { execSync } = await import('child_process');
+        chromiumPath = execSync('which chromium').toString().trim();
+      } catch {
+        try {
+          const { execSync } = await import('child_process');
+          chromiumPath = execSync('which chromium-browser').toString().trim();
+        } catch {
+          chromiumPath = '/usr/bin/chromium'; // fallback
+        }
       }
       this.browser = await puppeteer.launch({
         headless: 'new',
@@ -29,7 +36,7 @@ export class WebScrapingService {
           '--disable-gpu',
           '--single-process'
         ],
-        executablePath
+        executablePath: chromiumPath
       });
     }
     return this.browser;
