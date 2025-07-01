@@ -1,0 +1,35 @@
+{
+  "name": "dark-patterns-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Dark Patterns Website Analysis",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "keywords": [
+    "dark-patterns",
+    "web-scraping",
+    "ux-analysis",
+    "puppeteer",
+    "express"
+  ],
+  "author": "Prem Pradeep",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "puppeteer": "^21.11.0",
+    "cheerio": "^1.0.0-rc.12",
+    "axios": "^1.6.7",
+    "dotenv": "^16.4.1",
+    "rate-limiter-flexible": "^4.0.1",
+    "validator": "^13.11.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 

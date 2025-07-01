@@ -1,15 +1,18 @@
-
 import React, { useState, useEffect } from 'react';
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Copy, CheckCircle, AlertCircle, Plus } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Copy, CheckCircle, AlertCircle, Plus, Sparkles, Key, Wand2, RotateCcw, Lightbulb } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useSecureForm } from '@/hooks/useSecureForm';
 import { UserStory, UserStoryTemplate } from "@/types/user-story";
+import { openaiService } from '@/services/openaiService';
+import { AIApiKeyDialog } from './AIApiKeyDialog';
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface UserStoryBuilderProps {
   onSaveStory?: (story: UserStory) => void;
@@ -27,12 +30,29 @@ export const UserStoryBuilder = ({ onSaveStory, templateToUse, onTemplateUsed }:
   const [notes, setNotes] = useState('');
   const [generatedStory, setGeneratedStory] = useState('');
   const [isCopied, setIsCopied] = useState(false);
+  
+  // AI-related state
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [isGeneratingAI, setIsGeneratingAI] = useState(false);
+  const [showApiKeyDialog, setShowApiKeyDialog] = useState(false);
+  const [apiKey, setApiKey] = useState('');
+  const [activeTab, setActiveTab] = useState('manual');
+  
   const { toast } = useToast();
   
   const { validateField, sanitizeField, errors: securityErrors } = useSecureForm({
     rateLimitKey: 'user-story-form',
     maxLength: 500
   });
+
+  // Initialize API key from localStorage
+  useEffect(() => {
+    const savedApiKey = localStorage.getItem('openai_api_key');
+    if (savedApiKey) {
+      setApiKey(savedApiKey);
+      openaiService.initialize(savedApiKey);
+    }
+  }, []);
 
   // Load template data when templateToUse changes
   useEffect(() => {
@@ -58,6 +78,113 @@ export const UserStoryBuilder = ({ onSaveStory, templateToUse, onTemplateUsed }:
       }
     }
   }, [templateToUse, onTemplateUsed]);
+
+  const handleApiKeySet = (newApiKey: string) => {
+    setApiKey(newApiKey);
+    if (newApiKey) {
+      openaiService.initialize(newApiKey);
+    }
+  };
+
+  const generateWithAI = async () => {
+    if (!openaiService.isInitialized()) {
+      setShowApiKeyDialog(true);
+      return;
+    }
+
+    if (!aiPrompt.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a description for the user story you want to generate.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsGeneratingAI(true);
+    
+    try {
+      const aiResult = await openaiService.generateUserStory(aiPrompt);
+      
+      // Populate the form with AI-generated data
+      setUserType(aiResult.userType);
+      setAction(aiResult.action);
+      setBenefit(aiResult.benefit);
+      setPriority(aiResult.priority);
+      setComplexity(aiResult.complexity);
+      setAcceptanceCriteria(aiResult.acceptanceCriteria);
+      setNotes(aiResult.notes);
+      
+      // Generate the full story
+      const story = `As a ${aiResult.userType}, I want ${aiResult.action} so that ${aiResult.benefit}.`;
+      setGeneratedStory(story);
+
+      toast({
+        title: "User Story Generated!",
+        description: "AI has generated a comprehensive user story for you.",
+      });
+
+      // Switch to manual tab to show the generated content
+      setActiveTab('manual');
+      
+    } catch (error) {
+      toast({
+        title: "Generation Failed",
+        description: error instanceof Error ? error.message : "Failed to generate user story with AI.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGeneratingAI(false);
+    }
+  };
+
+  const improveWithAI = async () => {
+    if (!openaiService.isInitialized()) {
+      setShowApiKeyDialog(true);
+      return;
+    }
+
+    if (!generatedStory) {
+      toast({
+        title: "Error",
+        description: "Please generate a user story first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsGeneratingAI(true);
+    
+    try {
+      const improvement = await openaiService.improveUserStory(generatedStory);
+      
+      // Parse the improved story
+      const parts = improvement.improvedStory.match(/As a (.+?), I want (.+?) so that (.+?)\./);
+      if (parts) {
+        setUserType(parts[1]);
+        setAction(parts[2]);
+        setBenefit(parts[3]);
+      }
+      
+      setGeneratedStory(improvement.improvedStory);
+      setAcceptanceCriteria(improvement.acceptanceCriteria);
+      setNotes(prev => `${prev}\n\nAI Suggestions: ${improvement.suggestions.join(', ')}`);
+
+      toast({
+        title: "Story Improved!",
+        description: "AI has enhanced your user story with suggestions.",
+      });
+      
+    } catch (error) {
+      toast({
+        title: "Improvement Failed",
+        description: error instanceof Error ? error.message : "Failed to improve user story with AI.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGeneratingAI(false);
+    }
+  };
 
   const handleUserTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserType(sanitizeField(e.target.value));
@@ -157,6 +284,7 @@ export const UserStoryBuilder = ({ onSaveStory, templateToUse, onTemplateUsed }:
     setAcceptanceCriteria(['']);
     setNotes('');
     setGeneratedStory('');
+    setAiPrompt('');
 
     toast({
       title: "Story Saved!",
@@ -185,176 +313,317 @@ export const UserStoryBuilder = ({ onSaveStory, templateToUse, onTemplateUsed }:
     generateUserStory();
   };
 
+  const resetForm = () => {
+    setUserType('');
+    setAction('');
+    setBenefit('');
+    setPriority('');
+    setComplexity('');
+    setAcceptanceCriteria(['']);
+    setNotes('');
+    setGeneratedStory('');
+    setAiPrompt('');
+  };
+
   return (
-    <Card className="w-full max-w-2xl mx-auto border-0 bg-gradient-to-br from-white to-gray-50/50 shadow-md">
-      <CardContent className="p-6">
-        <h2 className="text-2xl font-bold mb-4 text-gray-900">User Story Builder</h2>
-        <p className="text-gray-600 mb-6">
-          Create clear and concise user stories using the standard template.
+    <Card className="w-full max-w-4xl mx-auto border-0 bg-gradient-to-br from-white to-gray-50/50 shadow-md">
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2 text-2xl">
+          <Sparkles className="h-6 w-6 text-blue-600" />
+          AI-Powered User Story Builder
+        </CardTitle>
+        <p className="text-gray-600">
+          Create comprehensive user stories manually or with AI assistance.
         </p>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Label htmlFor="userType">User Type</Label>
-            <Input
-              type="text"
-              id="userType"
-              placeholder="e.g., a marketing manager"
-              value={userType}
-              onChange={handleUserTypeChange}
-              className={securityErrors.userType ? "border-red-500" : ""}
-            />
-            {securityErrors.userType && <p className="text-red-500 text-sm mt-1">{securityErrors.userType}</p>}
-          </div>
-          <div>
-            <Label htmlFor="action">Action</Label>
-            <Input
-              type="text"
-              id="action"
-              placeholder="e.g., view campaign statistics"
-              value={action}
-              onChange={handleActionChange}
-              className={securityErrors.action ? "border-red-500" : ""}
-            />
-            {securityErrors.action && <p className="text-red-500 text-sm mt-1">{securityErrors.action}</p>}
-          </div>
-          <div>
-            <Label htmlFor="benefit">Benefit</Label>
-            <Input
-              type="text"
-              id="benefit"
-              placeholder="e.g., I can optimize our ad spend"
-              value={benefit}
-              onChange={handleBenefitChange}
-              className={securityErrors.benefit ? "border-red-500" : ""}
-            />
-            {securityErrors.benefit && <p className="text-red-500 text-sm mt-1">{securityErrors.benefit}</p>}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="priority">Priority</Label>
-              <Select value={priority} onValueChange={handlePriorityChange}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select priority" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="low">Low</SelectItem>
-                  <SelectItem value="medium">Medium</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="complexity">Complexity</Label>
-              <Select value={complexity} onValueChange={handleComplexityChange}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select complexity" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="simple">Simple</SelectItem>
-                  <SelectItem value="moderate">Moderate</SelectItem>
-                  <SelectItem value="complex">Complex</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          
-          <div>
-            <div className="flex items-center justify-between mb-2">
-              <Label>Acceptance Criteria</Label>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={addAcceptanceCriteria}
-                className="flex items-center gap-1"
-              >
-                <Plus className="w-4 h-4" />
-                Add
-              </Button>
-            </div>
-            <div className="space-y-2">
-              {acceptanceCriteria.map((criteria, index) => (
-                <div key={index} className="flex gap-2">
-                  <Input
-                    placeholder={`Acceptance criteria ${index + 1}`}
-                    value={criteria}
-                    onChange={(e) => updateAcceptanceCriteria(index, e.target.value)}
-                    className="flex-1"
-                  />
-                  {acceptanceCriteria.length > 1 && (
+      </CardHeader>
+      
+      <CardContent className="p-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="ai" className="flex items-center gap-2">
+              <Wand2 className="h-4 w-4" />
+              AI Generator
+            </TabsTrigger>
+            <TabsTrigger value="manual" className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4" />
+              Manual Builder
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="ai" className="space-y-4">
+            <div className="space-y-4">
+              {!openaiService.isInitialized() && (
+                <Alert>
+                  <Key className="h-4 w-4" />
+                  <AlertDescription>
+                    Configure your OpenAI API key to enable AI-powered user story generation.
                     <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => removeAcceptanceCriteria(index)}
-                      className="px-2"
+                      variant="link"
+                      className="p-0 ml-1 h-auto"
+                      onClick={() => setShowApiKeyDialog(true)}
                     >
-                      ×
+                      Set up API key
                     </Button>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
+                  </AlertDescription>
+                </Alert>
+              )}
 
-          <div>
-            <Label htmlFor="notes">Notes (Optional)</Label>
-            <Textarea
-              id="notes"
-              placeholder="Additional notes or context..."
-              value={notes}
-              onChange={handleNotesChange}
-              className="resize-none"
-              rows={3}
-            />
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="aiPrompt">Describe your feature or requirement</Label>
+                <Textarea
+                  id="aiPrompt"
+                  placeholder="e.g., A mobile app feature that allows users to track their daily water intake and set reminders"
+                  value={aiPrompt}
+                  onChange={(e) => setAiPrompt(e.target.value)}
+                  className="min-h-[100px]"
+                />
+              </div>
 
-          <div>
-            <Button type="submit" className="w-full">
-              Generate User Story
-            </Button>
-          </div>
-        </form>
-        {generatedStory && (
-          <div className="mt-8">
-            <Label>Generated User Story</Label>
-            <div className="relative">
-              <Textarea
-                readOnly
-                value={generatedStory}
-                className="resize-none"
-              />
-              <div className="absolute right-2 top-2 flex gap-2">
-                <Button
-                  variant="ghost"
-                  onClick={handleCopyClick}
-                  className="h-8 w-8 rounded-full hover:bg-gray-100"
+              <div className="flex gap-2 flex-wrap">
+                <Button 
+                  onClick={generateWithAI}
+                  disabled={isGeneratingAI || !openaiService.isInitialized()}
+                  className="flex items-center gap-2"
                 >
-                  {isCopied ? (
-                    <CheckCircle className="h-4 w-4 text-green-500" />
+                  {isGeneratingAI ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      Generating...
+                    </>
                   ) : (
-                    <Copy className="h-4 w-4" />
+                    <>
+                      <Sparkles className="h-4 w-4" />
+                      Generate with AI
+                    </>
                   )}
                 </Button>
-                {onSaveStory && (
+
+                {!openaiService.isInitialized() && (
                   <Button
-                    variant="ghost"
-                    onClick={handleSaveStory}
-                    className="h-8 px-3 rounded-full hover:bg-gray-100 text-xs"
+                    variant="outline"
+                    onClick={() => setShowApiKeyDialog(true)}
+                    className="flex items-center gap-2"
                   >
-                    Save
+                    <Key className="h-4 w-4" />
+                    Setup API Key
                   </Button>
                 )}
               </div>
+
+              <div className="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg">
+                <strong>💡 Pro Tips:</strong>
+                <ul className="list-disc list-inside mt-1 space-y-1">
+                  <li>Be specific about the user type and context</li>
+                  <li>Include the problem you're trying to solve</li>
+                  <li>Mention any constraints or requirements</li>
+                </ul>
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="manual" className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="userType">User Type</Label>
+                  <Input
+                    type="text"
+                    id="userType"
+                    placeholder="e.g., a marketing manager"
+                    value={userType}
+                    onChange={handleUserTypeChange}
+                    className="w-full"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="action">Action</Label>
+                  <Input
+                    type="text"
+                    id="action"
+                    placeholder="e.g., view campaign statistics"
+                    value={action}
+                    onChange={handleActionChange}
+                    className="w-full"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="benefit">Benefit</Label>
+                <Input
+                  type="text"
+                  id="benefit"
+                  placeholder="e.g., I can optimize our ad spend"
+                  value={benefit}
+                  onChange={handleBenefitChange}
+                  className="w-full"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="priority">Priority</Label>
+                  <Select value={priority} onValueChange={handlePriorityChange}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select priority" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="low">Low</SelectItem>
+                      <SelectItem value="medium">Medium</SelectItem>
+                      <SelectItem value="high">High</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="complexity">Complexity</Label>
+                  <Select value={complexity} onValueChange={handleComplexityChange}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select complexity" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="simple">Simple</SelectItem>
+                      <SelectItem value="moderate">Moderate</SelectItem>
+                      <SelectItem value="complex">Complex</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div>
+                <Label>Acceptance Criteria</Label>
+                {acceptanceCriteria.map((criteria, index) => (
+                  <div key={index} className="flex items-center gap-2 mt-2">
+                    <Input
+                      placeholder={`Criterion ${index + 1}`}
+                      value={criteria}
+                      onChange={(e) => updateAcceptanceCriteria(index, e.target.value)}
+                      className="flex-1"
+                    />
+                    {acceptanceCriteria.length > 1 && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => removeAcceptanceCriteria(index)}
+                      >
+                        Remove
+                      </Button>
+                    )}
+                  </div>
+                ))}
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={addAcceptanceCriteria}
+                  className="mt-2 flex items-center gap-1"
+                >
+                  <Plus className="h-4 w-4" />
+                  Add Criterion
+                </Button>
+              </div>
+
+              <div>
+                <Label htmlFor="notes">Notes</Label>
+                <Textarea
+                  id="notes"
+                  placeholder="Additional context, assumptions, or implementation notes..."
+                  value={notes}
+                  onChange={handleNotesChange}
+                  className="min-h-[80px]"
+                />
+              </div>
+
+              <div className="flex gap-2 flex-wrap">
+                <Button type="submit" className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4" />
+                  Generate Story
+                </Button>
+                
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={resetForm}
+                  className="flex items-center gap-2"
+                >
+                  <RotateCcw className="h-4 w-4" />
+                  Reset
+                </Button>
+
+                {generatedStory && openaiService.isInitialized() && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={improveWithAI}
+                    disabled={isGeneratingAI}
+                    className="flex items-center gap-2"
+                  >
+                    {isGeneratingAI ? (
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-600"></div>
+                    ) : (
+                      <Lightbulb className="h-4 w-4" />
+                    )}
+                    Improve with AI
+                  </Button>
+                )}
+              </div>
+            </form>
+          </TabsContent>
+        </Tabs>
+
+        {/* Generated Story Display */}
+        {generatedStory && (
+          <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <h3 className="font-semibold text-green-800 mb-2">Generated User Story:</h3>
+            <p className="text-green-700 font-medium mb-4">{generatedStory}</p>
+            
+            {acceptanceCriteria.some(criteria => criteria.trim() !== '') && (
+              <div className="mt-3">
+                <h4 className="font-medium text-green-800 mb-1">Acceptance Criteria:</h4>
+                <ul className="list-disc list-inside text-green-700 text-sm space-y-1">
+                  {acceptanceCriteria
+                    .filter(criteria => criteria.trim() !== '')
+                    .map((criteria, index) => (
+                      <li key={index}>{criteria}</li>
+                    ))}
+                </ul>
+              </div>
+            )}
+            
+            <div className="flex gap-2 mt-4">
+              <Button
+                onClick={handleCopyClick}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                {isCopied ? <CheckCircle className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                {isCopied ? 'Copied!' : 'Copy'}
+              </Button>
+              
+              {onSaveStory && (
+                <Button
+                  onClick={handleSaveStory}
+                  size="sm"
+                  className="flex items-center gap-2"
+                >
+                  <CheckCircle className="h-4 w-4" />
+                  Save Story
+                </Button>
+              )}
             </div>
           </div>
         )}
-        {securityErrors.rateLimit && (
-          <div className="mt-4 p-3 rounded-md bg-red-50 text-red-500 flex items-center">
-            <AlertCircle className="h-4 w-4 mr-2" />
-            {securityErrors.rateLimit}
-          </div>
-        )}
+
+        {/* API Key Dialog */}
+        <AIApiKeyDialog
+          open={showApiKeyDialog}
+          onOpenChange={setShowApiKeyDialog}
+          onApiKeySet={handleApiKeySet}
+          currentApiKey={apiKey}
+        />
       </CardContent>
     </Card>
   );

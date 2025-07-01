@@ -48,7 +48,7 @@ export const HeroSection = () => {
         <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-x-6 sm:gap-y-4 px-4">
           <span className="flex items-center justify-center gap-2 text-sm text-gray-500">
             <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" /> 
-            6 Featured Tools
+            4 Featured Tools
           </span>
           <span className="flex items-center justify-center gap-2 text-sm text-gray-500">
             <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" /> 

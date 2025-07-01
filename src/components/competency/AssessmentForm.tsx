@@ -106,9 +106,6 @@ export const AssessmentForm = ({ onComplete, onBack }: AssessmentFormProps) => {
                     >
                       {isCompleted ? <CheckCircle className="w-4 h-4" /> : <Circle className="w-4 h-4" />}
                       {area.name}
-                      <Badge variant="secondary" className="ml-1">
-                        {areaCompleted}/{areaComps.length}
-                      </Badge>
                     </Button>
                   );
                 })}
@@ -149,9 +146,6 @@ export const AssessmentForm = ({ onComplete, onBack }: AssessmentFormProps) => {
                 </CardTitle>
                 <p className="text-gray-600">{currentArea.description}</p>
               </div>
-              <Badge className="bg-blue-100 text-blue-700">
-                {areaCompletedCount}/{currentAreaCompetencies.length} completed
-              </Badge>
             </div>
           </CardHeader>
           <CardContent className="space-y-8">

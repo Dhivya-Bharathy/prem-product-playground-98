@@ -8,7 +8,7 @@ export const SecurityHeaders = () => {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data: https: blob:",
-    "connect-src 'self' https: wss:",
+    "connect-src 'self' https: wss: http://localhost:3001",
     "media-src 'self' data: https:",
     "object-src 'none'",
     "base-uri 'self'",

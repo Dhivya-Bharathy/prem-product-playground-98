@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Shield, AlertTriangle, CheckCircle, Download, ExternalLink, Zap, Info, Home, BookOpen, Scale, Globe } from "lucide-react";
 import { AnalysisResults, AnalysisProgress } from "@/types/darkPatterns";
-import { analyzeWebsite } from "@/utils/darkPatternsAnalyzer";
+import { analyzeWebsite } from "@/services/realDarkPatternsAnalyzer";
 import { generateDarkPatternsPDF } from "@/utils/darkPatternsPdfGenerator";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
@@ -332,14 +332,14 @@ const DarkPatternsAssessment = () => {
           </div>
 
           {/* Info Banner */}
-          <Card className="mb-8 border-amber-200 bg-amber-50">
+          <Card className="mb-8 border-blue-200 bg-blue-50">
             <CardContent className="py-4">
               <div className="flex items-start gap-3">
-                <Info className="w-5 h-5 text-amber-600 mt-0.5" />
+                <Info className="w-5 h-5 text-blue-600 mt-0.5" />
                 <div>
-                  <p className="text-amber-800 text-sm">
-                    <strong>Note:</strong> Real web scraping and analysis requires server-side implementation. 
-                    This tool currently cannot bypass browser security restrictions to analyze external websites.
+                  <p className="text-blue-800 text-sm">
+                    <strong>Real Analysis Enabled:</strong> This tool uses Puppeteer to scrape websites and analyze them for dark patterns, gray patterns, and white patterns. 
+                    Make sure the backend server is running on port 3001 for real-time analysis.
                   </p>
                 </div>
               </div>
