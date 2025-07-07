@@ -100,6 +100,11 @@ app.get('/health', (req, res) => {
 // API routes
 app.use('/api', analyzeWebsiteRoute);
 
+// Friendly root route
+app.get('/', (req, res) => {
+  res.send('Dark Patterns Analysis API. Use /api/analyze for analysis.');
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Server error:', err);

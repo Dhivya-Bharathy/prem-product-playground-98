@@ -525,8 +525,8 @@ const DarkPatternsAssessment = () => {
                       </CardHeader>
                       <CardContent>
                         <div className="grid gap-4">
-                          {patternsOfType.map((pattern) => (
-                            <div key={pattern.id} className="border rounded-lg p-4 space-y-3">
+                          {patternsOfType.map((pattern, idx) => (
+                            <div key={pattern.id || `${patternType}-${idx}`} className="border rounded-lg p-4 space-y-3">
                               <div className="flex items-start justify-between">
                                 <div className="flex-1">
                                   <div className="flex items-center gap-3 mb-2">

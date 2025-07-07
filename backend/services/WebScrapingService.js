@@ -11,22 +11,6 @@ export class WebScrapingService {
   async initBrowser() {
     if (!this.browser) {
       console.log('🚀 Launching Puppeteer browser...');
-      // Prefer /usr/bin/chromium-browser for Render.com, fallback to dynamic detection
-      let chromiumPath = '/usr/bin/chromium-browser';
-      const fs = await import('fs');
-      if (!fs.existsSync(chromiumPath)) {
-        try {
-          const { execSync } = await import('child_process');
-          chromiumPath = execSync('which chromium').toString().trim();
-        } catch {
-          try {
-            const { execSync } = await import('child_process');
-            chromiumPath = execSync('which chromium-browser').toString().trim();
-          } catch {
-            chromiumPath = '/usr/bin/chromium'; // fallback
-          }
-        }
-      }
       this.browser = await puppeteer.launch({
         headless: 'new',
         args: [
@@ -38,8 +22,8 @@ export class WebScrapingService {
           '--no-zygote',
           '--disable-gpu',
           '--single-process'
-        ],
-        executablePath: chromiumPath
+        ]
+        // No executablePath: use Puppeteer's default bundled Chromium
       });
     }
     return this.browser;

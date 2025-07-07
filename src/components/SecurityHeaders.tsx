@@ -1,4 +1,3 @@
-
 import { Helmet } from 'react-helmet-async';
 
 export const SecurityHeaders = () => {
@@ -19,12 +18,12 @@ export const SecurityHeaders = () => {
 
   return (
     <Helmet>
-      {/* Content Security Policy */}
-      <meta httpEquiv="Content-Security-Policy" content={cspPolicy} />
+      {/* Content Security Policy - removed, set via HTTP header in backend */}
+      {/* <meta httpEquiv="Content-Security-Policy" content={cspPolicy} /> */}
       
       {/* Security Headers */}
       <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
-      <meta httpEquiv="X-Frame-Options" content="DENY" />
+      {/* <meta httpEquiv="X-Frame-Options" content="DENY" /> */}
       <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
       <meta name="referrer" content="strict-origin-when-cross-origin" />
       
