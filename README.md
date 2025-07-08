@@ -11,35 +11,22 @@ A comprehensive tool for analyzing websites and detecting dark patterns using re
 
 ## 🌐 Live Demo
 
-**Frontend**: Deployed on Netlify  
-**Backend**: Deployed on Railway with Puppeteer support
+**Frontend**: Deployed on Render  
+**Backend**: Deployed on Render with Puppeteer support
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Dhivya-Bharathy/prem-product-playground-98)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
 
 ## 🚀 Quick Deploy
 
-### Option 1: One-Click Deploy
-Click the "Deploy to Netlify" button above for instant deployment.
+### Option 1: Render Blueprint (Recommended)
+1. Click the "Deploy to Render" button above
+2. Connect your GitHub repository
+3. Render will automatically detect `render.yaml` and deploy both services
 
 ### Option 2: Manual Deploy
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed instructions.
 
-#### Frontend (Netlify)
-1. Go to [netlify.com](https://netlify.com)
-2. Click "New site from Git"
-3. Select this repository
-4. Build settings (auto-configured):
-   - **Build command**: `npm run build`
-   - **Publish directory**: `dist`
-5. Add environment variable:
-   - `VITE_BACKEND_URL` = `https://prem-product-playground-98-production.up.railway.app`
 
-#### Backend (Railway)
-1. Go to [railway.app](https://railway.app)
-2. Deploy from GitHub repo
-3. Select `backend` folder
-4. Add environment variables:
-   - `NODE_ENV` = `production`
-   - `FRONTEND_URL` = `https://your-netlify-url.netlify.app`
 
 ## 🛠️ Local Development
 
@@ -73,7 +60,7 @@ FRONTEND_URL=http://localhost:8081
 
 - **Frontend**: React, TypeScript, Vite, Tailwind CSS
 - **Backend**: Node.js, Express, Puppeteer, Cheerio
-- **Deployment**: Netlify (Frontend) + Railway (Backend)
+- **Deployment**: Render (Full-stack deployment)
 - **Analysis**: Real-time web scraping with semantic pattern detection
 
 ## 📄 License
