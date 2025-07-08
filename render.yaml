@@ -1,0 +1,32 @@
+services:
+  # Backend API Service
+  - type: web
+    name: prem-product-playground-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: FRONTEND_URL
+        fromService:
+          name: prem-product-playground-frontend
+          type: web
+          property: url
+
+  # Frontend Service
+  - type: web
+    name: prem-product-playground-frontend
+    env: static
+    plan: free
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_BACKEND_URL
+        fromService:
+          name: prem-product-playground-backend
+          type: web
+          property: url 

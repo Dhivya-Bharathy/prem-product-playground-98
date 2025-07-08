@@ -1,113 +1,124 @@
-# 🚀 Deployment Guide
+# Deployment Guide for Render
 
-This guide will help you deploy the Dark Patterns Assessment tool with a fully working backend.
+This guide will help you deploy the Prem Product Playground application to Render.
 
-## 📋 Overview
+## Prerequisites
 
-- **Frontend**: React/Vite app → Deploy to **Netlify**
-- **Backend**: Node.js + Puppeteer → Deploy to **Railway**
+1. A Render account (free tier available)
+2. Your code pushed to a Git repository (GitHub, GitLab, or Bitbucket)
 
-## 🔧 Step 1: Deploy Backend to Railway
+## Deployment Steps
 
-### 1.1 Create Railway Account
-1. Go to [Railway.app](https://railway.app)
-2. Sign up with GitHub
-3. Connect your GitHub account
+### Option 1: Using render.yaml (Recommended)
 
-### 1.2 Deploy Backend
-1. Click "New Project" → "Deploy from GitHub repo"
-2. Select your repository: `prem-product-playground-98`
-3. Choose "Deploy from a folder" → Select `backend` folder
-4. Railway will automatically detect it's a Node.js app
-
-### 1.3 Configure Environment Variables
-In Railway dashboard, go to your service → Variables tab and add:
-
-```
-NODE_ENV=production
-FRONTEND_URL=https://your-app-name.netlify.app
-```
-
-### 1.4 Get Your Railway URL
-- After deployment, Railway will give you a URL like: `https://your-app-name.railway.app`
-- **Save this URL** - you'll need it for the frontend!
-
-## 🌐 Step 2: Deploy Frontend to Netlify
-
-### 2.1 Create Netlify Account
-1. Go to [Netlify.com](https://netlify.com)
-2. Sign up with GitHub
-
-### 2.2 Deploy Frontend
-1. Click "New site from Git"
-2. Choose GitHub → Select your repository
-3. Build settings:
-   - **Build command**: `npm run build`
-   - **Publish directory**: `dist`
-   - **Base directory**: `/` (leave empty)
-
-### 2.3 Configure Environment Variables
-In Netlify dashboard → Site settings → Environment variables, add:
-
-```
-VITE_BACKEND_URL=https://your-railway-app.railway.app
-```
-
-**Replace with your actual Railway URL from Step 1.4!**
-
-### 2.4 Redeploy
-- Go to Deploys tab → Click "Trigger deploy"
-- This ensures the environment variable takes effect
-
-## 🔄 Step 3: Update Railway with Netlify URL
-
-1. Go back to Railway dashboard
-2. Update the `FRONTEND_URL` variable with your Netlify URL:
+1. **Push your code to Git**
+   ```bash
+   git add .
+   git commit -m "Add Render deployment configuration"
+   git push origin main
    ```
-   FRONTEND_URL=https://your-app-name.netlify.app
-   ```
-3. This will restart your backend with proper CORS
 
-## ✅ Step 4: Test Your Deployment
+2. **Connect to Render**
+   - Go to [render.com](https://render.com) and sign in
+   - Click "New +" and select "Blueprint"
+   - Connect your Git repository
+   - Render will automatically detect the `render.yaml` file
 
-1. Visit your Netlify URL
-2. Go to "Dark Patterns Assessment" tool
-3. Enter any website URL and analyze
-4. You should see **specific pattern names**, not generic text!
+3. **Deploy**
+   - Render will create both services automatically:
+     - `prem-product-playground-backend` (Node.js API)
+     - `prem-product-playground-frontend` (Static site)
+   - The services will be linked together with environment variables
 
-## 🐛 Troubleshooting
+### Option 2: Manual Deployment
 
-### Backend Issues:
-- **503 Error**: Railway might need a few minutes to start
-- **CORS Error**: Make sure `FRONTEND_URL` is set correctly in Railway
-- **Timeout**: Puppeteer needs time to scrape websites
+#### Deploy Backend First
 
-### Frontend Issues:
-- **API Connection Failed**: Check `VITE_BACKEND_URL` in Netlify
-- **Build Failed**: Make sure all dependencies are in `package.json`
+1. **Create Web Service**
+   - Go to Render Dashboard
+   - Click "New +" → "Web Service"
+   - Connect your Git repository
+   - Configure:
+     - **Name**: `prem-product-playground-backend`
+     - **Root Directory**: `backend`
+     - **Environment**: `Node`
+     - **Build Command**: `npm install`
+     - **Start Command**: `npm start`
+     - **Plan**: Free
 
-## 🔗 URLs You'll Get:
+2. **Environment Variables**
+   - Add these environment variables:
+     - `NODE_ENV`: `production`
+     - `PORT`: `10000`
 
-```
-Frontend: https://your-app-name.netlify.app
-Backend:  https://your-app-name.railway.app
-API:      https://your-app-name.railway.app/api/analyze
-Health:   https://your-app-name.railway.app/health
-```
+#### Deploy Frontend
 
-## 💰 Costs:
+1. **Create Static Site**
+   - Click "New +" → "Static Site"
+   - Connect your Git repository
+   - Configure:
+     - **Name**: `prem-product-playground-frontend`
+     - **Build Command**: `npm install && npm run build`
+     - **Publish Directory**: `dist`
+     - **Plan**: Free
 
-- **Netlify**: Free (generous limits)
-- **Railway**: Free tier available (500 hours/month)
+2. **Environment Variables**
+   - Add this environment variable:
+     - `VITE_BACKEND_URL`: `https://your-backend-service-name.onrender.com`
 
-## 🎉 You're Done!
+## Environment Variables
 
-Your Dark Patterns Assessment tool is now live with:
-- ✅ Real web scraping with Puppeteer
-- ✅ Actual dark pattern detection  
-- ✅ Specific, detailed analysis results
-- ✅ No more dummy data!
+### Backend Environment Variables
+- `NODE_ENV`: Set to `production`
+- `PORT`: Port number (Render sets this automatically)
+- `FRONTEND_URL`: URL of your frontend service
 
----
+### Frontend Environment Variables
+- `VITE_BACKEND_URL`: URL of your backend service
 
-**Need help?** Check the Railway and Netlify logs in their dashboards for detailed error messages. 
+## Service URLs
+
+After deployment, your services will be available at:
+- **Frontend**: `https://prem-product-playground-frontend.onrender.com`
+- **Backend**: `https://prem-product-playground-backend.onrender.com`
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Build Failures**
+   - Check the build logs in Render dashboard
+   - Ensure all dependencies are in `package.json`
+   - Verify Node.js version compatibility
+
+2. **CORS Errors**
+   - The backend is configured to allow requests from the frontend
+   - Check that `FRONTEND_URL` environment variable is set correctly
+
+3. **API Connection Issues**
+   - Verify `VITE_BACKEND_URL` is set correctly in frontend
+   - Check that backend service is running and healthy
+
+### Health Checks
+
+- **Backend Health**: `https://your-backend-url.onrender.com/health`
+- **Frontend Health**: `https://your-frontend-url.onrender.com/health`
+
+## Monitoring
+
+- Monitor your services in the Render dashboard
+- Check logs for any errors
+- Set up alerts for service downtime
+
+## Scaling
+
+- Free tier includes 750 hours per month
+- Services sleep after 15 minutes of inactivity
+- Upgrade to paid plans for always-on services
+
+## Security
+
+- All traffic is served over HTTPS
+- Environment variables are encrypted
+- CORS is properly configured
+- Security headers are enabled 
