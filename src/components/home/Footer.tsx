@@ -97,6 +97,12 @@ export const Footer = () => {
               >
                 ProdZ Slang
               </Link>
+              <Link 
+                to="/saas" 
+                className="block text-sm text-gray-600 hover:text-indigo-600 hover:translate-x-1 transition-all duration-200 focus:outline-none focus:text-indigo-600"
+              >
+                SaaS
+              </Link>
               <a 
                 href="https://www.linkedin.com/in/prempradeep/" 
                 target="_blank" 
