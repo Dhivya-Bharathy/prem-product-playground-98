@@ -22,6 +22,8 @@ import JobsToBeDone from "./pages/JobsToBeDone";
 import PMCompetency from "./pages/PMCompetency";
 import DarkPatternsAssessment from "./pages/DarkPatternsAssessment";
 import ProdZSlang from "./pages/ProdZSlang";
+import SaaS from "./pages/SaaS";
+import AcademicMicroSaaS from "./pages/AcademicMicroSaaS";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -55,6 +57,8 @@ const App = () => (
               <Route path="/tools/dark-patterns-assessment" element={<DarkPatternsAssessment />} />
               <Route path="/tools/idea-validator" element={<IdeaValidator />} />
               <Route path="/prodz-slang" element={<ProdZSlang />} />
+              <Route path="/saas" element={<SaaS />} />
+              <Route path="/saas/academic-micro-saas" element={<AcademicMicroSaaS />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/about" element={<About />} />
               <Route path="*" element={<NotFound />} />

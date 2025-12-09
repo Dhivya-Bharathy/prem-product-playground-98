@@ -23,15 +23,6 @@ export const HeroSection = () => {
       <div className="absolute -top-32 -left-32 w-[32rem] h-[32rem] bg-[#22325F] opacity-20 rounded-full blur-3xl z-0" />
       <div className="absolute top-1/3 -right-40 w-[28rem] h-[28rem] bg-teal-400 opacity-10 rounded-full blur-3xl z-0" />
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[40rem] h-40 bg-gradient-to-r from-[#22325F]/10 via-white/0 to-teal-400/10 rounded-full blur-2xl z-0" />
-      {/* Dotted pattern layer - centered above headline */}
-      <svg className="absolute left-1/2 top-12 -translate-x-1/2 w-[32rem] h-48 z-0 opacity-30" width="512" height="192" viewBox="0 0 512 192" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="2" r="2" fill="#22325F" />
-          </pattern>
-        </defs>
-        <rect width="512" height="192" fill="url(#dots)" />
-      </svg>
       
       <div className="container mx-auto px-4 text-center relative z-10">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#22325F] leading-tight">

@@ -3,6 +3,7 @@ import { Header } from "@/components/home/Header";
 import { HeroSection } from "@/components/home/HeroSection";
 import { ToolsGrid } from "@/components/home/ToolsGrid";
 import { ProductWordOfTheDay } from "@/components/home/ProductWordOfTheDay";
+import { SaaSSection } from "@/components/home/SaaSSection";
 import { AboutPremSection } from "@/components/home/AboutPremSection";
 import { Footer } from "@/components/home/Footer";
 import { SEOHead } from "@/components/SEOHead";
@@ -81,6 +82,7 @@ const Index = () => {
           <HeroSection />
           <ProductWordOfTheDay />
           <ToolsGrid />
+          <SaaSSection />
           <AboutPremSection />
         </main>
         <Footer />

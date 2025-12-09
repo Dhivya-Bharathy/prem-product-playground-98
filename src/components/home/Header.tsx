@@ -14,9 +14,9 @@ export const Header = () => {
           >
             <div className="flex items-center gap-3" aria-hidden="true">
               <img 
-                src="/prempradeep-logo-2024.svg" 
-                alt="Prem Pradeep Logo" 
-                className="w-10 h-10 sm:w-12 sm:h-12"
+                src="/lovable-uploads/4cc61976-ba63-4fee-8c99-1ad76011fb54.png" 
+                alt="Prem Pradeep" 
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-[#1E40AF]/20 shadow-sm"
               />
               <div className="flex flex-col min-w-0">
                 <div className="flex items-baseline gap-1">
