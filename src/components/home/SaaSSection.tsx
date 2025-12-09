@@ -19,10 +19,8 @@ export const SaaSSection = () => {
 
   const SaaSCard = ({ product }) => {
     return (
-      <a
-        href={product.externalUrl}
-        target="_blank"
-        rel="noopener noreferrer"
+      <Link
+        to={product.href}
         className="block group h-full focus:outline-none focus:ring-2 focus:ring-[#22325F] rounded-2xl"
       >
         <Card className="relative overflow-hidden border-gray-200 bg-white transition-all duration-300 hover:border-gray-300 hover:shadow-lg hover:-translate-y-1 h-full cursor-pointer">
@@ -51,7 +49,7 @@ export const SaaSSection = () => {
             </div>
           </CardContent>
         </Card>
-      </a>
+      </Link>
     );
   };
 

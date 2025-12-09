@@ -79,15 +79,13 @@ const SaaS = () => {
                       asChild
                       className="w-full group/btn bg-[#1E40AF] hover:bg-[#1E3A8A] text-white"
                     >
-                      <a
-                        href={product.externalUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <Link
+                        to={product.path}
                         className="focus:outline-none focus:ring-2 focus:ring-[#1E40AF] focus:ring-offset-2 rounded-md inline-flex items-center justify-center"
                       >
                         Explore Product
                         <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                      </a>
+                      </Link>
                     </Button>
                   </article>
                 ))}
